@@ -54,7 +54,7 @@ public class PlayerContaller : MonoBehaviour
     {
         if (!_pv.IsMine)
         {
-            this.GetComponent<PlayerContaller>().enabled=false;
+            //this.GetComponent<PlayerContaller>().enabled=false;
             playerData.DefaultColor=Color.red;
         }
         movingSpeed=rigidbody.velocity.magnitude;
@@ -90,7 +90,7 @@ public class PlayerContaller : MonoBehaviour
     }
 
     public void Lift(InputAction.CallbackContext callback){
-        if (callback.performed){            
+        if (callback.performed){       
             if (PlayerDistance() && enemy)
             {
                 //如果距離夠進就可以把敵人列表裡第一個抬起來
