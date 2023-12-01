@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
@@ -16,6 +17,7 @@ public class PlayerData : MonoBehaviour
     PlayerContaller playerContaller;
     Rigidbody rigidbody;
     PlayerInput playerInput;    
+    PhotonView _pv;
     public string defaultMap;
     public bool Lifting=false;
     public int scapeCount=0;
@@ -32,6 +34,7 @@ public class PlayerData : MonoBehaviour
         defaultMap=playerInput.defaultActionMap;
         rigidbody=this.transform.GetComponent<Rigidbody>();
         gameManager=FindObjectOfType<GameManager>();
+        _pv = this.transform.GetComponent<PhotonView>();
     }
 
     // Update is called once per frame
@@ -44,6 +47,10 @@ public class PlayerData : MonoBehaviour
                 scapeCount=0;
                 playerInput.SwitchCurrentActionMap(defaultMap);
                 playerContaller.Idle();
+                if (!_pv.IsMine)
+                {
+                    playerContaller.enabled=false;
+                }
                 this.gameObject.GetComponent<MeshRenderer>().material.color=DefaultColor;
                 break;
 
@@ -51,6 +58,10 @@ public class PlayerData : MonoBehaviour
                 //進入不可動狀態，物件變白，操作的MAP改成CD
                 this.gameObject.GetComponent<MeshRenderer>().material.color=Color.white;
                 playerInput.SwitchCurrentActionMap("CD");
+                if (!_pv.IsMine)
+                {
+                    rigidbody.isKinematic=true;
+                }
                 if (scapeCount>=10)
                 {
                     //如果達成逃脫條件，變回IDLE狀態，並從子物件中移出，再取消Kinematic
