@@ -9,17 +9,18 @@ using UnityEngine.Assertions.Must;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using hashTable = ExitGames.Client.Photon.Hashtable;
+using Photon.Realtime;
 
 
 public class PlayerData : MonoBehaviourPunCallbacks
 {
-    public enum PlayerState{Idle,Dash,Fly,Lift,BeLift,Die,CantMove}
+    public enum PlayerState{Idle,Dash,Fly,Lift,BeLift,Dead,CantMove}
     [SerializeField]
     public Text nameText;
     public List<GameObject> enemyList=new List<GameObject>();
     public PlayerState _playerState;
-    public GameObject mySlef;
     public Color DefaultColor;
+    public GameObject throwMe;
     GameManager _gm;
     PlayerContaller playerContaller;
     Rigidbody rigidbody;
@@ -36,7 +37,6 @@ public class PlayerData : MonoBehaviourPunCallbacks
     void Start()
     {
         _playerState=PlayerState.Idle;
-        mySlef=this.gameObject;
         playerContaller=this.transform.GetComponent<PlayerContaller>();
         playerInput=this.transform.GetComponent<PlayerInput>();
         defaultMap=playerInput.defaultActionMap;
@@ -80,8 +80,8 @@ public class PlayerData : MonoBehaviourPunCallbacks
 
                 break;
 
-            case PlayerState.Die:
-                 
+            case PlayerState.Dead:
+                GameObject mySlef = this.gameObject;
                 this.gameObject.GetComponent<MeshRenderer>().material.color=Color.black;
                 StartCoroutine(Delay(3));
                 _gm.deadPlayer.Add(mySlef);
@@ -126,10 +126,12 @@ public class PlayerData : MonoBehaviourPunCallbacks
     }
 
     public void SwitchState(PlayerState state){
-        hashTable table = new hashTable();
+        //hashTable table = new hashTable();
         _playerState=state;
-        table.Add("_playerState",_playerState);
-        PhotonNetwork.LocalPlayer.SetCustomProperties(table);
+        //table.Add("_playerState",_playerState);
+        //PhotonNetwork.LocalPlayer.SetCustomProperties(table);
+        string stateText = state.ToString();
+        CallRpcStateSwitch(state,stateText);
     }
     private void OnCollisionEnter(Collision other) {
         if(other.gameObject.tag == "Player")
@@ -153,5 +155,15 @@ public class PlayerData : MonoBehaviourPunCallbacks
             _playerState = (PlayerState)changedProps["_playerState"];
             scapeCount = (int)changedProps["scapeCount"];
         }
+    }
+
+    public void CallRpcStateSwitch(PlayerData.PlayerState playerState,string playerStateText){
+        _pv.RPC("RpcStateSwitch",RpcTarget.All,playerState,playerStateText);
+    }
+
+    [PunRPC]
+    void RpcStateSwitch(PlayerData.PlayerState playerState,string text,PhotonMessageInfo info){
+        print(playerState);
+        _playerState = playerState;
     }
 }

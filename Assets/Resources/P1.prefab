@@ -181,8 +181,8 @@ MonoBehaviour:
   nameText: {fileID: 6774569807595874641}
   enemyList: []
   _playerState: 0
-  mySlef: {fileID: 0}
   DefaultColor: {r: 0, g: 0.17254902, b: 1, a: 1}
+  throwMe: {fileID: 0}
   defaultMap: Player1
   Lifting: 0
   scapeCount: 0

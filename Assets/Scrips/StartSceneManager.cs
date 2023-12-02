@@ -7,7 +7,12 @@ using Photon.Pun;
 public class StartSceneManager : MonoBehaviourPunCallbacks
 {
     // Start is called before the first frame update
-    
+    [SerializeField]
+    GameObject LoadingPanle;
+
+    private void Start() {
+        LoadingPanle.SetActive(false);
+    }
     public void GoToGameScene(){
         //移到遊戲場景
         SceneManager.LoadScene("Game");
@@ -17,6 +22,7 @@ public class StartSceneManager : MonoBehaviourPunCallbacks
         PhotonNetwork.AutomaticallySyncScene=true;
         PhotonNetwork.ConnectUsingSettings();
         Debug.Log("Click Start");
+        LoadingPanle.SetActive(true);
     }
 
     public override void OnConnectedToMaster()

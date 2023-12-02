@@ -132,8 +132,10 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
             if (enemy&&playerData._playerState==PlayerData.PlayerState.Lift)
             {
                 Rigidbody enemyRig=enemy.GetComponent<Rigidbody>();
+                PlayerData enemyData = enemy.GetComponent<PlayerData>();
                 Debug.Log("Throw");
-                enemy.GetComponent<PlayerData>().SwitchState(PlayerData.PlayerState.CantMove);
+                enemyData.SwitchState(PlayerData.PlayerState.CantMove);
+                enemyData.throwMe = this.gameObject;
                 enemyRig.isKinematic=false;
                 enemyRig.AddForce(new Vector3(0,throwPower,throwPower),ForceMode.Impulse);
                 enemy.transform.parent=null;
