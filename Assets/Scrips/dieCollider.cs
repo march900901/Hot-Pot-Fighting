@@ -20,7 +20,7 @@ public class dieCollider : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision other) {
-        other.gameObject.GetComponent<PlayerData>()._playerState=PlayerData.PlayerState.Die;
+        other.gameObject.GetComponent<PlayerData>().SwitchState(PlayerData.PlayerState.Die);
         gameManager.CountPoint(other.gameObject.name,1);
         // if (other.gameObject.name==P1)
         // {

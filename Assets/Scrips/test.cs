@@ -16,7 +16,7 @@ public class test : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter(Collider other) {
-        Debug.Log("Enter");
+    private void OnCollisionEnter(Collision other) {
+        print(this.gameObject.name + "collistion");
     }
 }

@@ -1,23 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
+using Photon.Realtime;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
+using hashTable = ExitGames.Client.Photon.Hashtable;
 
-public class PlayerData : MonoBehaviour
+
+public class PlayerData : MonoBehaviourPunCallbacks
 {
-    public enum PlayerState{Idle,Desh,Fall,Lift,BeLift,Die,CantMove}
+    public enum PlayerState{Idle,Dash,Fly,Lift,BeLift,Die,CantMove}
+    [SerializeField]
+    public Text nameText;
     public List<GameObject> enemyList=new List<GameObject>();
     public PlayerState _playerState;
-    public GameManager gameManager;
     public GameObject mySlef;
     public Color DefaultColor;
+    GameManager _gm;
     PlayerContaller playerContaller;
     Rigidbody rigidbody;
     PlayerInput playerInput;    
     PhotonView _pv;
+    hashTable table = new hashTable();
     public string defaultMap;
     public bool Lifting=false;
     public int scapeCount=0;
@@ -33,8 +41,10 @@ public class PlayerData : MonoBehaviour
         playerInput=this.transform.GetComponent<PlayerInput>();
         defaultMap=playerInput.defaultActionMap;
         rigidbody=this.transform.GetComponent<Rigidbody>();
-        gameManager=FindObjectOfType<GameManager>();
+        _gm = GameObject.Find("GameManager").GetComponent<GameManager>(); 
         _pv = this.transform.GetComponent<PhotonView>();
+        nameText.text = _pv.Owner.NickName;
+        
     }
 
     // Update is called once per frame
@@ -47,10 +57,6 @@ public class PlayerData : MonoBehaviour
                 scapeCount=0;
                 playerInput.SwitchCurrentActionMap(defaultMap);
                 playerContaller.Idle();
-                if (!_pv.IsMine)
-                {
-                    playerContaller.enabled=false;
-                }
                 this.gameObject.GetComponent<MeshRenderer>().material.color=DefaultColor;
                 break;
 
@@ -58,10 +64,7 @@ public class PlayerData : MonoBehaviour
                 //進入不可動狀態，物件變白，操作的MAP改成CD
                 this.gameObject.GetComponent<MeshRenderer>().material.color=Color.white;
                 playerInput.SwitchCurrentActionMap("CD");
-                if (!_pv.IsMine)
-                {
-                    rigidbody.isKinematic=true;
-                }
+                
                 if (scapeCount>=10)
                 {
                     //如果達成逃脫條件，變回IDLE狀態，並從子物件中移出，再取消Kinematic
@@ -73,25 +76,32 @@ public class PlayerData : MonoBehaviour
                 }
                 break;
 
-            case PlayerState.Desh:
-                
+            case PlayerState.Dash:
+
                 break;
 
             case PlayerState.Die:
+                 
                 this.gameObject.GetComponent<MeshRenderer>().material.color=Color.black;
                 StartCoroutine(Delay(3));
-                gameManager.deadPlayer.Add(mySlef);
-                //this.gameObject.SetActive(false);
-                gameManager.revivalPlayer(this.gameObject.name);
-                Destroy(this.gameObject);
+                _gm.deadPlayer.Add(mySlef);
+                _gm.revivalPlayer(this.gameObject.name);
+                Dead();
+                PhotonNetwork.Destroy(this.gameObject);
                 break;
 
-            case PlayerState.Fall:
-                
+            case PlayerState.Fly:
+                if (!_pv.IsMine)
+                {
+                    rigidbody.isKinematic=true;
+                }
                 break;
 
             case PlayerState.Lift:
+                hashTable table = new hashTable();
                 Lifting=true;
+                table.Add("Lifting",Lifting);
+                PhotonNetwork.LocalPlayer.SetCustomProperties(table);
                 break;
 
             case PlayerState.BeLift:
@@ -102,6 +112,12 @@ public class PlayerData : MonoBehaviour
         //Debug.Log(this.name+_playerState);
     }
 
+    public void Dead(){
+         PhotonNetwork.Destroy(this.gameObject);
+         //告訴RPC呼叫告訴MesterClient自己被消滅了
+         _gm.CallRpcPlayerDead();
+    }
+
     IEnumerator Delay(float s){
         yield return new WaitForSecondsRealtime(s);
         playerInput.SwitchCurrentActionMap(defaultMap);
@@ -110,18 +126,32 @@ public class PlayerData : MonoBehaviour
     }
 
     public void SwitchState(PlayerState state){
+        hashTable table = new hashTable();
         _playerState=state;
+        table.Add("_playerState",_playerState);
+        PhotonNetwork.LocalPlayer.SetCustomProperties(table);
     }
     private void OnCollisionEnter(Collision other) {
-        PlayerData otherData=other.transform.GetComponent<PlayerData>();
-        if (_playerState==PlayerState.Desh)
+        if(other.gameObject.tag == "Player")
         {
-            if (other.transform.tag=="Player")
+            PlayerData otherData=other.transform.GetComponent<PlayerData>();
+            if (otherData._playerState==PlayerState.Dash)
             {
+                _gm.CallRpcSendMessageToAll(otherData._pv.Owner.NickName + "撞到" + _pv.Owner.NickName);
+                _gm.CallRpcSendMessageToAll(_pv.Owner.NickName + "RCP Say Hello");
                 //如果碰撞時自己的狀態是衝刺，對方的tag是player，就把對方的狀態變成CantMove
-                other.gameObject.GetComponent<PlayerData>()._playerState=PlayerState.CantMove;
+                SwitchState(_playerState=PlayerState.CantMove);
                 enemyList.Add(other.gameObject);
-            }
+            }else{}
+        }
+    }
+
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, hashTable changedProps)
+    {
+        if (targetPlayer == _pv.Owner)
+        {
+            _playerState = (PlayerState)changedProps["_playerState"];
+            scapeCount = (int)changedProps["scapeCount"];
         }
     }
 }

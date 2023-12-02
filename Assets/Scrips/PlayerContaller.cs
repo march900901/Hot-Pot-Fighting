@@ -6,8 +6,11 @@ using UnityEngine.InputSystem;
 using System;
 using TMPro;
 using Photon.Pun;
+using hashTable = ExitGames.Client.Photon.Hashtable;
+using UnityEditor;
+using Unity.VisualScripting;
 
-public class PlayerContaller : MonoBehaviour
+public class PlayerContaller : MonoBehaviourPunCallbacks
 {   
     PlayerData playerData;
     Rigidbody rigidbody;
@@ -30,6 +33,7 @@ public class PlayerContaller : MonoBehaviour
     public GameObject enemy;
     public PhotonView _pv;
     BoxCollider boxCollider;
+    GameManager _gm;
     
 
     // Start is called before the first frame update
@@ -41,12 +45,13 @@ public class PlayerContaller : MonoBehaviour
         defaultMap = playerInput.defaultActionMap;
         LiftPoint = this.transform.GetChild(0).gameObject;
         boxCollider = LiftPoint.GetComponent<BoxCollider>();
-        _pv = GetComponent<PhotonView>();
-        if (!_pv.IsMine)
-        {
-            print(_pv.ViewID);
-            //Destroy(rigidbody);
-        }
+        _pv = this.transform.GetComponent<PhotonView>();
+        _gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+        // if (!_pv.IsMine)
+        // {
+        //     playerInput.SwitchCurrentActionMap("NotMe");
+        //     playerData.DefaultColor=Color.red;
+        // }
     }
 
     // Update is called once per frame
@@ -55,6 +60,7 @@ public class PlayerContaller : MonoBehaviour
         if (!_pv.IsMine)
         {
             //this.GetComponent<PlayerContaller>().enabled=false;
+            playerInput.SwitchCurrentActionMap("NotMe"); 
             playerData.DefaultColor=Color.red;
         }
         movingSpeed=rigidbody.velocity.magnitude;
@@ -85,21 +91,24 @@ public class PlayerContaller : MonoBehaviour
     IEnumerator DelayAction(float s){
         yield return new WaitForSecondsRealtime(s);
         playerInput.SwitchCurrentActionMap(defaultMap);
-        playerData._playerState=PlayerData.PlayerState.Idle;
-        
+        playerData.SwitchState(PlayerData.PlayerState.Idle);
     }
 
     public void Lift(InputAction.CallbackContext callback){
-        if (callback.performed){       
-            if (PlayerDistance() && enemy)
-            {
-                //如果距離夠進就可以把敵人列表裡第一個抬起來
+        if (callback.performed){
+            if (PlayerDistance() && playerData.enemyList.Count > 0)
+            {//如果和倒地的人距離夠近，且enemyList不是空的，
                 enemy=playerData.enemyList[0];
-                playerData._playerState=PlayerData.PlayerState.Lift;
-                enemy.GetComponent<Rigidbody>().isKinematic=true;
-                enemy.transform.position=this.transform.Find("LiftPoint").transform.position;
-                enemy.transform.parent=this.transform.Find("LiftPoint");
-            }
+                if (enemy.GetComponent<PlayerData>().Lifting == false)
+                {
+                    //如果距離夠進就可以把敵人列表裡第一個抬起來
+                    playerData.SwitchState(PlayerData.PlayerState.Lift);
+                    enemy.GetComponent<Rigidbody>().isKinematic=true;
+                    enemy.transform.position=this.transform.Find("LiftPoint").transform.position;
+                    enemy.transform.parent=this.transform.Find("LiftPoint");
+                }
+            }       
+            
         }
     }
 
@@ -124,11 +133,11 @@ public class PlayerContaller : MonoBehaviour
             {
                 Rigidbody enemyRig=enemy.GetComponent<Rigidbody>();
                 Debug.Log("Throw");
-                enemy.GetComponent<PlayerData>()._playerState=PlayerData.PlayerState.CantMove;
+                enemy.GetComponent<PlayerData>().SwitchState(PlayerData.PlayerState.CantMove);
                 enemyRig.isKinematic=false;
                 enemyRig.AddForce(new Vector3(0,throwPower,throwPower),ForceMode.Impulse);
                 enemy.transform.parent=null;
-                playerData._playerState=PlayerData.PlayerState.Idle;
+                playerData.SwitchState(PlayerData.PlayerState.Idle);
                 playerData.enemyList.RemoveAt(0);
             }
         }
@@ -141,12 +150,11 @@ public class PlayerContaller : MonoBehaviour
                 if (_pv.IsMine)
                 {
                     //如果按下desh按鍵且自己狀態是idle的話，向前衝刺一下
-                    playerData.SwitchState(PlayerData.PlayerState.Desh);
+                    playerData.SwitchState(PlayerData.PlayerState.Dash);
                     rigidbody.AddForce(new Vector3(movevector.x,0,movevector.y)*DashPower,ForceMode.Impulse);
                     playerInput.SwitchCurrentActionMap("CD");
                     StartCoroutine(DelayAction(DashCD));
                 }
-                
             }             
         }
     }
@@ -157,15 +165,19 @@ public class PlayerContaller : MonoBehaviour
 
     public void Scaper(InputAction.CallbackContext callback){
         //計算逃脫按的次數
-        if (callback.performed)
+        if (callback.performed && playerData._playerState==PlayerData.PlayerState.CantMove)
         {
+            hashTable table = new hashTable();
             if (playerData.scapeCount>10)
             {
                 playerData.scapeCount=0;
+                table.Add("scapeCount",playerData.scapeCount);
+                PhotonNetwork.LocalPlayer.SetCustomProperties(table);
             }
             else{
                 playerData.scapeCount++;
-                
+                table.Add("scapeCount",playerData.scapeCount);
+                PhotonNetwork.LocalPlayer.SetCustomProperties(table);
             }
         }
     }
@@ -173,32 +185,4 @@ public class PlayerContaller : MonoBehaviour
     public void Idle(){
         boxCollider.enabled=false;
     }
-    
-    public void Fall(){
-        this.gameObject.GetComponent<MeshRenderer>().material.color=Color.white;
-        boxCollider.enabled=true;
-        playerInput.SwitchCurrentActionMap("CD");
-        StartCoroutine(DelayAction(FallCD));
-    }
-    // public void BounceBack(){
-    //     rigidbody.AddForce(new Vector3(-movevector.x,0,-movevector.y)*BouncePower*Time.deltaTime,ForceMode.Impulse);
-    //     //Debug.Log("BACK");
-    // }
-
-    private void OnTriggerEnter(Collider other) {
-        Debug.Log(other.name);
-        //PlayerData Player=other.transform.parent.gameObject.GetComponent<PlayerData>();
-        if (other.name=="LiftPoint")
-        {
-            enemy=other.transform.parent.gameObject;
-        }
-    }
-
-    private void OnCollisionEnter(Collision other) {
-        if (other.gameObject.tag=="Player" && playerData._playerState==PlayerData.PlayerState.Desh)
-        {
-            enemy=other.gameObject;
-        }else{}
-    }
-
 }

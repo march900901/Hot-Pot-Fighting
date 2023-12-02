@@ -88,7 +88,7 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
         {
             if (roomInfo.PlayerCount>0)
             {
-                sb.AppendLine(">"+roomInfo.Name);
+                sb.AppendLine("> "+roomInfo.Name);
             }
         }
         textRoomList.text = sb.ToString();
