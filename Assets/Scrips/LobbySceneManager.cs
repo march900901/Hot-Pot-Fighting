@@ -15,7 +15,7 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
     [SerializeField]
     InputField inputPlayerName;
     [SerializeField]
-    Text textRoomList;
+    GameObject WarningText;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +28,7 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
                 PhotonNetwork.JoinLobby();
             }
         }
+        WarningText.GetComponent<Text>().text = null;
     }
 
     public override void OnConnectedToMaster()
@@ -63,34 +64,36 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
         }
     }
 
-    public void OnClickJoinRoom(){
-        string roomName = GetRoomName();
-        string PlayerName=GetPlayerName();
-        if (roomName.Length > 0 && PlayerName.Length>0)
-        {
-            PhotonNetwork.JoinRoom(roomName);
-            PhotonNetwork.LocalPlayer.NickName=PlayerName;
-        }else{
-            Debug.Log("Please enter Room name and Player name");
-        }
-    }
-
     public override void OnJoinedRoom()
     {
         Debug.Log("Room Joined!");
         SceneManager.LoadScene("SelectCharacter");
     }
 
-    public override void OnRoomListUpdate(List<RoomInfo> roomList)
-    {
-        StringBuilder sb = new StringBuilder();
-        foreach (RoomInfo roomInfo in roomList)
-        {
-            if (roomInfo.PlayerCount>0)
-            {
-                sb.AppendLine("> "+roomInfo.Name);
-            }
-        }
-        textRoomList.text = sb.ToString();
+    // public override void OnRoomListUpdate(List<RoomInfo> roomList)
+    // {
+    //     StringBuilder sb = new StringBuilder();
+    //     foreach (RoomInfo roomInfo in roomList)
+    //     {
+    //         if (roomInfo.PlayerCount>0)
+    //         {
+    //             sb.AppendLine("> "+roomInfo.Name);
+    //         }
+    //     }
+    //     textRoomList.text = sb.ToString();
+    // }
+
+    public void JoinRoomList(string roomName){
+        PhotonNetwork.JoinRoom(roomName);
+    }
+
+    public void SetWarningText(string Text){
+        WarningText.GetComponent<Text>().text = Text;
+        StartCoroutine(Delay(5));
+    }
+
+    IEnumerator Delay(float s){
+        yield return new WaitForSecondsRealtime(s);
+        WarningText.GetComponent<Text>().text = null;
     }
 }
