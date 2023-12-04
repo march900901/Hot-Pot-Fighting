@@ -10,18 +10,20 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using hashTable = ExitGames.Client.Photon.Hashtable;
 using Photon.Realtime;
+using ExitGames.Client.Photon.StructWrapping;
 
 
 public class PlayerData : MonoBehaviourPunCallbacks
 {
     public enum PlayerState{Idle,Dash,Fly,Lift,BeLift,Dead,CantMove}
+    public int Point = 0;
     [SerializeField]
     public Text nameText;
     public List<GameObject> enemyList=new List<GameObject>();
     public PlayerState _playerState;
     public Color DefaultColor;
     public GameObject throwMe;
-    GameManager _gm;
+    GameSceneManager _gm;
     PlayerContaller playerContaller;
     Rigidbody rigidbody;
     PlayerInput playerInput;    
@@ -30,18 +32,20 @@ public class PlayerData : MonoBehaviourPunCallbacks
     public string defaultMap;
     public bool Lifting=false;
     public int scapeCount=0;
+
     
 
 
     // Start is called before the first frame update
     void Start()
     {
+        Point = 0;
         _playerState=PlayerState.Idle;
         playerContaller=this.transform.GetComponent<PlayerContaller>();
         playerInput=this.transform.GetComponent<PlayerInput>();
         defaultMap=playerInput.defaultActionMap;
         rigidbody=this.transform.GetComponent<Rigidbody>();
-        _gm = GameObject.Find("GameManager").GetComponent<GameManager>(); 
+        _gm = GameObject.Find("GameManager").GetComponent<GameSceneManager>(); 
         _pv = this.transform.GetComponent<PhotonView>();
         nameText.text = _pv.Owner.NickName;
         
@@ -88,6 +92,7 @@ public class PlayerData : MonoBehaviourPunCallbacks
                 _gm.revivalPlayer(this.gameObject.name);
                 Dead();
                 PhotonNetwork.Destroy(this.gameObject);
+                throwMe.GetComponent<PlayerData>().Point += 1;
                 break;
 
             case PlayerState.Fly:
@@ -113,8 +118,7 @@ public class PlayerData : MonoBehaviourPunCallbacks
     }
 
     public void Dead(){
-         PhotonNetwork.Destroy(this.gameObject);
-         //告訴RPC呼叫告訴MesterClient自己被消滅了
+         //PhotonNetwork.Destroy(this.gameObject);
          _gm.CallRpcPlayerDead();
     }
 
@@ -136,26 +140,38 @@ public class PlayerData : MonoBehaviourPunCallbacks
     private void OnCollisionEnter(Collision other) {
         if(other.gameObject.tag == "Player")
         {
+            float h = Input.GetAxis("Horizontal");
+            float v = Input.GetAxis("Vertical");
+            Vector3 playerDirection = new Vector3(h,0,v);
             PlayerData otherData=other.transform.GetComponent<PlayerData>();
             if (otherData._playerState==PlayerState.Dash)
-            {
+            {//被撞到的時候
+                throwMe = other.gameObject;
                 _gm.CallRpcSendMessageToAll(otherData._pv.Owner.NickName + "撞到" + _pv.Owner.NickName);
                 _gm.CallRpcSendMessageToAll(_pv.Owner.NickName + "RCP Say Hello");
                 //如果碰撞時自己的狀態是衝刺，對方的tag是player，就把對方的狀態變成CantMove
                 SwitchState(_playerState=PlayerState.CantMove);
-                enemyList.Add(other.gameObject);
+                //enemyList.Add(other.gameObject);
+                otherData.enemyList.Add(this.gameObject);
+                other.gameObject.GetComponent<Rigidbody>().AddForce(-playerDirection*playerContaller.BouncePower,ForceMode.Force);
             }else{}
         }
     }
 
-    public override void OnPlayerPropertiesUpdate(Player targetPlayer, hashTable changedProps)
-    {
-        if (targetPlayer == _pv.Owner)
-        {
-            _playerState = (PlayerState)changedProps["_playerState"];
-            scapeCount = (int)changedProps["scapeCount"];
-        }
-    }
+    // public override void OnPlayerPropertiesUpdate(Player targetPlayer, hashTable changedProps)
+    // {//接收數值更新
+    //     if (targetPlayer != null && changedProps != null)
+    //     {
+    //         if (targetPlayer == _pv.Owner)
+    //         {
+    //             //_playerState = (PlayerState)changedProps["_playerState"]; 
+    //             if (scapeCount != null && changedProps != null)
+    //             {
+    //                 scapeCount = (int)changedProps["scapeCount"];
+    //             }
+    //         }
+    //     }
+    // }
 
     public void CallRpcStateSwitch(PlayerData.PlayerState playerState,string playerStateText){
         _pv.RPC("RpcStateSwitch",RpcTarget.All,playerState,playerStateText);

@@ -33,7 +33,7 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
     public GameObject enemy;
     public PhotonView _pv;
     BoxCollider boxCollider;
-    GameManager _gm;
+    GameSceneManager _gm;
     
 
     // Start is called before the first frame update
@@ -46,7 +46,7 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
         LiftPoint = this.transform.GetChild(0).gameObject;
         boxCollider = LiftPoint.GetComponent<BoxCollider>();
         _pv = this.transform.GetComponent<PhotonView>();
-        _gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+        _gm = GameObject.Find("GameManager").GetComponent<GameSceneManager>();
         // if (!_pv.IsMine)
         // {
         //     playerInput.SwitchCurrentActionMap("NotMe");
@@ -96,7 +96,23 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
 
     public void Lift(InputAction.CallbackContext callback){
         if (callback.performed){
-            if (PlayerDistance() && playerData.enemyList.Count > 0)
+            DoLift();
+            CallRpcDoLift();
+        }
+    }
+
+    public void CallRpcDoLift(){
+        _pv.RPC("RpcDoLift",RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RpcDoLift(PhotonMessageInfo info){
+        print("Lift");
+        DoLift();
+    }
+
+    public void DoLift(){
+        if (PlayerDistance() && playerData.enemyList.Count > 0)
             {//如果和倒地的人距離夠近，且enemyList不是空的，
                 enemy=playerData.enemyList[0];
                 if (enemy.GetComponent<PlayerData>().Lifting == false)
@@ -107,21 +123,22 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
                     enemy.transform.position=this.transform.Find("LiftPoint").transform.position;
                     enemy.transform.parent=this.transform.Find("LiftPoint");
                 }
-            }       
-            
-        }
+            }
     }
 
     public bool PlayerDistance(){
-        bool canLift;
+        bool canLift = false;
         float distance=0;
-        //計算自己與敵人列表中第一個的距離
-        distance = Vector3.Distance(this.transform.position,playerData.enemyList[0].transform.position);
-        if (distance<=1.5f)
+        if (playerData.enemyList != null && playerData.enemyList.Count > 0)
         {
-            canLift=true;
-        }else{
-            canLift=false;
+            //計算自己與敵人列表中第一個的距離
+            distance = Vector3.Distance(this.transform.position,playerData.enemyList[0].transform.position);
+            if (distance<=1.5f)
+            {
+                canLift=true;
+            }else{
+                canLift=false;
+            } 
         }
         return canLift;
     }
@@ -169,19 +186,33 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
         //計算逃脫按的次數
         if (callback.performed && playerData._playerState==PlayerData.PlayerState.CantMove)
         {
-            hashTable table = new hashTable();
-            if (playerData.scapeCount>10)
+            DoScape();            
+        }
+    }
+
+    public void CallRpcDoScaper(){
+        _pv.RPC("RpcDoScape",RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RpcDoScape(PhotonMessageInfo info){
+        DoScape();
+    }
+
+    public void DoScape(){
+        if (playerData.scapeCount>10)
             {
+                hashTable table = new hashTable();
                 playerData.scapeCount=0;
                 table.Add("scapeCount",playerData.scapeCount);
                 PhotonNetwork.LocalPlayer.SetCustomProperties(table);
             }
             else{
+                hashTable table = new hashTable();
                 playerData.scapeCount++;
                 table.Add("scapeCount",playerData.scapeCount);
                 PhotonNetwork.LocalPlayer.SetCustomProperties(table);
             }
-        }
     }
 
     public void Idle(){
