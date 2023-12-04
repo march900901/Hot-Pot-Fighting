@@ -10,7 +10,7 @@ using System.IO;
 using UnityEngine.UI;
 using Photon.Realtime;
 
-public class GameManager : MonoBehaviourPunCallbacks
+public class GameSceneManager : MonoBehaviourPunCallbacks
 {
     public List<GameObject> PlayerList = new List<GameObject>();
     public List<Transform> startTransform = new List<Transform>();
@@ -30,9 +30,12 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public int P1point=0;
     public int P2point=0;
+    public string CharacterName;
     // Start is called before the first frame update
     void Start()
     {
+        CharacterName = PlayerPrefs.GetString("CharacterName");
+        print(CharacterName);
         _pv = this.transform.GetComponent<PhotonView>();
         if (PhotonNetwork.CurrentRoom==null)
         {
@@ -85,7 +88,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             startPions.Add(startTransform[randomNum]);
             //print(startPions[i].gameObject.name);
         }
-        PhotonNetwork.Instantiate("P1",startPions[Random.Range(0,startPions.Count)].position,Quaternion.identity);
+        PhotonNetwork.Instantiate(CharacterName,startPions[Random.Range(0,startPions.Count)].position,Quaternion.identity);
         // if (PlayerList.Count!=0)
         // {
         //     for (int i = 0; i < PlayerList.Count; i++)
@@ -118,18 +121,16 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public void revivalPlayer(string revivalPlayerName){
         int randomNum=0;
-        if (deadPlayer.Count!=0)
-        {
-            for (int i = 0; i < deadPlayer.Count; i++)
-            {
-                randomNum=Random.Range(0,startTransform.Count);
-                GameObject revivalObj = Instantiate(deadPlayer[i],startTransform[randomNum].position,Quaternion.identity);
-                revivalObj.name=revivalPlayerName;
-                deadPlayer.RemoveAt(i);
-            }
-        }else{
-
-        }
+        // if (deadPlayer.Count!=0)
+        // {
+        //     for (int i = 0; i < deadPlayer.Count; i++)
+        //     {
+        //         randomNum=Random.Range(0,startTransform.Count);
+        //         GameObject revivalObj = Instantiate(deadPlayer[i],startTransform[randomNum].position,Quaternion.identity);
+        //         revivalObj.name=revivalPlayerName;
+        //         deadPlayer.RemoveAt(i);
+        //     }
+        // }
     }
 
     public void CountPoint(string PlayerName,int point){
@@ -151,13 +152,18 @@ public class GameManager : MonoBehaviourPunCallbacks
     }
     [PunRPC]
     void RpcPlayerDead(PhotonMessageInfo info){
-        if(alivePlayerMap.ContainsKey(info.Sender)){
-            alivePlayerMap[info.Sender] = false;
-        }
-        if (PhotonNetwork.IsMasterClient)
+        if (deadPlayer.Count != null)
         {
-            //檢查玩家存活狀態，顯示結果或轉換場景
+            PhotonNetwork.Destroy(deadPlayer[0]);
         }
+
+        // if(alivePlayerMap.ContainsKey(info.Sender)){
+        //     alivePlayerMap[info.Sender] = false;
+        // }
+        // if (PhotonNetwork.IsMasterClient)
+        // {
+        //     //檢查玩家存活狀態，顯示結果或轉換場景
+        // }
     }
 
     public void CallRpcSendMessageToAll(string message){//用photon的RPC功能發送訊息
