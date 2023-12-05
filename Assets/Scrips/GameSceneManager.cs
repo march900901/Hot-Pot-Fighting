@@ -70,10 +70,10 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
             alivePlayerMap[kvp.Value] = true;
         }
         //--------初始隨機生成玩家-------
-        SponPlayer();
+        SponPlayer(CharacterName);
     }
 
-    public void SponPlayer(){
+    public void SponPlayer(string _caracterName){
         //遊戲開始時生成玩家在遊戲場景
         int randomNum=0;
         List<Transform> startPions=new List<Transform>();
@@ -83,7 +83,8 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
             startPions.Add(startTransform[randomNum]);
         }
         //在所有玩家的畫面中生成玩家物件
-        PhotonNetwork.Instantiate(CharacterName,startPions[Random.Range(0,startPions.Count)].position,Quaternion.identity);
+        GameObject Player = PhotonNetwork.Instantiate(_caracterName,startPions[Random.Range(0,startPions.Count)].position,Quaternion.identity);
+        Player.name = CharacterName.ToString(); 
     }
 
     // public void revivalPlayer(string PlayerName){
@@ -102,7 +103,9 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         //執行玩家死亡
         if (deadPlayer.Count != null)
         {
+            SponPlayer(deadPlayer[0].name);
             PhotonNetwork.Destroy(deadPlayer[0]);
+            
         }
 
         // if(alivePlayerMap.ContainsKey(info.Sender)){

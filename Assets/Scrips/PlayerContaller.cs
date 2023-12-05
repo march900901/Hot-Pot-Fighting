@@ -130,7 +130,7 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
                 }
             }
     }
-
+//-------計算玩家距離-------
     public bool PlayerDistance(){
         //計算與其他玩家物件的距離
         bool canLift = false;
@@ -149,10 +149,17 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
         return canLift;
     }
 
+//-------丟-------
     public void Throw(InputAction.CallbackContext callback){
         if (callback.performed)
         {//收到輸入指令時
-            if (enemy&&playerData._playerState==PlayerData.PlayerState.Lift)
+            DoThrow();
+            CallRpcDoThrow();
+        }
+    }
+
+    public void DoThrow(){
+        if (enemy&&playerData._playerState==PlayerData.PlayerState.Lift)
             {//確認enemy不是空的且自己的狀態是Lift
                 Rigidbody enemyRig=enemy.GetComponent<Rigidbody>();
                 PlayerData enemyData = enemy.GetComponent<PlayerData>();
@@ -170,10 +177,20 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
                 playerData.SwitchState(PlayerData.PlayerState.Idle);
                 //刪掉敵人列表第一項
                 playerData.enemyList.RemoveAt(0);
+                print("Throw!!!");
             }
-        }
     }
 
+    public void CallRpcDoThrow(){
+        _pv.RPC("RpcDoThrow",RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RpcDoThrow(PhotonMessageInfo info){
+        DoThrow();
+    }
+
+//-------衝刺-------
     public void Dash(InputAction.CallbackContext callback){
         if(callback.performed){//收到輸入訊號
             if (playerData._playerState==PlayerData.PlayerState.Idle)
@@ -194,6 +211,7 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
         movevector=callback.ReadValue<Vector2>();
     }
 
+//-------逃脫機制-------
     public void Scaper(InputAction.CallbackContext callback){
         //計算逃脫按的次數
         if (callback.performed && playerData._playerState==PlayerData.PlayerState.CantMove)

@@ -87,13 +87,13 @@ public class PlayerData : MonoBehaviourPunCallbacks
 
             case PlayerState.Dead:
                 //角色死亡時顏色變黑，將自己加入GameManager的deadPlayer
-                GameObject mySlef = this.gameObject;
                 this.gameObject.GetComponent<MeshRenderer>().material.color=Color.black;
-                StartCoroutine(Delay(3));
-                _gm.deadPlayer.Add(mySlef);
-                _gm.SponPlayer();
-                Dead();
+                _gm.deadPlayer.Add(this.gameObject);
+                //_gm.SponPlayer();
+                _gm.CallRpcPlayerDead();
                 PhotonNetwork.Destroy(this.gameObject);
+                print("Daed!!");
+
                 break;
 
             case PlayerState.Fly:
@@ -118,11 +118,6 @@ public class PlayerData : MonoBehaviourPunCallbacks
         //Debug.Log(this.name+_playerState);
     }
 
-    public void Dead(){
-         //PhotonNetwork.Destroy(this.gameObject);
-         _gm.CallRpcPlayerDead();
-    }
-
     IEnumerator Delay(float s){
         yield return new WaitForSecondsRealtime(s);
         playerInput.SwitchCurrentActionMap(defaultMap);
@@ -138,24 +133,44 @@ public class PlayerData : MonoBehaviourPunCallbacks
         string stateText = state.ToString();
         CallRpcStateSwitch(state,stateText);
     }
+    
+    public void OnHit(PlayerData other){
+        //PlayerData otherData=other.transform.GetComponent<PlayerData>();
+        if (other._playerState==PlayerState.Dash)
+        {//被撞到的時候
+            throwMe = other.gameObject;
+            _gm.CallRpcSendMessageToAll(other._pv.Owner.NickName + "撞到" + _pv.Owner.NickName);
+            _gm.CallRpcSendMessageToAll(_pv.Owner.NickName + "RCP Say Hello");
+            //如果碰撞時自己的狀態是衝刺，對方的tag是player，就把對方的狀態變成CantMove
+            SwitchState(_playerState=PlayerState.CantMove);
+            //enemyList.Add(other.gameObject);
+            other.enemyList.Add(this.gameObject);
+            //other.gameObject.GetComponent<Rigidbody>().AddForce(-playerDirection*playerContaller.BouncePower,ForceMode.Force);
+        }
+    }
+
+    public void OnHitFace(PlayerData other){
+        float h = Input.GetAxis("Horizontal");
+        float v = Input.GetAxis("Vertical");
+        Vector3 playerDirection = new Vector3(h,0,v);
+        //PlayerData otherData=other.transform.GetComponent<PlayerData>();
+        if (other._playerState==PlayerState.Dash)
+        {//被撞到的時候
+            //throwMe = other.gameObject;
+            _gm.CallRpcSendMessageToAll(other._pv.Owner.NickName + "撞到" + _pv.Owner.NickName);
+            _gm.CallRpcSendMessageToAll(_pv.Owner.NickName + "RCP Say Hello");
+            //如果碰撞時自己的狀態是衝刺，對方的tag是player，就把對方的狀態變成CantMove
+            //SwitchState(_playerState=PlayerState.CantMove);
+            //enemyList.Add(other.gameObject);
+            other.enemyList.Add(this.gameObject);
+            other.gameObject.GetComponent<Rigidbody>().AddForce(-playerDirection*playerContaller.BouncePower,ForceMode.Force);
+        }
+    }
+
     private void OnCollisionEnter(Collision other) {
         if(other.gameObject.tag == "Player")
         {
-            float h = Input.GetAxis("Horizontal");
-            float v = Input.GetAxis("Vertical");
-            Vector3 playerDirection = new Vector3(h,0,v);
-            PlayerData otherData=other.transform.GetComponent<PlayerData>();
-            if (otherData._playerState==PlayerState.Dash)
-            {//被撞到的時候
-                throwMe = other.gameObject;
-                _gm.CallRpcSendMessageToAll(otherData._pv.Owner.NickName + "撞到" + _pv.Owner.NickName);
-                _gm.CallRpcSendMessageToAll(_pv.Owner.NickName + "RCP Say Hello");
-                //如果碰撞時自己的狀態是衝刺，對方的tag是player，就把對方的狀態變成CantMove
-                SwitchState(_playerState=PlayerState.CantMove);
-                //enemyList.Add(other.gameObject);
-                otherData.enemyList.Add(this.gameObject);
-                other.gameObject.GetComponent<Rigidbody>().AddForce(-playerDirection*playerContaller.BouncePower,ForceMode.Force);
-            }else{}
+            OnHitFace(other.gameObject.GetComponent<PlayerData>());
         }
     }
 
@@ -174,6 +189,7 @@ public class PlayerData : MonoBehaviourPunCallbacks
     //     }
     // }
 
+//-------同步角色狀態-------
     public void CallRpcStateSwitch(PlayerData.PlayerState playerState,string playerStateText){
         _pv.RPC("RpcStateSwitch",RpcTarget.All,playerState,playerStateText);
     }
