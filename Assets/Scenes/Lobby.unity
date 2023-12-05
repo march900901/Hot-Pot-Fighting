@@ -670,6 +670,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomButten: {fileID: 8630168227077992666, guid: 5521819a64ccf7d4b8033d77f7615186, type: 3}
+  buttenList: []
+  timeBetweenUpdate: 1.5
 --- !u!1 &1081191389
 GameObject:
   m_ObjectHideFlags: 0
@@ -1494,6 +1496,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomButten: {fileID: 0}
+  buttenList: []
+  timeBetweenUpdate: 1.5
 --- !u!1 &2037761097
 GameObject:
   m_ObjectHideFlags: 0

@@ -38,7 +38,7 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
 
     // Start is called before the first frame update
     void Start()
-    {
+    {//初始化
         playerData = this.transform.GetComponent<PlayerData>();
         rigidbody = gameObject.GetComponent<Rigidbody>();
         playerInput = this.transform.GetComponent<PlayerInput>();      
@@ -59,29 +59,29 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
     {
         if (!_pv.IsMine)
         {
-            //this.GetComponent<PlayerContaller>().enabled=false;
+            //一直將自己以外的玩家物件控制關掉，並將材質顏色設為紅色
             playerInput.SwitchCurrentActionMap("NotMe"); 
             playerData.DefaultColor=Color.red;
         }
-        movingSpeed=rigidbody.velocity.magnitude;
+        movingSpeed=rigidbody.velocity.magnitude;//取得角色移動速度
         if(movevector!=Vector2.zero){
-            //this.transform.position+=new Vector3(movevector.x,0,movevector.y)*MoveSpeed*Time.deltaTime;
-            if(movingSpeed<=MaxSpeed){
+            //
+            if(movingSpeed<=MaxSpeed){//角色移動
                 rigidbody.AddForce(movevector.x*MoveSpeed*Time.deltaTime,0,movevector.y*MoveSpeed*Time.deltaTime,ForceMode.Force);
             }
-            if(movevector.x>0){
-                    this.transform.rotation=Quaternion.Lerp(transform.rotation,Quaternion.Euler(0,90,0),RotaSpeed);
+            if(movevector.x>0){//角色轉向右邊
+                this.transform.rotation=Quaternion.Lerp(transform.rotation,Quaternion.Euler(0,90,0),RotaSpeed);
             }
 
-            if(movevector.x<0){
+            if(movevector.x<0){//角色轉向左邊
                 this.transform.rotation=Quaternion.Lerp(transform.rotation,Quaternion.Euler(0,-90,0),RotaSpeed);
             }
 
-            if(movevector.y>0){
+            if(movevector.y>0){//角色轉向前面
                 this.transform.rotation=Quaternion.Lerp(transform.rotation,Quaternion.Euler(0,0,0),RotaSpeed);
             }
 
-            if(movevector.y<0){
+            if(movevector.y<0){//角色轉向後面
                 this.transform.rotation=Quaternion.Lerp(transform.rotation,Quaternion.Euler(0,180,0),RotaSpeed);
             }
             
@@ -89,24 +89,28 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
     } 
 
     IEnumerator DelayAction(float s){
+        //延遲過後將角色控制設為預設Map，並將狀態改為Idle
         yield return new WaitForSecondsRealtime(s);
         playerInput.SwitchCurrentActionMap(defaultMap);
         playerData.SwitchState(PlayerData.PlayerState.Idle);
     }
-
+//--------抬人--------
     public void Lift(InputAction.CallbackContext callback){
         if (callback.performed){
-            DoLift();
-            CallRpcDoLift();
+            //收到輸入訊號後
+            DoLift();//自己執行抬人
+            CallRpcDoLift();//呼叫其他玩家場景的自己執行抬人
         }
     }
 
     public void CallRpcDoLift(){
+        //用RPC呼叫其他玩家場景的自己執行RpcDoLift
         _pv.RPC("RpcDoLift",RpcTarget.Others);
     }
 
     [PunRPC]
     void RpcDoLift(PhotonMessageInfo info){
+        //Rpc接收
         print("Lift");
         DoLift();
     }
@@ -121,12 +125,14 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
                     playerData.SwitchState(PlayerData.PlayerState.Lift);
                     enemy.GetComponent<Rigidbody>().isKinematic=true;
                     enemy.transform.position=this.transform.Find("LiftPoint").transform.position;
+                    enemy.transform.Rotate(-90f,90f,0f,Space.Self);
                     enemy.transform.parent=this.transform.Find("LiftPoint");
                 }
             }
     }
 
     public bool PlayerDistance(){
+        //計算與其他玩家物件的距離
         bool canLift = false;
         float distance=0;
         if (playerData.enemyList != null && playerData.enemyList.Count > 0)
@@ -145,34 +151,40 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
 
     public void Throw(InputAction.CallbackContext callback){
         if (callback.performed)
-        {
+        {//收到輸入指令時
             if (enemy&&playerData._playerState==PlayerData.PlayerState.Lift)
-            {
+            {//確認enemy不是空的且自己的狀態是Lift
                 Rigidbody enemyRig=enemy.GetComponent<Rigidbody>();
                 PlayerData enemyData = enemy.GetComponent<PlayerData>();
                 Debug.Log("Throw");
+                //把敵人的狀態改為CantMove
                 enemyData.SwitchState(PlayerData.PlayerState.CantMove);
+                //把對方的throwMe設為自己
                 enemyData.throwMe = this.gameObject;
                 enemyRig.isKinematic=false;
+                //丟出去
                 enemyRig.AddForce(new Vector3(0,throwPower,throwPower),ForceMode.Impulse);
+                //把對方從子物件移出
                 enemy.transform.parent=null;
+                //自己狀態設為Idle
                 playerData.SwitchState(PlayerData.PlayerState.Idle);
+                //刪掉敵人列表第一項
                 playerData.enemyList.RemoveAt(0);
             }
         }
     }
 
     public void Dash(InputAction.CallbackContext callback){
-        if(callback.performed){
+        if(callback.performed){//收到輸入訊號
             if (playerData._playerState==PlayerData.PlayerState.Idle)
-            {
+            {//自己的狀態是Idle
                 if (_pv.IsMine)
-                {
-                    //如果按下desh按鍵且自己狀態是idle的話，向前衝刺一下
+                {//限制只能控制自己
+                    //向前衝刺一下
                     playerData.SwitchState(PlayerData.PlayerState.Dash);
                     rigidbody.AddForce(new Vector3(movevector.x,0,movevector.y)*DashPower,ForceMode.Impulse);
-                    playerInput.SwitchCurrentActionMap("CD");
-                    StartCoroutine(DelayAction(DashCD));
+                    playerInput.SwitchCurrentActionMap("CD");//取消玩家控制
+                    StartCoroutine(DelayAction(DashCD));//玩家進入CD時間
                 }
             }             
         }
@@ -191,15 +203,18 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
     }
 
     public void CallRpcDoScaper(){
+        //用RPC呼叫其他玩家場景的自己執行DoScape
         _pv.RPC("RpcDoScape",RpcTarget.Others);
     }
 
     [PunRPC]
     void RpcDoScape(PhotonMessageInfo info){
+        //收到RPC訊號
         DoScape();
     }
 
     public void DoScape(){
+        //計算ScapeCount並將playerData的ScapeCount數值上傳HashTable
         if (playerData.scapeCount>10)
             {
                 hashTable table = new hashTable();
@@ -216,6 +231,6 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
     }
 
     public void Idle(){
-        boxCollider.enabled=false;
+        //boxCollider.enabled=false;
     }
 }

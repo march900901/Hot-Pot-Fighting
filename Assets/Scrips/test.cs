@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class test : MonoBehaviour
 {
     public List<string> strings = new List<string>{"0","5","4","5","0","7","9"};
+    public GameObject cube;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,6 +16,7 @@ public class test : MonoBehaviour
         {
             print(item);
         }
+        Rotate90(cube);
     }
 
     // Update is called once per frame
@@ -47,5 +49,8 @@ public class test : MonoBehaviour
                 }
             }
         }
+    }
+    public void Rotate90(GameObject gameObject){
+        gameObject.transform.Rotate(-90f,90f,0f,Space.Self);
     }
 }

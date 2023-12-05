@@ -34,28 +34,17 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-        CharacterName = PlayerPrefs.GetString("CharacterName");
-        print(CharacterName);
+        CharacterName = PlayerPrefs.GetString("CharacterName");//取得玩家選擇的角色名
         _pv = this.transform.GetComponent<PhotonView>();
-        if (PhotonNetwork.CurrentRoom==null)
+        if (PhotonNetwork.CurrentRoom==null)//如果運行時沒有創建的房間，就會轉到Lobby場景
         {
             SceneManager.LoadScene("Lobby");
-        }else{
-            
         }
-        //SponPlayer();
         InisGame();
     }
 
-    // Update is called once per frame
-    void Update()
-    {   //計分
-        P1pointText.text=P1point.ToString();
-        P2pointText.text=P2point.ToString();
-    }
-
     public override void OnPlayerEnteredRoom(Player newPlayer)
-    {
+    {//玩家加入房間的時候，把玩家加入alivePlayerMap裡，並設為true
         alivePlayerMap[newPlayer] = true;
     }
     public override void OnPlayerLeftRoom(Player otherPlayer)
@@ -65,13 +54,13 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
             alivePlayerMap.Remove(otherPlayer);
         }
         if(PhotonNetwork.CurrentRoom.PlayerCount <= 1)
-        {
+        {//當玩家離開房間時，檢查房間玩家人數，如果<=1就離開房間
             PhotonNetwork.LeaveRoom();
         }
     }
 
     public override void OnLeftRoom()
-    {
+    {//離開房間的時候將場景換到Lobby
         SceneManager.LoadScene("LObby");
     }
 
@@ -80,78 +69,37 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         {
             alivePlayerMap[kvp.Value] = true;
         }
+        //--------初始隨機生成玩家-------
+        SponPlayer();
+    }
+
+    public void SponPlayer(){
+        //遊戲開始時生成玩家在遊戲場景
         int randomNum=0;
         List<Transform> startPions=new List<Transform>();
         for (int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount; i++)
         {//隨機取生成點
             randomNum=Random.Range(0,startTransform.Count);
             startPions.Add(startTransform[randomNum]);
-            //print(startPions[i].gameObject.name);
         }
+        //在所有玩家的畫面中生成玩家物件
         PhotonNetwork.Instantiate(CharacterName,startPions[Random.Range(0,startPions.Count)].position,Quaternion.identity);
-        // if (PlayerList.Count!=0)
-        // {
-        //     for (int i = 0; i < PlayerList.Count; i++)
-        //     {
-        //         randomNum=Random.Range(0,startTransform.Count);
-        //         //GameObject sponObj = Instantiate(PlayerList[i],startTransform[randomNum].position,Quaternion.identity);
-        //         //sponObj.name=PlayerList[i].name;
-                
-        //     }
-        // }else{
-
-        // }
     }
 
-    public void SponPlayer(){
-        //遊戲開始時生成玩家在遊戲場景
-        int randomNum=0;
-        if (PlayerList.Count!=0)
-        {
-            for (int i = 0; i < PlayerList.Count; i++)
-            {
-                randomNum=Random.Range(0,startTransform.Count);
-                GameObject sponObj = Instantiate(PlayerList[i],startTransform[randomNum].position,Quaternion.identity);
-                sponObj.name=PlayerList[i].name;
-            }
-        }else{
-
-        }
-    }
-
-    public void revivalPlayer(string revivalPlayerName){
-        int randomNum=0;
-        // if (deadPlayer.Count!=0)
-        // {
-        //     for (int i = 0; i < deadPlayer.Count; i++)
-        //     {
-        //         randomNum=Random.Range(0,startTransform.Count);
-        //         GameObject revivalObj = Instantiate(deadPlayer[i],startTransform[randomNum].position,Quaternion.identity);
-        //         revivalObj.name=revivalPlayerName;
-        //         deadPlayer.RemoveAt(i);
-        //     }
-        // }
-    }
-
-    public void CountPoint(string PlayerName,int point){
-        if (PlayerName=="P1")
-        {
-            P2point+=point;   
-        }
-        else if (PlayerName=="P2")
-        {
-            P1point+=point;
-        }
-        else{
-            
-        }
-    }
-
+    // public void revivalPlayer(string PlayerName){
+    //     int randomNum=0;
+    //     randomNum=Random.Range(0,startTransform.Count);
+    //     PhotonNetwork.Instantiate(CharacterName,startPions[Random.Range(0,startPions.Count)].position,Quaternion.identity);
+    //     revivalObj.name=PlayerName;
+    // }
+    //-------玩家死亡-------
     public void CallRpcPlayerDead(){
+        //用RPC呼叫所有玩家場景中的"RpcPlayerDead"方法
         _pv.RPC("RpcPlayerDead",RpcTarget.All);
     }
     [PunRPC]
     void RpcPlayerDead(PhotonMessageInfo info){
+        //執行玩家死亡
         if (deadPlayer.Count != null)
         {
             PhotonNetwork.Destroy(deadPlayer[0]);
@@ -165,7 +113,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         //     //檢查玩家存活狀態，顯示結果或轉換場景
         // }
     }
-
+//-------用Rpc向其他玩家發送訊息-------
     public void CallRpcSendMessageToAll(string message){//用photon的RPC功能發送訊息
         _pv.RPC("RpcSendMessage",RpcTarget.All,message);//對所有人發送"RpcSendMessage"，呼叫RpcSendMessage這個方法
     }
@@ -182,5 +130,9 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
 
     void UpdateMessage(){//更新messageList的訊息到message
         messageText.text = string.Join("\n",messageList);
+    }
+//-------離開遊戲-------
+    public void OnClickLeaveGame(){
+        PhotonNetwork.LeaveRoom();
     }
 }

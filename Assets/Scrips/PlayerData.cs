@@ -38,7 +38,7 @@ public class PlayerData : MonoBehaviourPunCallbacks
 
     // Start is called before the first frame update
     void Start()
-    {
+    {//初始化
         Point = 0;
         _playerState=PlayerState.Idle;
         playerContaller=this.transform.GetComponent<PlayerContaller>();
@@ -58,9 +58,10 @@ public class PlayerData : MonoBehaviourPunCallbacks
         switch (_playerState)
         {
             case PlayerState.Idle:
+                //狀態Idle時，將輸入設為預設Map角色顏色設為預設
                 scapeCount=0;
                 playerInput.SwitchCurrentActionMap(defaultMap);
-                playerContaller.Idle();
+                //playerContaller.Idle();
                 this.gameObject.GetComponent<MeshRenderer>().material.color=DefaultColor;
                 break;
 
@@ -85,14 +86,14 @@ public class PlayerData : MonoBehaviourPunCallbacks
                 break;
 
             case PlayerState.Dead:
+                //角色死亡時顏色變黑，將自己加入GameManager的deadPlayer
                 GameObject mySlef = this.gameObject;
                 this.gameObject.GetComponent<MeshRenderer>().material.color=Color.black;
                 StartCoroutine(Delay(3));
                 _gm.deadPlayer.Add(mySlef);
-                _gm.revivalPlayer(this.gameObject.name);
+                _gm.SponPlayer();
                 Dead();
                 PhotonNetwork.Destroy(this.gameObject);
-                throwMe.GetComponent<PlayerData>().Point += 1;
                 break;
 
             case PlayerState.Fly:
@@ -181,5 +182,11 @@ public class PlayerData : MonoBehaviourPunCallbacks
     void RpcStateSwitch(PlayerData.PlayerState playerState,string text,PhotonMessageInfo info){
         print(playerState);
         _playerState = playerState;
+    }
+
+    //-------加分-------
+    public void CountingPoint(){
+        throwMe.GetComponent<PlayerData>().Point += 1;
+        print("+1");
     }
 }
