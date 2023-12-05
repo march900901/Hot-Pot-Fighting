@@ -225,5 +225,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14090237bde8be34d9163f2eeeac65e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: {fileID: 1792399475532506175}
+  RoomName: {fileID: 1792399475532506175}
   WarningText: {fileID: 0}
