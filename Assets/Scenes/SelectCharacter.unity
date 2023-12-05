@@ -1858,9 +1858,10 @@ MonoBehaviour:
   buttonStartGame: {fileID: 560716574}
   CharacterIndex: 0
   CharacterList:
+  - {fileID: 3565059113061548435, guid: d4ae47f41403e2946b8ef3202b0dfebe, type: 3}
   - {fileID: 3565059113061548435, guid: 8936b36f2e26f0340bffddb313711ea6, type: 3}
-  - {fileID: 3565059113061548435, guid: 58ff39083738ad043aacb8bbb36727ed, type: 3}
-  - {fileID: 3565059113061548435, guid: 1eed5f2f93a1f384b900aab9fb6af179, type: 3}
+  - {fileID: 3565059113061548435, guid: 0ba42ede26aeae04c9d5022215045cab, type: 3}
+  - {fileID: 3565059113061548435, guid: 883d312b7cb714b4d86706dad3b0b690, type: 3}
   GeneratPoint: {fileID: 209098776}
   selectCharacterName: 
   text_Confirm: {fileID: 1054938913}
