@@ -19,7 +19,7 @@ public class PlayerData : MonoBehaviourPunCallbacks
     public int Point = 0;
     [SerializeField]
     public Text nameText;
-    public List<GameObject> enemyList=new List<GameObject>();
+    public GameObject enemy;
     public PlayerState _playerState;
     public Color DefaultColor;
     public GameObject throwMe;
@@ -74,8 +74,8 @@ public class PlayerData : MonoBehaviourPunCallbacks
                 {
                     //如果達成逃脫條件，變回IDLE狀態，並從子物件中移出，再取消Kinematic
                     _playerState=PlayerState.Idle;
-                    playerContaller.enemy=null;
-                    this.transform.parent.transform.parent.gameObject.GetComponent<PlayerData>()._playerState=PlayerState.Idle;
+                    enemy.GetComponent<PlayerData>()._playerState=PlayerState.Idle;
+                    enemy=null;
                     this.transform.parent=null;
                     rigidbody.isKinematic=false;
                 }
@@ -88,11 +88,12 @@ public class PlayerData : MonoBehaviourPunCallbacks
             case PlayerState.Dead:
                 //角色死亡時顏色變黑，將自己加入GameManager的deadPlayer
                 this.gameObject.GetComponent<MeshRenderer>().material.color=Color.black;
-                _gm.deadPlayer.Add(this.gameObject);
+                _gm.DeadPlayer = this.gameObject;
                 //_gm.SponPlayer();
                 _gm.CallRpcPlayerDead();
                 PhotonNetwork.Destroy(this.gameObject);
                 print("Daed!!");
+                SwitchState(PlayerState.Idle);
 
                 break;
 
@@ -134,6 +135,7 @@ public class PlayerData : MonoBehaviourPunCallbacks
         CallRpcStateSwitch(state,stateText);
     }
     
+    //-------撞到時-------
     public void OnHit(PlayerData other){
         //PlayerData otherData=other.transform.GetComponent<PlayerData>();
         if (other._playerState==PlayerState.Dash)
@@ -144,7 +146,7 @@ public class PlayerData : MonoBehaviourPunCallbacks
             //如果碰撞時自己的狀態是衝刺，對方的tag是player，就把對方的狀態變成CantMove
             SwitchState(_playerState=PlayerState.CantMove);
             //enemyList.Add(other.gameObject);
-            other.enemyList.Add(this.gameObject);
+            other.enemy = this.gameObject;
             //other.gameObject.GetComponent<Rigidbody>().AddForce(-playerDirection*playerContaller.BouncePower,ForceMode.Force);
         }
     }
@@ -162,7 +164,7 @@ public class PlayerData : MonoBehaviourPunCallbacks
             //如果碰撞時自己的狀態是衝刺，對方的tag是player，就把對方的狀態變成CantMove
             //SwitchState(_playerState=PlayerState.CantMove);
             //enemyList.Add(other.gameObject);
-            other.enemyList.Add(this.gameObject);
+            //other.enemyList.Add(this.gameObject);
             other.gameObject.GetComponent<Rigidbody>().AddForce(-playerDirection*playerContaller.BouncePower,ForceMode.Force);
         }
     }

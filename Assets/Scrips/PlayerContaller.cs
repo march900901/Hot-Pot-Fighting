@@ -30,7 +30,7 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
     public string defaultMap;
     public float throwPower=5.0f;
     private float movingSpeed;
-    public GameObject enemy;
+    //public GameObject enemy;
     public PhotonView _pv;
     BoxCollider boxCollider;
     GameSceneManager _gm;
@@ -91,15 +91,16 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
     IEnumerator DelayAction(float s){
         //延遲過後將角色控制設為預設Map，並將狀態改為Idle
         yield return new WaitForSecondsRealtime(s);
-        playerInput.SwitchCurrentActionMap(defaultMap);
+        //playerInput.SwitchCurrentActionMap(defaultMap);
         playerData.SwitchState(PlayerData.PlayerState.Idle);
     }
 //--------抬人--------
     public void Lift(InputAction.CallbackContext callback){
         if (callback.performed){
             //收到輸入訊號後
-            DoLift();//自己執行抬人
             CallRpcDoLift();//呼叫其他玩家場景的自己執行抬人
+            DoLift();//自己執行抬人
+            print(this.gameObject.name + "Lift");
         }
     }
 
@@ -111,34 +112,34 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
     [PunRPC]
     void RpcDoLift(PhotonMessageInfo info){
         //Rpc接收
-        print("Lift");
+        print(this.gameObject.name + "RpcDoLift");
         DoLift();
     }
 
     public void DoLift(){
-        if (PlayerDistance() && playerData.enemyList.Count > 0)
-            {//如果和倒地的人距離夠近，且enemyList不是空的，
-                enemy=playerData.enemyList[0];
-                if (enemy.GetComponent<PlayerData>().Lifting == false)
-                {
-                    //如果距離夠進就可以把敵人列表裡第一個抬起來
-                    playerData.SwitchState(PlayerData.PlayerState.Lift);
-                    enemy.GetComponent<Rigidbody>().isKinematic=true;
-                    enemy.transform.position=this.transform.Find("LiftPoint").transform.position;
-                    enemy.transform.Rotate(-90f,90f,0f,Space.Self);
-                    enemy.transform.parent=this.transform.Find("LiftPoint");
-                }
+        if (PlayerDistance() && playerData.enemy)
+        {//如果和倒地的人距離夠近，且enemyList不是空的，
+            if (playerData.enemy.GetComponent<PlayerData>().Lifting == false)
+            {
+                //如果距離夠進就可以把敵人列表裡第一個抬起來
+                playerData.SwitchState(PlayerData.PlayerState.Lift);
+                playerData.enemy.GetComponent<Rigidbody>().isKinematic=true;
+                playerData.enemy.transform.position=this.transform.Find("LiftPoint").transform.position;
+                playerData.enemy.transform.Rotate(-90f,90f,0f,Space.Self);
+                playerData.enemy.transform.parent=this.transform.Find("LiftPoint");
             }
+        }
+        print(this.gameObject.name + "DoLift");
     }
 //-------計算玩家距離-------
     public bool PlayerDistance(){
         //計算與其他玩家物件的距離
         bool canLift = false;
         float distance=0;
-        if (playerData.enemyList != null && playerData.enemyList.Count > 0)
+        if (playerData.enemy != null)
         {
             //計算自己與敵人列表中第一個的距離
-            distance = Vector3.Distance(this.transform.position,playerData.enemyList[0].transform.position);
+            distance = Vector3.Distance(this.transform.position,playerData.enemy.transform.position);
             if (distance<=1.5f)
             {
                 canLift=true;
@@ -153,15 +154,20 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
     public void Throw(InputAction.CallbackContext callback){
         if (callback.performed)
         {//收到輸入指令時
+            print(gameObject.name + "Throw!!!");
+            CallRpcDoThrow();   
             DoThrow();
-            CallRpcDoThrow();
         }
     }
 
     public void DoThrow(){
-        if (enemy&&playerData._playerState==PlayerData.PlayerState.Lift)
+        float h = Input.GetAxis("Horizontal");
+        float v = Input.GetAxis("Vertical");
+        Vector3 playerDirection = new Vector3(h,0,v);
+        if (playerData.enemy&&playerData._playerState==PlayerData.PlayerState.Lift)
             {//確認enemy不是空的且自己的狀態是Lift
-                Rigidbody enemyRig=enemy.GetComponent<Rigidbody>();
+                GameObject enemy = playerData.enemy;
+                Rigidbody enemyRig=playerData.enemy.GetComponent<Rigidbody>();
                 PlayerData enemyData = enemy.GetComponent<PlayerData>();
                 Debug.Log("Throw");
                 //把敵人的狀態改為CantMove
@@ -169,15 +175,18 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
                 //把對方的throwMe設為自己
                 enemyData.throwMe = this.gameObject;
                 enemyRig.isKinematic=false;
-                //丟出去
-                enemyRig.AddForce(new Vector3(0,throwPower,throwPower),ForceMode.Impulse);
                 //把對方從子物件移出
                 enemy.transform.parent=null;
+                //丟出去
+                enemyRig.AddForce(playerDirection*throwPower,ForceMode.Impulse);
                 //自己狀態設為Idle
                 playerData.SwitchState(PlayerData.PlayerState.Idle);
-                //刪掉敵人列表第一項
-                playerData.enemyList.RemoveAt(0);
-                print("Throw!!!");
+                //刪掉敵人
+                playerData.enemy = null;
+                //playerData.enemyList.Clear();
+                print(gameObject.name + "DoThrow!!!");
+            }else{
+                print("CantThrow");
             }
     }
 
@@ -188,12 +197,21 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
     [PunRPC]
     void RpcDoThrow(PhotonMessageInfo info){
         DoThrow();
+        print(gameObject.name + "RPC DoThrow!!!");
     }
 
 //-------衝刺-------
     public void Dash(InputAction.CallbackContext callback){
         if(callback.performed){//收到輸入訊號
-            if (playerData._playerState==PlayerData.PlayerState.Idle)
+            DoDash();
+            //CallRpcDoDash();
+        }
+    }
+
+    public void DoDash(){
+        float CDTime = 1.0f;
+        float CanMoveTime = 0f;
+        if (playerData._playerState==PlayerData.PlayerState.Idle)
             {//自己的狀態是Idle
                 if (_pv.IsMine)
                 {//限制只能控制自己
@@ -201,12 +219,26 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
                     playerData.SwitchState(PlayerData.PlayerState.Dash);
                     rigidbody.AddForce(new Vector3(movevector.x,0,movevector.y)*DashPower,ForceMode.Impulse);
                     playerInput.SwitchCurrentActionMap("CD");//取消玩家控制
+                    // if (Time.deltaTime >= CanMoveTime)
+                    // {
+                    //     playerData.SwitchState(PlayerData.PlayerState.Idle);
+                    //     CanMoveTime = Time.deltaTime + CDTime;
+                    // }
                     StartCoroutine(DelayAction(DashCD));//玩家進入CD時間
                 }
-            }             
-        }
+            }
     }
 
+    public void CallRpcDoDash(){
+        _pv.RPC("RpcDoDash",RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RpcDoDash(PhotonMessageInfo info){
+        DoDash();
+    }
+
+//-------移動-------
     public void Move(InputAction.CallbackContext callback){
         movevector=callback.ReadValue<Vector2>();
     }

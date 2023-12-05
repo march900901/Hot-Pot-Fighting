@@ -14,22 +14,13 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
 {
     public List<GameObject> PlayerList = new List<GameObject>();
     public List<Transform> startTransform = new List<Transform>();
-    [SerializeField]TextMeshProUGUI P1pointText;
-    [SerializeField]TextMeshProUGUI P2pointText;
-    public List<GameObject> deadPlayer = new List<GameObject>();
-    public GameObject P1;
-    public GameObject P2;
-    public Transform P1Start;
-    public Transform P2Start;
+    public GameObject DeadPlayer;
     PhotonView _pv;
     [SerializeField]
     List<string> messageList;
     [SerializeField]
     Text messageText;
     public Dictionary<Player, bool> alivePlayerMap = new Dictionary<Player, bool>();
-
-    public int P1point=0;
-    public int P2point=0;
     public string CharacterName;
     // Start is called before the first frame update
     void Start()
@@ -84,7 +75,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         }
         //在所有玩家的畫面中生成玩家物件
         GameObject Player = PhotonNetwork.Instantiate(_caracterName,startPions[Random.Range(0,startPions.Count)].position,Quaternion.identity);
-        Player.name = CharacterName.ToString(); 
+        Player.name = _caracterName.ToString(); 
     }
 
     // public void revivalPlayer(string PlayerName){
@@ -101,10 +92,10 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     [PunRPC]
     void RpcPlayerDead(PhotonMessageInfo info){
         //執行玩家死亡
-        if (deadPlayer.Count != null)
+        if (DeadPlayer)
         {
-            SponPlayer(deadPlayer[0].name);
-            PhotonNetwork.Destroy(deadPlayer[0]);
+            SponPlayer(DeadPlayer.name);
+            PhotonNetwork.Destroy(DeadPlayer);
             
         }
 
