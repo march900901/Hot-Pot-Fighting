@@ -46,6 +46,11 @@ MonoBehaviour:
   - RpcDoScape
   - RpcDoThrow
   - RpcDoDash
+  - RpcRevivalPlayer
+  - RpcGameOver
+  - RpcCanStart
+  - RpcCancelConfirm
+  - RpcDoConfirm
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
