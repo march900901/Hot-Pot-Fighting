@@ -21,6 +21,9 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
     public Transform GeneratPoint;
     public string selectCharacterName;
     public Text text_Confirm;
+    public bool CanStart;
+    public int CanStartPlayer;
+    PhotonView _pv;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,13 +34,14 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
             textRoomName.text=PhotonNetwork.CurrentRoom.Name;
             UpDatePlayerList();
         }
-        buttonStartGame.interactable=PhotonNetwork.IsMasterClient;//讓只有房主才能按Start按鈕
+        buttonStartGame.interactable=false;//禁用開始按鈕
         //在GeneratPoint生成角色列表第0個角色
-        GameObject Character = Instantiate(CharacterList[0],GeneratPoint.position,Quaternion.identity);
+        GameObject Character = Instantiate(CharacterList[0],GeneratPoint.position,new Quaternion(0,180,0,0));
         Character.name = CharacterList[0].name;//將生成的角色名字改成跟角色列表一樣，防止出現culon等字樣，方便後續操作
         ReSetCharacter(Character);//將角色控制、數據等腳本刪除，防止報錯
         selectCharacterName = Character.name;//將所selectCharcterName設為當前所選角色名字
         text_Confirm.enabled = false;//將UI初始化
+        _pv = this.transform.GetComponent<PhotonView>();
     }
 
     public override void OnMasterClientSwitched(Player newMasterClient)
@@ -92,6 +96,12 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
             CharacterIndex = 0;
         }
         text_Confirm.enabled = false;
+        if (CanStart == true)
+        {//取消確認
+            CanStartPlayer --;
+            CallRpcCancelConfirm();
+        }
+        CanStart = false;
         UpdateCharacter();//刷新角色預覽
     }
 
@@ -104,6 +114,12 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
             CharacterIndex = CharacterList.Count-1;
         }
         text_Confirm.enabled = false;
+        if (CanStart == true)
+        {//取消確認
+            CanStartPlayer --;
+            CallRpcCancelConfirm();
+        }
+        CanStart = false;
         UpdateCharacter();//刷新角色預覽
     }
 
@@ -118,7 +134,7 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
         //刷新角色預覽
         Destroy(GameObject.FindGameObjectWithTag("Player"));//刪除原本的角色物件
         //依照CharacterIndex生成新的角色物件
-        GameObject Character = Instantiate(CharacterList[CharacterIndex],GeneratPoint.position,Quaternion.identity);
+        GameObject Character = Instantiate(CharacterList[CharacterIndex],GeneratPoint.position,new Quaternion(0,180,0,0));
         //將生成的角色物件名字改成跟角色列表的一樣，預防clone等字出現，方便之後操作
         Character.name = CharacterList[CharacterIndex].name;
         //重製角色物件
@@ -131,5 +147,41 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
         //確認所選角色
         PlayerPrefs.SetString("CharacterName",selectCharacterName);
         text_Confirm.enabled = true;
+        CanStart = true;
+        CallRpcDoConfirm();
+        DoConfirm();
+    }
+
+    public void CallRpcCancelConfirm(){//呼叫RPC執行取消確認
+        _pv.RPC("RpcCancelConfirm",RpcTarget.Others);
+    }
+    [PunRPC]
+    public void RpcCancelConfirm(){//呼叫RPV執行取消確認
+        CanStartPlayer --;
+        UpdateCanStart();
+    }
+    void DoConfirm(){
+        print("DoCanStart");
+        CanStartPlayer ++;
+        
+    } 
+
+    public void CallRpcDoConfirm(){
+        _pv.RPC("RpcDoConfirm",RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RpcDoConfirm(PhotonMessageInfo info){
+        DoConfirm();
+        UpdateCanStart();
+    }
+
+    public void UpdateCanStart(){
+        if (CanStartPlayer >= PhotonNetwork.CurrentRoom.PlayerCount)
+        {//如果房間內玩家都準備好了才可以按開始按鈕
+            buttonStartGame.interactable=PhotonNetwork.IsMasterClient;
+        }else{
+            buttonStartGame.interactable = false;
+        }
     }
 }
