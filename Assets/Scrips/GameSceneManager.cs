@@ -8,13 +8,12 @@ using UnityEngine.SceneManagement;
 using Photon.Realtime;
 using System.IO;
 using UnityEngine.UI;
-using Photon.Realtime;
 
 public class GameSceneManager : MonoBehaviourPunCallbacks
 {
     public List<GameObject> PlayerList = new List<GameObject>();
     public List<Transform> startTransform = new List<Transform>();
-    public GameObject DeadPlayer;
+    //public GameObject DeadPlayer;
     PhotonView _pv;
     [SerializeField]
     List<string> messageList;
@@ -22,6 +21,8 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     Text messageText;
     public Dictionary<Player, bool> alivePlayerMap = new Dictionary<Player, bool>();
     public string CharacterName;
+    public GameObject instruction;
+    public GameObject GameOverPanlel;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,7 +32,13 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         {
             SceneManager.LoadScene("Lobby");
         }
+        instruction.SetActive(true);
+        GameOverPanlel.SetActive(false);
         InisGame();
+        PhotonNetwork.SendRate = 100;
+        PhotonNetwork.SerializationRate = 100;
+        print("SendRate: " + PhotonNetwork.SendRate);
+        print("SerializaationRate: " + PhotonNetwork.SerializationRate);
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -63,7 +70,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         //--------初始隨機生成玩家-------
         SponPlayer(CharacterName);
     }
-
+//-------初始生成玩家------
     public void SponPlayer(string _caracterName){
         //遊戲開始時生成玩家在遊戲場景
         int randomNum=0;
@@ -74,29 +81,43 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
             startPions.Add(startTransform[randomNum]);
         }
         //在所有玩家的畫面中生成玩家物件
-        GameObject Player = PhotonNetwork.Instantiate(_caracterName,startPions[Random.Range(0,startPions.Count)].position,Quaternion.identity);
+        GameObject Player = PhotonNetwork.Instantiate(_caracterName,startPions[Random.Range(0,startPions.Count)].position,new Quaternion(0,180,0,0));
         Player.name = _caracterName.ToString(); 
+        print("Spoon");
     }
 
-    // public void revivalPlayer(string PlayerName){
-    //     int randomNum=0;
-    //     randomNum=Random.Range(0,startTransform.Count);
-    //     PhotonNetwork.Instantiate(CharacterName,startPions[Random.Range(0,startPions.Count)].position,Quaternion.identity);
-    //     revivalObj.name=PlayerName;
-    // }
-    //-------玩家死亡-------
-    public void CallRpcPlayerDead(){
+//-------玩家復活-------
+    public void ReSetPlayer(string PlayerName){
+        int randomNum=0;
+        List<Transform> startPions=new List<Transform>();
+        for (int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount; i++)
+        {//隨機取生成點
+            randomNum=Random.Range(0,startTransform.Count);
+            startPions.Add(startTransform[randomNum]);
+        }
+        randomNum = Random.Range(0,startPions.Count);
+        GameObject Player = GameObject.Find(PlayerName);
+        //Player.GetComponent<PlayerData>()._playerState = PlayerData.PlayerState.Idle;
+        Player.transform.position =startPions[randomNum].transform.position;
+        Player.transform.rotation = Quaternion.Euler(0,0,0);
+        //Player.name = PlayerName;
+        
+        print("revival");
+    }
+
+//-------玩家死亡-------
+    public void CallRpcPlayerDead(string DeadPlayerName){
         //用RPC呼叫所有玩家場景中的"RpcPlayerDead"方法
-        _pv.RPC("RpcPlayerDead",RpcTarget.All);
+        _pv.RPC("RpcPlayerDead",RpcTarget.Others,DeadPlayerName);
     }
     [PunRPC]
-    void RpcPlayerDead(PhotonMessageInfo info){
+    void RpcPlayerDead(string DeadPlayerName,PhotonMessageInfo info){//RPC接收訊息執行玩家死亡
         //執行玩家死亡
-        if (DeadPlayer)
+        if (DeadPlayerName != null)
         {
-            SponPlayer(DeadPlayer.name);
-            PhotonNetwork.Destroy(DeadPlayer);
-            
+            print("RPC RevivalPlayer");
+            ReSetPlayer(DeadPlayerName);
+            //PhotonNetwork.Destroy(GameObject.Find(DeadPlayerName));
         }
 
         // if(alivePlayerMap.ContainsKey(info.Sender)){
@@ -107,7 +128,8 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         //     //檢查玩家存活狀態，顯示結果或轉換場景
         // }
     }
-//-------用Rpc向其他玩家發送訊息-------
+
+    //-------用Rpc向其他玩家發送訊息-------
     public void CallRpcSendMessageToAll(string message){//用photon的RPC功能發送訊息
         _pv.RPC("RpcSendMessage",RpcTarget.All,message);//對所有人發送"RpcSendMessage"，呼叫RpcSendMessage這個方法
     }
@@ -129,4 +151,21 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     public void OnClickLeaveGame(){
         PhotonNetwork.LeaveRoom();
     }
+
+//-------遊戲結束-------
+    public void GameOver(){
+        GameOverPanlel.SetActive(true);
+        print("GameOver");
+    }
+
+    public void CallRpcGameOver(){
+        _pv.RPC("RpcGameOver",RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void RpcGameOver(PhotonMessageInfo info){
+        GameOver();
+    }
+
+//-------轉換場景-------
 }
