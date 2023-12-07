@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7485095516641441130}
-  - component: {fileID: 2332163328957395257}
+  - component: {fileID: 7604174802520243325}
   - component: {fileID: 5470434754123948182}
   m_Layer: 0
   m_Name: HitCollider
@@ -28,13 +28,13 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.14}
-  m_LocalScale: {x: 1.0442, y: 1.0442, z: 1.0442}
+  m_LocalScale: {x: 1.2310073, y: 1.0442, z: 1.0442}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8641646075716855716}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &2332163328957395257
-CapsuleCollider:
+--- !u!65 &7604174802520243325
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -51,11 +51,9 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  serializedVersion: 3
+  m_Size: {x: 1.0000001, y: 1.780597, z: 0.763374}
+  m_Center: {x: 0.000000048419405, y: 0.10970115, z: -0.11831324}
 --- !u!114 &5470434754123948182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80,7 +78,7 @@ GameObject:
   - component: {fileID: 8641646075716855716}
   - component: {fileID: 8491351941032378793}
   - component: {fileID: 8153046539293607014}
-  - component: {fileID: 6370994147390730627}
+  - component: {fileID: 2423213588020754325}
   - component: {fileID: 8798554491973973088}
   - component: {fileID: 1336943972699726994}
   - component: {fileID: 2169938143906249001}
@@ -110,6 +108,7 @@ Transform:
   m_Children:
   - {fileID: 4850477266051048571}
   - {fileID: 7485095516641441130}
+  - {fileID: 8341787367945207573}
   - {fileID: 5539455865460403452}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -163,8 +162,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &6370994147390730627
-CapsuleCollider:
+--- !u!65 &2423213588020754325
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -181,11 +180,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  serializedVersion: 3
+  m_Size: {x: 0.7610561, y: 2, z: 0.7125902}
+  m_Center: {x: 0.008443207, y: 0, z: 0.030889034}
 --- !u!54 &8798554491973973088
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -235,7 +232,7 @@ MonoBehaviour:
   beLiftCD: 5
   BouncePower: 500
   defaultMap: Player1
-  throwPower: 5
+  throwPower: 20
   _pv: {fileID: 0}
 --- !u!114 &2169938143906249001
 MonoBehaviour:
@@ -249,14 +246,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd210a1dcee113c4db56640272c5b8db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Name: Cylinder
   Point: 0
   nameText: {fileID: 6774569807595874641}
   enemy: {fileID: 0}
   _playerState: 0
   DefaultColor: {r: 0, g: 0.17254902, b: 1, a: 1}
   throwMe: {fileID: 0}
+  LiftPoint: {fileID: 982419727248070447}
   defaultMap: Player1
   Lifting: 0
+  CanLift: 0
   scapeCount: 0
 --- !u!114 &4634476352361722460
 MonoBehaviour:
@@ -456,6 +456,7 @@ GameObject:
   - component: {fileID: 1256023086999833994}
   - component: {fileID: 2784393357215382167}
   - component: {fileID: 7500856548532062494}
+  - component: {fileID: 8785026561563904287}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -472,11 +473,11 @@ Transform:
   m_GameObject: {fileID: 5240058431551287360}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.07, y: -1.325, z: 0.51}
+  m_LocalPosition: {x: 0, y: 0, z: 0.533}
   m_LocalScale: {x: 0.48735, y: 0.48735, z: 0.48735}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5539455865460403452}
+  m_Father: {fileID: 8641646075716855716}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1256023086999833994
 MeshFilter:
@@ -543,12 +544,25 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8785026561563904287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5240058431551287360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b17f5fe286348d458ed965ab65fc486, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerData: {fileID: 2169938143906249001}
 --- !u!1 &5678900855238976666
 GameObject:
   m_ObjectHideFlags: 0
@@ -581,7 +595,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5794023646269684395}
-  - {fileID: 8341787367945207573}
   m_Father: {fileID: 8641646075716855716}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -662,6 +675,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4850477266051048571}
   - component: {fileID: 2912097882990004203}
+  - component: {fileID: 982419727248070447}
   m_Layer: 0
   m_Name: LiftPoint
   m_TagString: Untagged
@@ -705,6 +719,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 3.2289262, z: 1}
   m_Center: {x: 0, y: -1.1144631, z: 0}
+--- !u!114 &982419727248070447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7621337929020526871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 686f4a3857774b349b67d5c362a9abcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9013582798367162788
 GameObject:
   m_ObjectHideFlags: 0

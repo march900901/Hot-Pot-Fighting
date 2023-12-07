@@ -232,7 +232,7 @@ MonoBehaviour:
   beLiftCD: 5
   BouncePower: 500
   defaultMap: Player1
-  throwPower: 5
+  throwPower: 20
   _pv: {fileID: 0}
 --- !u!114 &2169938143906249001
 MonoBehaviour:
@@ -246,14 +246,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd210a1dcee113c4db56640272c5b8db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Name: Cube
   Point: 0
   nameText: {fileID: 6774569807595874641}
   enemy: {fileID: 0}
   _playerState: 0
   DefaultColor: {r: 0, g: 0.17254902, b: 1, a: 1}
   throwMe: {fileID: 0}
+  LiftPoint: {fileID: 756940056766339087}
   defaultMap: Player1
   Lifting: 0
+  CanLift: 0
   scapeCount: 0
 --- !u!114 &4634476352361722460
 MonoBehaviour:
@@ -453,6 +456,7 @@ GameObject:
   - component: {fileID: 6999534429825259371}
   - component: {fileID: 2651147761117205227}
   - component: {fileID: 6887580085456170894}
+  - component: {fileID: 1329145207847225882}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -540,12 +544,25 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1329145207847225882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4867954565764613552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b17f5fe286348d458ed965ab65fc486, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerData: {fileID: 2169938143906249001}
 --- !u!1 &5678900855238976666
 GameObject:
   m_ObjectHideFlags: 0
@@ -658,6 +675,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4850477266051048571}
   - component: {fileID: 2912097882990004203}
+  - component: {fileID: 756940056766339087}
   m_Layer: 0
   m_Name: LiftPoint
   m_TagString: Untagged
@@ -701,6 +719,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 2.2517312, z: 1}
   m_Center: {x: 0, y: -0.6258656, z: 0}
+--- !u!114 &756940056766339087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7621337929020526871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 686f4a3857774b349b67d5c362a9abcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9013582798367162788
 GameObject:
   m_ObjectHideFlags: 0

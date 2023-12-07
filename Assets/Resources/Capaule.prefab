@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 8491351941032378793}
   - component: {fileID: 8153046539293607014}
   - component: {fileID: 1756597642846273431}
-  - component: {fileID: -5773754736716270831}
   - component: {fileID: 8798554491973973088}
   - component: {fileID: 1336943972699726994}
   - component: {fileID: 2169938143906249001}
@@ -113,33 +112,10 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 1, y: 2, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!136 &-5773754736716270831
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3565059113061548435}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 3
+  m_Size: {x: 0.72820854, y: 2, z: 0.77235603}
+  m_Center: {x: 0.0022999048, y: 0, z: 0.016537666}
 --- !u!54 &8798554491973973088
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -189,7 +165,7 @@ MonoBehaviour:
   beLiftCD: 5
   BouncePower: 500
   defaultMap: Player1
-  throwPower: 5
+  throwPower: 20
   _pv: {fileID: 0}
 --- !u!114 &2169938143906249001
 MonoBehaviour:
@@ -203,14 +179,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd210a1dcee113c4db56640272c5b8db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Name: Capaule
   Point: 0
   nameText: {fileID: 6774569807595874641}
   enemy: {fileID: 0}
   _playerState: 0
   DefaultColor: {r: 0, g: 0.17254902, b: 1, a: 1}
   throwMe: {fileID: 0}
+  LiftPoint: {fileID: 7916744158950958469}
   defaultMap: Player1
   Lifting: 0
+  CanLift: 0
   scapeCount: 0
 --- !u!114 &4634476352361722460
 MonoBehaviour:
@@ -410,6 +389,7 @@ GameObject:
   - component: {fileID: 6212915827090721320}
   - component: {fileID: 8106570365845962696}
   - component: {fileID: 716057043627072841}
+  - component: {fileID: 5144483133697296527}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -497,12 +477,25 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5144483133697296527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3613634420834126057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b17f5fe286348d458ed965ab65fc486, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerData: {fileID: 2169938143906249001}
 --- !u!1 &5678900855238976666
 GameObject:
   m_ObjectHideFlags: 0
@@ -614,7 +607,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 912268344789900455}
-  - component: {fileID: 334042683342406385}
+  - component: {fileID: 7825324671482398390}
   - component: {fileID: 7203172747537649802}
   m_Layer: 0
   m_Name: HitCollider
@@ -633,13 +626,13 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.109}
-  m_LocalScale: {x: 1.053, y: 1.053, z: 1.053}
+  m_LocalScale: {x: 1.1887317, y: 1.053, z: 1.053}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8641646075716855716}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &334042683342406385
-CapsuleCollider:
+--- !u!65 &7825324671482398390
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -656,11 +649,9 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1.4710039, z: 0.6858804}
+  m_Center: {x: 0, y: 0.23550197, z: -0.1570598}
 --- !u!114 &7203172747537649802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -684,6 +675,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4850477266051048571}
   - component: {fileID: 2912097882990004203}
+  - component: {fileID: 7916744158950958469}
   m_Layer: 0
   m_Name: LiftPoint
   m_TagString: Untagged
@@ -700,7 +692,7 @@ Transform:
   m_GameObject: {fileID: 7621337929020526871}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.84, z: 0}
+  m_LocalPosition: {x: 0, y: 2.18, z: 0}
   m_LocalScale: {x: 2, y: 1, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -725,8 +717,20 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
-  m_Size: {x: 1, y: 2.2517312, z: 1}
-  m_Center: {x: 0, y: -0.6258656, z: 0}
+  m_Size: {x: 1, y: 2.0400162, z: 1}
+  m_Center: {x: 0, y: -1.8725691, z: 0}
+--- !u!114 &7916744158950958469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7621337929020526871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 686f4a3857774b349b67d5c362a9abcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9013582798367162788
 GameObject:
   m_ObjectHideFlags: 0
