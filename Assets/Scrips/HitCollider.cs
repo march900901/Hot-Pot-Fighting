@@ -12,5 +12,6 @@ public class HitCollider : MonoBehaviour
         {
             _pd.OnHit(other.gameObject.GetComponent<PlayerData>());
         }
+        
     }
 }
