@@ -16,6 +16,7 @@ using ExitGames.Client.Photon.StructWrapping;
 public class PlayerData : MonoBehaviourPunCallbacks
 {
     public enum PlayerState{Idle,Dash,Fly,Lift,BeLift,Dead,CantMove}
+    public string Name;
     public int Point = 0;
     [SerializeField]
     public Text nameText;
@@ -23,6 +24,7 @@ public class PlayerData : MonoBehaviourPunCallbacks
     public PlayerState _playerState;
     public Color DefaultColor;
     public GameObject throwMe;
+    public LiftCollider LiftPoint;
     GameSceneManager _gm;
     PlayerContaller playerContaller;
     Rigidbody rigidbody;
@@ -31,6 +33,7 @@ public class PlayerData : MonoBehaviourPunCallbacks
     hashTable table = new hashTable();
     public string defaultMap;
     public bool Lifting=false;
+    public bool CanLift;
     public int scapeCount=0;
 
     
@@ -39,6 +42,7 @@ public class PlayerData : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {//初始化
+        this.gameObject.name = Name;
         Point = 0;
         _playerState=PlayerState.Idle;
         playerContaller=this.transform.GetComponent<PlayerContaller>();
@@ -61,15 +65,15 @@ public class PlayerData : MonoBehaviourPunCallbacks
                 //狀態Idle時，將輸入設為預設Map角色顏色設為預設
                 scapeCount=0;
                 playerInput.SwitchCurrentActionMap(defaultMap);
-                //playerContaller.Idle();
                 this.gameObject.GetComponent<MeshRenderer>().material.color=DefaultColor;
+                LiftPoint.UpdateCanLift(CanLift);
                 break;
 
             case PlayerState.CantMove:
                 //進入不可動狀態，物件變白，操作的MAP改成CD
                 this.gameObject.GetComponent<MeshRenderer>().material.color=Color.white;
                 playerInput.SwitchCurrentActionMap("CD");
-                
+                LiftPoint.UpdateCanLift(true);
                 if (scapeCount>=10)
                 {
                     //如果達成逃脫條件，變回IDLE狀態，並從子物件中移出，再取消Kinematic
@@ -82,29 +86,31 @@ public class PlayerData : MonoBehaviourPunCallbacks
                 break;
 
             case PlayerState.Dash:
-
+                LiftPoint.UpdateCanLift(CanLift);
                 break;
 
             case PlayerState.Dead:
                 //角色死亡時顏色變黑，將自己加入GameManager的deadPlayer
                 this.gameObject.GetComponent<MeshRenderer>().material.color=Color.black;
-                _gm.DeadPlayer = this.gameObject;
-                //_gm.SponPlayer();
-                _gm.CallRpcPlayerDead();
-                PhotonNetwork.Destroy(this.gameObject);
-                print("Daed!!");
+                LiftPoint.UpdateCanLift(CanLift);
+                //_gm.DeadPlayer = this.gameObject;
+                //_gm.SponPlayer(Name);
+                _gm.CallRpcPlayerDead(this.gameObject.name);
+                // PhotonNetwork.Destroy(this.gameObject);
+                //print("Daed!!");
                 SwitchState(PlayerState.Idle);
 
                 break;
 
-            case PlayerState.Fly:
-                if (!_pv.IsMine)
-                {
-                    rigidbody.isKinematic=true;
-                }
-                break;
+            // case PlayerState.Fly:
+            //     if (!_pv.IsMine)
+            //     {
+            //         rigidbody.isKinematic=true;
+            //     }
+            //     break;
 
             case PlayerState.Lift:
+                LiftPoint.UpdateCanLift(CanLift);
                 hashTable table = new hashTable();
                 Lifting=true;
                 table.Add("Lifting",Lifting);
@@ -125,7 +131,7 @@ public class PlayerData : MonoBehaviourPunCallbacks
         _playerState=PlayerState.Idle;
         
     }
-
+//-------改變狀態-------
     public void SwitchState(PlayerState state){
         //hashTable table = new hashTable();
         _playerState=state;
@@ -140,7 +146,7 @@ public class PlayerData : MonoBehaviourPunCallbacks
         //PlayerData otherData=other.transform.GetComponent<PlayerData>();
         if (other._playerState==PlayerState.Dash)
         {//被撞到的時候
-            throwMe = other.gameObject;
+            //throwMe = other.gameObject;
             _gm.CallRpcSendMessageToAll(other._pv.Owner.NickName + "撞到" + _pv.Owner.NickName);
             _gm.CallRpcSendMessageToAll(_pv.Owner.NickName + "RCP Say Hello");
             //如果碰撞時自己的狀態是衝刺，對方的tag是player，就把對方的狀態變成CantMove
@@ -148,6 +154,7 @@ public class PlayerData : MonoBehaviourPunCallbacks
             //enemyList.Add(other.gameObject);
             other.enemy = this.gameObject;
             //other.gameObject.GetComponent<Rigidbody>().AddForce(-playerDirection*playerContaller.BouncePower,ForceMode.Force);
+            print("Hit!!");
         }
     }
 
@@ -155,6 +162,7 @@ public class PlayerData : MonoBehaviourPunCallbacks
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
         Vector3 playerDirection = new Vector3(h,0,v);
+        print(playerDirection);
         //PlayerData otherData=other.transform.GetComponent<PlayerData>();
         if (other._playerState==PlayerState.Dash)
         {//被撞到的時候
@@ -167,12 +175,13 @@ public class PlayerData : MonoBehaviourPunCallbacks
             //other.enemyList.Add(this.gameObject);
             other.gameObject.GetComponent<Rigidbody>().AddForce(-playerDirection*playerContaller.BouncePower,ForceMode.Force);
         }
+        print("Hit Face!!");
     }
 
     private void OnCollisionEnter(Collision other) {
         if(other.gameObject.tag == "Player")
         {
-            OnHitFace(other.gameObject.GetComponent<PlayerData>());
+            //OnHitFace(other.gameObject.GetComponent<PlayerData>());
         }
     }
 
@@ -206,5 +215,10 @@ public class PlayerData : MonoBehaviourPunCallbacks
     public void CountingPoint(){
         throwMe.GetComponent<PlayerData>().Point += 1;
         print("+1");
+        if(throwMe.GetComponent<PlayerData>().Point >= 3){
+            _gm.GameOver();
+            _gm.CallRpcGameOver();
+            print("Point!!");
+        }
     }
 }

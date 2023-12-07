@@ -117,18 +117,19 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
     }
 
     public void DoLift(){
-        if (PlayerDistance() && playerData.enemy)
+        if (playerData.CanLift==true && playerData.enemy)
         {//如果和倒地的人距離夠近，且enemyList不是空的，
             if (playerData.enemy.GetComponent<PlayerData>().Lifting == false)
             {
                 //如果距離夠進就可以把敵人列表裡第一個抬起來
                 playerData.SwitchState(PlayerData.PlayerState.Lift);
                 playerData.enemy.GetComponent<Rigidbody>().isKinematic=true;
-                playerData.enemy.transform.position=this.transform.Find("LiftPoint").transform.position;
+                
                 playerData.enemy.transform.Rotate(-90f,90f,0f,Space.Self);
                 playerData.enemy.transform.parent=this.transform.Find("LiftPoint");
+                playerData.enemy.transform.position=this.transform.Find("LiftPoint").transform.position;
             }
-        }
+        }else{print("Can't Lift");}
         print(this.gameObject.name + "DoLift");
     }
 //-------計算玩家距離-------
@@ -161,15 +162,12 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
     }
 
     public void DoThrow(){
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
-        Vector3 playerDirection = new Vector3(h,0,v);
         if (playerData.enemy&&playerData._playerState==PlayerData.PlayerState.Lift)
             {//確認enemy不是空的且自己的狀態是Lift
                 GameObject enemy = playerData.enemy;
                 Rigidbody enemyRig=playerData.enemy.GetComponent<Rigidbody>();
                 PlayerData enemyData = enemy.GetComponent<PlayerData>();
-                Debug.Log("Throw");
+                playerData.Lifting = false;
                 //把敵人的狀態改為CantMove
                 enemyData.SwitchState(PlayerData.PlayerState.CantMove);
                 //把對方的throwMe設為自己
@@ -178,7 +176,7 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
                 //把對方從子物件移出
                 enemy.transform.parent=null;
                 //丟出去
-                enemyRig.AddForce(playerDirection*throwPower,ForceMode.Impulse);
+                enemyRig.AddForce(transform.forward*throwPower,ForceMode.Impulse);
                 //自己狀態設為Idle
                 playerData.SwitchState(PlayerData.PlayerState.Idle);
                 //刪掉敵人
