@@ -29,6 +29,10 @@ public class test : MonoBehaviour
         print(this.gameObject.name + "collistion");
     }
 
+    private void OnTriggerEnter(Collider other) {
+        print(this.gameObject.name + "Trigger");
+    }
+
     public void ConparList(List<string> list){
         HashSet<string> hs = new HashSet<string>(list);
         foreach (string HashSet in hs)
@@ -51,6 +55,9 @@ public class test : MonoBehaviour
         }
     }
     public void Rotate90(GameObject gameObject){
-        gameObject.transform.Rotate(-90f,90f,0f,Space.Self);
+        if (gameObject)
+        {
+            gameObject.transform.Rotate(-90f,90f,0f,Space.Self);
+        }
     }
 }
