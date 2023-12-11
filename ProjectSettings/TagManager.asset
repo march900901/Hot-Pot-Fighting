@@ -5,11 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - RoomButten
+  - GameManager
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - BG
   - Water
   - UI
   - 
