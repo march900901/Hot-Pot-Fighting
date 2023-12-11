@@ -562,7 +562,6 @@ GameObject:
   - component: {fileID: 1079705424}
   - component: {fileID: 1079705423}
   - component: {fileID: 1079705422}
-  - component: {fileID: 1079705425}
   m_Layer: 5
   m_Name: RoomList
   m_TagString: Untagged
@@ -658,24 +657,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1079705420}
   m_CullTransparentMesh: 1
---- !u!114 &1079705425
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1079705420}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4601da880e5e924d9c8703d7ef3160c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  roomButten: {fileID: 8630168227077992666, guid: 5521819a64ccf7d4b8033d77f7615186, type: 3}
-  RoomNameList: []
-  buttonList: []
-  timeBetweenUpdate: 1.5
-  roomCount: 0
-  JoinRoomName: ABC
 --- !u!1 &1081191389
 GameObject:
   m_ObjectHideFlags: 0

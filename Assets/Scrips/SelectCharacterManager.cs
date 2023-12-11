@@ -44,8 +44,7 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
         _pv = this.transform.GetComponent<PhotonView>();
     }
 
-    public override void OnMasterClientSwitched(Player newMasterClient)
-    {//當房主切換的時候
+    public override void OnMasterClientSwitched(Player newMasterClient){//當房主切換的時候
         //buttonStartGame.interactable=PhotonNetwork.IsMasterClient;
     }
 
@@ -70,6 +69,7 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
     public void OnClickStart(){//按下Start按紐時
         
         SceneManager.LoadScene("Game");
+        PhotonNetwork.CurrentRoom.IsVisible = false;
     }
 
     public void OnClickLeaveRoom(){//按下LeaveRoom按鈕時

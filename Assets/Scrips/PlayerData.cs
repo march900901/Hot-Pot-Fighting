@@ -214,12 +214,15 @@ public class PlayerData : MonoBehaviourPunCallbacks
     
 
     //-------加分-------
-    public void CountingPoint(){
+    public void CountingPoint(){//加分&&勝利
         throwMe.GetComponent<PlayerData>().Point += 1;
         print("+1");
         if(throwMe.GetComponent<PlayerData>().Point >= 3){
             _gm.GameOver();
             _gm.CallRpcGameOver();
+            print(this.gameObject.name);
+            _gm.SetWinerName(throwMe.name);
+            //_gm.CallRpcSetWinerName(this.gameObject.name);
             print("Point!!");
         }
     }

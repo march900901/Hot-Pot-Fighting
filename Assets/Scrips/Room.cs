@@ -26,7 +26,6 @@ public class Room : MonoBehaviour
 
     public void JoinRoom(){
         string playerName = _lbm.GetPlayerName();
-        _roomList.JoinRoomName = RoomName.text;
         PlayerPrefs.SetString("JoinRoomName",RoomName.text);
         if (playerName.Length > 0 )
         {//如果有輸入PlayerName，就加入這個按鈕名稱的房間，並把玩家名字設為PlayerName
