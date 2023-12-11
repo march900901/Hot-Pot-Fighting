@@ -153,18 +153,31 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     }
 
 //-------遊戲結束-------
-    public void GameOver(){
+    public void GameOver(){//執行遊戲結束
         GameOverPanlel.SetActive(true);
         print("GameOver");
     }
 
-    public void CallRpcGameOver(){
+    public void CallRpcGameOver(){//呼叫RPC執行遊戲結束
         _pv.RPC("RpcGameOver",RpcTarget.Others);
     }
 
     [PunRPC]
-    void RpcGameOver(PhotonMessageInfo info){
+    void RpcGameOver(PhotonMessageInfo info){//RPC執行遊戲結束
         GameOver();
+    }
+
+    public void SetWinerName(string winerName){
+        PlayerPrefs.SetString("WinerName",winerName);
+    }
+
+    public void CallRpcSetWinerName(string winerName){//呼叫RPC傳送贏家名字
+        _pv.RPC("RpcSetWinerName",RpcTarget.All,winerName);
+    }
+
+    [PunRPC]
+    void RpcSetWinerName(string winerName,PhotonMessageInfo info){//RPC執行贏家名字
+        PlayerPrefs.SetString("WinerName",winerName);
     }
 
 //-------轉換場景-------
