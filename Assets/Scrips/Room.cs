@@ -10,16 +10,24 @@ public class Room : MonoBehaviour
     [SerializeField]
     GameObject WarningText;
     LobbySceneManager _lbm;
+    RoomList _roomList;
 
     private void Start() {
         //初始化
         _lbm = GameObject.Find("LobbySceneManager").GetComponent<LobbySceneManager>();
+        _roomList = GameObject.Find("RoomList").GetComponent<RoomList>();
         WarningText = GameObject.Find("WarningText");
+        RoomName.text = this.gameObject.name;
+    }
+
+    public void SetRoomName(string _roomName){
         RoomName.text = this.gameObject.name;
     }
 
     public void JoinRoom(){
         string playerName = _lbm.GetPlayerName();
+        _roomList.JoinRoomName = RoomName.text;
+        PlayerPrefs.SetString("JoinRoomName",RoomName.text);
         if (playerName.Length > 0 )
         {//如果有輸入PlayerName，就加入這個按鈕名稱的房間，並把玩家名字設為PlayerName
             GameObject.Find("LobbySceneManager").GetComponent<LobbySceneManager>().JoinRoomList(RoomName.text);
@@ -28,5 +36,5 @@ public class Room : MonoBehaviour
             WarningText.SetActive(true);
             _lbm.SetWarningText("Plece enter PlayerName");
         }
-    }   
+    }
 }

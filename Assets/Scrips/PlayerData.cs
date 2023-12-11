@@ -140,6 +140,16 @@ public class PlayerData : MonoBehaviourPunCallbacks
         string stateText = state.ToString();
         CallRpcStateSwitch(state,stateText);
     }
+
+    public void CallRpcStateSwitch(PlayerData.PlayerState playerState,string playerStateText){//呼叫RPC執行切換角色狀態
+        _pv.RPC("RpcStateSwitch",RpcTarget.All,playerState,playerStateText);
+    }
+
+    [PunRPC]
+    void RpcStateSwitch(PlayerData.PlayerState playerState,string text,PhotonMessageInfo info){//RPC執行切換角色狀態
+        print(playerState);
+        _playerState = playerState;
+    }
     
     //-------撞到時-------
     public void OnHit(PlayerData other){
@@ -152,7 +162,7 @@ public class PlayerData : MonoBehaviourPunCallbacks
             //如果碰撞時自己的狀態是衝刺，對方的tag是player，就把對方的狀態變成CantMove
             SwitchState(_playerState=PlayerState.CantMove);
             //enemyList.Add(other.gameObject);
-            other.enemy = this.gameObject;
+            //other.enemy = this.gameObject;
             //other.gameObject.GetComponent<Rigidbody>().AddForce(-playerDirection*playerContaller.BouncePower,ForceMode.Force);
             print("Hit!!");
         }
@@ -178,12 +188,12 @@ public class PlayerData : MonoBehaviourPunCallbacks
         print("Hit Face!!");
     }
 
-    private void OnCollisionEnter(Collision other) {
-        if(other.gameObject.tag == "Player")
-        {
-            //OnHitFace(other.gameObject.GetComponent<PlayerData>());
-        }
-    }
+    //private void OnCollisionEnter(Collision other) {
+    //     if(other.gameObject.tag == "Player")
+    //     {
+    //         //OnHitFace(other.gameObject.GetComponent<PlayerData>());
+    //     }
+    // }
 
     // public override void OnPlayerPropertiesUpdate(Player targetPlayer, hashTable changedProps)
     // {//接收數值更新
@@ -201,15 +211,7 @@ public class PlayerData : MonoBehaviourPunCallbacks
     // }
 
 //-------同步角色狀態-------
-    public void CallRpcStateSwitch(PlayerData.PlayerState playerState,string playerStateText){
-        _pv.RPC("RpcStateSwitch",RpcTarget.All,playerState,playerStateText);
-    }
-
-    [PunRPC]
-    void RpcStateSwitch(PlayerData.PlayerState playerState,string text,PhotonMessageInfo info){
-        print(playerState);
-        _playerState = playerState;
-    }
+    
 
     //-------加分-------
     public void CountingPoint(){

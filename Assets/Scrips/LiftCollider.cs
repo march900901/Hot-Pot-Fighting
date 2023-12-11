@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class LiftCollider : MonoBehaviour
@@ -12,6 +13,7 @@ public class LiftCollider : MonoBehaviour
         if (other.tag == "Player")
         {
             other.GetComponent<PlayerData>().CanLift = true;
+            other.GetComponent<PlayerData>().enemy = this.gameObject.transform.parent.gameObject;
         }
     }
 

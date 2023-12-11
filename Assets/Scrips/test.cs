@@ -11,7 +11,7 @@ public class test : MonoBehaviour
     void Start()
     {
         //ConparList(strings);
-        ConparList2();
+        ConparList2(strings);
         foreach (var item in strings)
         {
             print(item);
@@ -42,14 +42,14 @@ public class test : MonoBehaviour
         
     }
 
-    public void ConparList2(){
-        for (int i = 0; i < strings.Count; i++)
+    public void ConparList2(List<string> sg){
+        for (int i = 0; i < sg.Count; i++)
         {
-            for (int j = strings.Count-1; j > i; j--)
+            for (int j = sg.Count-1; j > i; j--)
             {
-                if (strings[i] == strings[j])
+                if (sg[i] == sg[j])
                 {
-                    strings.RemoveAt(j);
+                    sg.RemoveAt(j);
                 }
             }
         }
