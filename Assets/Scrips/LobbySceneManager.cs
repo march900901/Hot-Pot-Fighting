@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Photon.Realtime;
 using System.Text;
-using UnityEngine.SceneManagement;
 
 public class LobbySceneManager : MonoBehaviourPunCallbacks
 {
@@ -16,7 +15,11 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
     InputField inputPlayerName;//輸入玩家名的UI
     [SerializeField]
     GameObject WarningText;//錯誤提示字串
-    // Start is called before the first frame update
+    public GameObject roomButtenPrefab;
+    public List<GameObject> roomButtenList = new List<GameObject>();
+    public Transform contenObject;
+    public float timeBettwinUpdate = 1.5f;
+    float nextUpdateTime;
     void Start()
     {
 
@@ -86,5 +89,36 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
     IEnumerator Delay(float s){
         yield return new WaitForSecondsRealtime(s);
         WarningText.GetComponent<Text>().text = null;
+    }
+
+    public override void OnRoomListUpdate(List<RoomInfo> roomList)
+    {
+        
+        if (Time.time >= nextUpdateTime)
+        {
+            UpdateRoom(roomList);
+            nextUpdateTime = Time.time + timeBettwinUpdate;
+        }
+    }
+
+    public void UpdateRoom(List<RoomInfo> list){
+        // foreach (GameObject item in roomButtenList)
+        // {
+        //     Destroy(item.gameObject);
+        // }
+        roomButtenList.Clear();
+        foreach (RoomInfo room in list)
+        {
+            if (room.PlayerCount > 0)
+            {
+                GameObject newButton = Instantiate(roomButtenPrefab,Vector3.zero,Quaternion.identity,GameObject.Find("Content").transform);
+                newButton.gameObject.name = room.Name;
+                roomButtenList.Add(newButton);
+                print("新增 " + room.Name);
+            }else if(room.PlayerCount<=0){
+                string NullRoom = room.Name;
+                Destroy(GameObject.Find(NullRoom));
+            }
+        }
     }
 }

@@ -31,7 +31,7 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
         {//如果沒連上伺服器的話就回到Lobby場景
             SceneManager.LoadScene("Lobby");
         }else{//如果有連上伺服器就把房間名稱UI設為房間名稱，並刷新玩家列表
-            textRoomName.text=PhotonNetwork.CurrentRoom.Name;
+            textRoomName.text="目前房間: " + PhotonNetwork.CurrentRoom.Name;
             UpDatePlayerList();
         }
         buttonStartGame.interactable=false;//禁用開始按鈕
@@ -46,11 +46,10 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
 
     public override void OnMasterClientSwitched(Player newMasterClient)
     {//當房主切換的時候
-        buttonStartGame.interactable=PhotonNetwork.IsMasterClient;
+        //buttonStartGame.interactable=PhotonNetwork.IsMasterClient;
     }
 
-    public void UpDatePlayerList(){
-        //一個一個印出PlayerList的玩家名字
+    public void UpDatePlayerList(){//一個一個印出PlayerList的玩家名字
         StringBuilder sb = new StringBuilder();
         foreach (var kvp in PhotonNetwork.CurrentRoom.Players)
         {
@@ -59,36 +58,29 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
         textPlayerList.text=sb.ToString();
     }
 
-    public override void OnPlayerEnteredRoom(Player newPlayer)
-    {//當玩家加入房間時更新玩家列表
+    public override void OnPlayerEnteredRoom(Player newPlayer){//當玩家加入房間時更新玩家列表
         UpDatePlayerList();
     }
 
-    public override void OnPlayerLeftRoom(Player otherPlayer)
-    {//當玩家離開房間時更新玩家列表
+    public override void OnPlayerLeftRoom(Player otherPlayer){//當玩家離開房間時更新玩家列表
         UpDatePlayerList();
         print("LeftRoom");
     }
 
-    public void OnClickStart(){
-        //按下Start按紐時
+    public void OnClickStart(){//按下Start按紐時
+        
         SceneManager.LoadScene("Game");
     }
 
-    public void OnClickLeaveRoom(){
-        //按下LeaveRoom按鈕時
+    public void OnClickLeaveRoom(){//按下LeaveRoom按鈕時
         PhotonNetwork.LeaveRoom();
-        //PhotonNetwork.LeaveLobby();
     }
 
-    public override void OnLeftRoom()
-    {//當離開房間時
+    public override void OnLeftRoom(){//當離開房間時
         SceneManager.LoadScene("Lobby");
-        //PhotonNetwork.Disconnect();
     }
 //---------選角區--------
-    public void AddCharaterIndex(){
-        //當CharacterIndex在角色列表範圍內時，CharacterIndex+1
+    public void AddCharaterIndex(){//當CharacterIndex在角色列表範圍內時，CharacterIndex+1
         if (CharacterIndex <= CharacterList.Count-2)
         {
             CharacterIndex ++;
@@ -103,10 +95,10 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
         }
         CanStart = false;
         UpdateCharacter();//刷新角色預覽
+        UpdateCanStart();
     }
 
-    public void ReduceCharacterIndex(){
-        //當CharacterIndex在角色列表範圍內時，CharacterIndex-1
+    public void ReduceCharacterIndex(){//當CharacterIndex在角色列表範圍內時，CharacterIndex-1
         if (CharacterIndex >0)
         {
             CharacterIndex--;
@@ -121,17 +113,16 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
         }
         CanStart = false;
         UpdateCharacter();//刷新角色預覽
+        UpdateCanStart();
     }
 
-    public void ReSetCharacter(GameObject gameObject){
-        //刪除角色物件中可能報錯的腳本
+    public void ReSetCharacter(GameObject gameObject){//刪除角色物件中可能報錯的腳本
         Destroy(gameObject.GetComponent<PlayerContaller>());
         Destroy(gameObject.GetComponent<PlayerData>());
         Destroy(gameObject.GetComponent<PlayerInput>());
     }
 
-    public void UpdateCharacter(){
-        //刷新角色預覽
+    public void UpdateCharacter(){//刷新角色預覽
         Destroy(GameObject.FindGameObjectWithTag("Player"));//刪除原本的角色物件
         //依照CharacterIndex生成新的角色物件
         GameObject Character = Instantiate(CharacterList[CharacterIndex],GeneratPoint.position,new Quaternion(0,180,0,0));
@@ -143,8 +134,7 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
         selectCharacterName = Character.name;
     }
 
-    public void ConfirmCharacter(){
-        //確認所選角色
+    public void ConfirmCharacter(){//確認所選角色
         PlayerPrefs.SetString("CharacterName",selectCharacterName);
         text_Confirm.enabled = true;
         CanStart = true;
@@ -161,26 +151,28 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
         UpdateCanStart();
     }
     void DoConfirm(){
-        print("DoCanStart");
+        print("DoConfirm");
         CanStartPlayer ++;
-        
+        UpdateCanStart();
     } 
 
-    public void CallRpcDoConfirm(){
+    public void CallRpcDoConfirm(){//呼叫RPC執行確認選角
         _pv.RPC("RpcDoConfirm",RpcTarget.Others);
     }
 
     [PunRPC]
     void RpcDoConfirm(PhotonMessageInfo info){
         DoConfirm();
-        UpdateCanStart();
     }
 
-    public void UpdateCanStart(){
+    public void UpdateCanStart(){//更新CanStart數值
+        print(PhotonNetwork.CurrentRoom.PlayerCount);
         if (CanStartPlayer >= PhotonNetwork.CurrentRoom.PlayerCount)
         {//如果房間內玩家都準備好了才可以按開始按鈕
+            print("Can Start");
             buttonStartGame.interactable=PhotonNetwork.IsMasterClient;
         }else{
+            print("Can't Start");
             buttonStartGame.interactable = false;
         }
     }

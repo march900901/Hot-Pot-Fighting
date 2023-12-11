@@ -1277,7 +1277,7 @@ GameObject:
   - component: {fileID: 1068901991}
   - component: {fileID: 1068901990}
   m_Layer: 5
-  m_Name: StartButton (1)
+  m_Name: ConfirmButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1809,6 +1809,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2138890102}
   - {fileID: 851497653}
   - {fileID: 873793338}
   - {fileID: 1416887572}
@@ -1990,21 +1991,20 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2138890099}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.68, y: 0.26, z: -6.16}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -961.68, y: -539.74, z: -6.16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1994717836}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 2138890102}
+  - {fileID: 1994717836}
   - {fileID: 937264630}
   - {fileID: 2022884462}
   - {fileID: 209098776}
-  - {fileID: 1994717836}
   - {fileID: 911647017}
   - {fileID: 1332238798}
