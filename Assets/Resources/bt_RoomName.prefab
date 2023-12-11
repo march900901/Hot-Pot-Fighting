@@ -226,4 +226,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RoomName: {fileID: 1792399475532506175}
-  WarningText: {fileID: 0}
+  WarningText: {fileID: 7174448220768208204}
