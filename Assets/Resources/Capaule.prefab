@@ -156,6 +156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LiftPoint: {fileID: 7621337929020526871}
+  _animator: {fileID: 0}
   MoveSpeed: 1000
   DashPower: 10
   RotaSpeed: 0.05
