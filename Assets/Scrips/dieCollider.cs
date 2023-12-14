@@ -19,9 +19,18 @@ public class dieCollider : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter(Collision other) {
-        print(other.gameObject.name + "Dead!!");
-        other.gameObject.GetComponent<PlayerData>().SwitchState(PlayerData.PlayerState.Dead);
-        other.gameObject.GetComponent<PlayerData>().CountingPoint();
+    // private void OnCollisionEnter(Collision other) {
+    //     print(other.gameObject.name + "Dead!!");
+    //     other.gameObject.GetComponent<PlayerData>().SwitchState(PlayerData.PlayerState.Dead);
+    //     other.gameObject.GetComponent<PlayerData>().CountingPoint();
+    // }
+
+    private void OnTriggerEnter(Collider other) {
+        if (other.tag == "Player")
+        {
+            print(other.name + "Dead!!");
+            other.gameObject.GetComponent<PlayerData>().SwitchState(PlayerData.PlayerState.Dead);
+            other.gameObject.GetComponent<PlayerData>().CountingPoint();
+        }
     }
 }

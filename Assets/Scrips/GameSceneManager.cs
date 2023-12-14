@@ -82,12 +82,13 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         }
         //在所有玩家的畫面中生成玩家物件
         GameObject Player = PhotonNetwork.Instantiate(_caracterName,startPions[Random.Range(0,startPions.Count)].position,new Quaternion(0,180,0,0));
-        Player.name = _caracterName.ToString(); 
+        Player.name =  _caracterName.ToString();
+        ReSetPlayerData(Player.GetComponent<PlayerData>());
         print("Spoon");
     }
 
 //-------玩家復活-------
-    public void ReSetPlayer(string PlayerName){
+    public void ReSetPlayer(GameObject Player){
         int randomNum=0;
         List<Transform> startPions=new List<Transform>();
         for (int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount; i++)
@@ -96,27 +97,29 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
             startPions.Add(startTransform[randomNum]);
         }
         randomNum = Random.Range(0,startPions.Count);
-        GameObject Player = GameObject.Find(PlayerName);
+        // GameObject Player = GameObject.Find(PlayerName);
         //Player.GetComponent<PlayerData>()._playerState = PlayerData.PlayerState.Idle;
         Player.transform.position =startPions[randomNum].transform.position;
-        Player.transform.rotation = Quaternion.Euler(0,0,0);
+        Player.transform.rotation = Quaternion.Euler(0,180,0);
+        ReSetPlayerData(Player.GetComponent<PlayerData>());
         //Player.name = PlayerName;
         
         print("revival");
     }
 
 //-------玩家死亡-------
-    public void CallRpcPlayerDead(string DeadPlayerName){
+/*
+    public void CallRpcPlayerDead(GameObject DeadPlayer){
         //用RPC呼叫所有玩家場景中的"RpcPlayerDead"方法
-        _pv.RPC("RpcPlayerDead",RpcTarget.Others,DeadPlayerName);
+        _pv.RPC("RpcPlayerDead",RpcTarget.Others,DeadPlayer);
     }
     [PunRPC]
-    void RpcPlayerDead(string DeadPlayerName,PhotonMessageInfo info){//RPC接收訊息執行玩家死亡
+    void RpcPlayerDead(GameObject DeadPlayer,PhotonMessageInfo info){//RPC接收訊息執行玩家死亡
         //執行玩家死亡
-        if (DeadPlayerName != null)
+        if (DeadPlayer != null)
         {
             print("RPC RevivalPlayer");
-            ReSetPlayer(DeadPlayerName);
+            ReSetPlayer(DeadPlayer);
             //PhotonNetwork.Destroy(GameObject.Find(DeadPlayerName));
         }
 
@@ -128,8 +131,8 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         //     //檢查玩家存活狀態，顯示結果或轉換場景
         // }
     }
-
-    //-------用Rpc向其他玩家發送訊息-------
+*/
+//-------用Rpc向其他玩家發送訊息-------
     public void CallRpcSendMessageToAll(string message){//用photon的RPC功能發送訊息
         _pv.RPC("RpcSendMessage",RpcTarget.All,message);//對所有人發送"RpcSendMessage"，呼叫RpcSendMessage這個方法
     }
@@ -159,7 +162,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     }
 
     public void CallRpcGameOver(){//呼叫RPC執行遊戲結束
-        _pv.RPC("RpcGameOver",RpcTarget.Others);
+        _pv.RPC("RpcGameOver",RpcTarget.All);
     }
 
     [PunRPC]
@@ -180,5 +183,13 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         PlayerPrefs.SetString("WinerName",winerName);
     }
 
-//-------轉換場景-------
+//-------重設玩家數值-------
+    public void ReSetPlayerData(PlayerData player){
+        player.Point = 0;
+        player.enemy = null;
+        player._playerState = PlayerData.PlayerState.Idle;
+        player.throwMe = null;
+        player.Lifting = false;
+        player.CanLift = false;
+    }
 }

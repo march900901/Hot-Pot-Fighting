@@ -11,6 +11,7 @@ using UnityEngine.UI;
 using hashTable = ExitGames.Client.Photon.Hashtable;
 using Photon.Realtime;
 using ExitGames.Client.Photon.StructWrapping;
+using System.Text.RegularExpressions;
 
 
 public class PlayerData : MonoBehaviourPunCallbacks
@@ -42,7 +43,11 @@ public class PlayerData : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {//初始化
-        this.gameObject.name = Name;
+        if (this.gameObject.name.EndsWith("(Clone)"))
+        {
+            Name = this.gameObject.name.TrimEnd("(Clone)");
+            this.gameObject.name = Name;
+        }else{Name = this.gameObject.name;}
         Point = 0;
         _playerState=PlayerState.Idle;
         playerContaller=this.transform.GetComponent<PlayerContaller>();
@@ -93,11 +98,8 @@ public class PlayerData : MonoBehaviourPunCallbacks
                 //角色死亡時顏色變黑，將自己加入GameManager的deadPlayer
                 this.gameObject.GetComponent<MeshRenderer>().material.color=Color.black;
                 LiftPoint.UpdateCanLift(CanLift);
-                //_gm.DeadPlayer = this.gameObject;
-                //_gm.SponPlayer(Name);
-                _gm.CallRpcPlayerDead(this.gameObject.name);
-                // PhotonNetwork.Destroy(this.gameObject);
-                //print("Daed!!");
+                //_gm.CallRpcPlayerDead(this.gameObject);
+                _gm.ReSetPlayer(this.gameObject);
                 SwitchState(PlayerState.Idle);
 
                 break;
@@ -172,7 +174,7 @@ public class PlayerData : MonoBehaviourPunCallbacks
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
         Vector3 playerDirection = new Vector3(h,0,v);
-        print(playerDirection);
+        // print(playerDirection);
         //PlayerData otherData=other.transform.GetComponent<PlayerData>();
         if (other._playerState==PlayerState.Dash)
         {//被撞到的時候
@@ -218,12 +220,11 @@ public class PlayerData : MonoBehaviourPunCallbacks
         throwMe.GetComponent<PlayerData>().Point += 1;
         print("+1");
         if(throwMe.GetComponent<PlayerData>().Point >= 3){
+            //_gm.GameOver();
             _gm.GameOver();
-            _gm.CallRpcGameOver();
-            print(this.gameObject.name);
-            _gm.SetWinerName(throwMe.name);
+            _gm.SetWinerName(this.gameObject.name);
             //_gm.CallRpcSetWinerName(this.gameObject.name);
-            print("Point!!");
+            print(this.gameObject.name + " Point!!");
         }
     }
 }

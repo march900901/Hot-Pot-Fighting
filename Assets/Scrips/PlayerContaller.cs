@@ -18,6 +18,8 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
     PlayerInput playerInput;
     [SerializeField]
     GameObject LiftPoint;
+    [SerializeField]
+    Animator _animator;
 
     public float MoveSpeed=5.0f;
     public float DashPower=5.0f;
@@ -29,10 +31,10 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
     public float BouncePower=5.0f;
     public string defaultMap;
     public float throwPower=5.0f;
-    private float movingSpeed;
+    private float moveingSpeed;
     //public GameObject enemy;
     public PhotonView _pv;
-    BoxCollider boxCollider;
+    BoxCollider liftCollider;
     GameSceneManager _gm;
     
 
@@ -44,9 +46,14 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
         playerInput = this.transform.GetComponent<PlayerInput>();      
         defaultMap = playerInput.defaultActionMap;
         LiftPoint = this.transform.GetChild(0).gameObject;
-        boxCollider = LiftPoint.GetComponent<BoxCollider>();
+        liftCollider = LiftPoint.GetComponent<BoxCollider>();
         _pv = this.transform.GetComponent<PhotonView>();
         _gm = GameObject.Find("GameManager").GetComponent<GameSceneManager>();
+        var bindingDate = PlayerPrefs.GetString("binding");
+        if(bindingDate!=""){
+            print("設定完成");
+            playerInput.actions.LoadBindingOverridesFromJson(bindingDate);
+        }else{print("沒有綁定資料");}
         // if (!_pv.IsMine)
         // {
         //     playerInput.SwitchCurrentActionMap("NotMe");
@@ -63,10 +70,13 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
             playerInput.SwitchCurrentActionMap("NotMe"); 
             playerData.DefaultColor=Color.red;
         }
-        movingSpeed=rigidbody.velocity.magnitude;//取得角色移動速度
+        moveingSpeed=rigidbody.velocity.magnitude;//取得角色移動速度
         if(movevector!=Vector2.zero){
-            //
-            if(movingSpeed<=MaxSpeed){//角色移動
+            if (_animator)
+            {
+                _animator.SetTrigger("Move");
+            }
+            if(moveingSpeed<=MaxSpeed){//角色移動
                 rigidbody.AddForce(movevector.x*MoveSpeed*Time.deltaTime,0,movevector.y*MoveSpeed*Time.deltaTime,ForceMode.Force);
             }
             if(movevector.x>0){//角色轉向右邊
@@ -85,6 +95,11 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
                 this.transform.rotation=Quaternion.Lerp(transform.rotation,Quaternion.Euler(0,180,0),RotaSpeed);
             }
             
+        }else{
+            if (_animator)
+            {
+                _animator.SetTrigger("Idle");
+            }
         }
     } 
 
@@ -100,7 +115,7 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
             //收到輸入訊號後
             CallRpcDoLift();//呼叫其他玩家場景的自己執行抬人
             DoLift();//自己執行抬人
-            print(this.gameObject.name + "Lift");
+            //print(this.gameObject.name + "Lift");
         }
     }
 
@@ -129,8 +144,10 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
                 playerData.enemy.transform.parent=this.transform.Find("LiftPoint");
                 playerData.enemy.transform.position=this.transform.Find("LiftPoint").transform.position;
             }
-        }else{print("Can't Lift");}
-        print(this.gameObject.name + "DoLift");
+        }else{
+                //print("Can't Lift");
+            }
+        //print(this.gameObject.name + "DoLift");
     }
 //-------計算玩家距離-------
     public bool PlayerDistance(){
@@ -182,9 +199,9 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
                 //刪掉敵人
                 playerData.enemy = null;
                 //playerData.enemyList.Clear();
-                print(gameObject.name + "DoThrow!!!");
+                //print(gameObject.name + "DoThrow!!!");
             }else{
-                print("CantThrow");
+                //print("CantThrow");
             }
     }
 
