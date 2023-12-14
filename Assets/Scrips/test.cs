@@ -11,7 +11,6 @@ public class test : MonoBehaviour
     void Start()
     {
         //ConparList(strings);
-        ConparList2(strings);
         foreach (var item in strings)
         {
             print(item);
@@ -41,23 +40,12 @@ public class test : MonoBehaviour
         }
         
     }
-
-    public void ConparList2(List<string> sg){
-        for (int i = 0; i < sg.Count; i++)
-        {
-            for (int j = sg.Count-1; j > i; j--)
-            {
-                if (sg[i] == sg[j])
-                {
-                    sg.RemoveAt(j);
-                }
-            }
-        }
-    }
     public void Rotate90(GameObject gameObject){
         if (gameObject)
         {
             gameObject.transform.Rotate(-90f,90f,0f,Space.Self);
         }
     }
+
+
 }
