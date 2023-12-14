@@ -55,6 +55,17 @@
                     "isPartOfComposite": false
                 },
                 {
+                    "name": "",
+                    "id": "c4c2a149-60ac-4468-92ea-b0d0ac4f0658",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
                     "name": "2D Vector(keybord)",
                     "id": "c7290d68-513d-43f0-b48c-d7c2d470ea62",
                     "path": "2DVector",
@@ -134,138 +145,6 @@
             ]
         },
         {
-            "name": "Player2",
-            "id": "2ca288de-4cb3-433d-bf46-d0ddd91d8bf6",
-            "actions": [
-                {
-                    "name": "Dash",
-                    "type": "Button",
-                    "id": "a85fca28-9f84-41ea-a841-b2128386681d",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Lift",
-                    "type": "Button",
-                    "id": "c316b27f-e06d-4934-b2a1-ac860bed86eb",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Move",
-                    "type": "Value",
-                    "id": "49751a44-dcc4-48db-b0cd-13260fe8af82",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "Throw",
-                    "type": "Button",
-                    "id": "b8546df6-8501-4548-9edd-cd61916ab13a",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "405929eb-908c-44e6-ab75-aeb7b4c96e34",
-                    "path": "<XInputController>/buttonSouth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Dash",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "2D Vector",
-                    "id": "a6465d22-020b-445f-9b4f-7747e5ee80fb",
-                    "path": "2DVector",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "up",
-                    "id": "840f3a54-210b-49c5-8344-d1a7666c87f8",
-                    "path": "<XInputController>/leftStick/up",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "1d8df817-8298-40be-8f9d-d8fd581e3cd5",
-                    "path": "<XInputController>/leftStick/down",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
-                    "id": "32082aec-138f-4de0-a201-e558902db2ad",
-                    "path": "<XInputController>/leftStick/left",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "883f2dfa-e8d8-4293-9307-92b68e91a9c6",
-                    "path": "<XInputController>/leftStick/right",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "",
-                    "id": "c1452ac9-f2c6-4efa-9c81-99cde93a8a9f",
-                    "path": "<XInputController>/buttonEast",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Lift",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "f6edf248-57ca-457e-9e53-da2359cb312a",
-                    "path": "<XInputController>/buttonNorth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Throw",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
-        },
-        {
             "name": "CD",
             "id": "d045d50d-3013-4b8c-8131-8ce2e914cf73",
             "actions": [
@@ -307,30 +186,8 @@
         {
             "name": "NotMe",
             "id": "65267060-c679-4592-a2ee-74e5a834d109",
-            "actions": [
-                {
-                    "name": "New action",
-                    "type": "Button",
-                    "id": "87ec872f-a6ab-4adb-b4e3-e46d10a8d9f9",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "6b11df38-14b6-4809-93fe-708998b69e26",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "New action",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
+            "actions": [],
+            "bindings": []
         }
     ],
     "controlSchemes": []
