@@ -224,7 +224,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LiftPoint: {fileID: 7621337929020526871}
   _animator: {fileID: 1501586447326535589}
-  MoveSpeed: 700
+  MoveSpeed: 1000
   DashPower: 10
   RotaSpeed: 0.05
   MaxSpeed: 5
@@ -475,7 +475,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4867954565764613552}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -673,7 +673,7 @@ Transform:
   m_GameObject: {fileID: 7621337929020526871}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.968, z: 0}
+  m_LocalPosition: {x: 0, y: 2.35, z: 0}
   m_LocalScale: {x: 2, y: 1, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -698,8 +698,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
-  m_Size: {x: 1.2753382, y: 1.3993149, z: 0.43680832}
-  m_Center: {x: 0.0041718185, y: -1.5680046, z: 0.018773064}
+  m_Size: {x: 1.2753382, y: 1.3250306, z: 0.43680832}
+  m_Center: {x: 0.0041718483, y: -1.9166099, z: 0.018773064}
 --- !u!114 &756940056766339087
 MonoBehaviour:
   m_ObjectHideFlags: 0
