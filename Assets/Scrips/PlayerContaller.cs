@@ -107,7 +107,7 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
         //延遲過後將角色控制設為預設Map，並將狀態改為Idle
         yield return new WaitForSecondsRealtime(s);
         //playerInput.SwitchCurrentActionMap(defaultMap);
-        playerData.SwitchState(PlayerData.PlayerState.Idle);
+        playerData.CallRpcStateSwitch(PlayerData.PlayerState.Idle);
     }
 //--------抬人--------
     public void Lift(InputAction.CallbackContext callback){
@@ -137,7 +137,7 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
             if (playerData.enemy.GetComponent<PlayerData>().Lifting == false)
             {
                 //如果距離夠進就可以把敵人列表裡第一個抬起來
-                playerData.SwitchState(PlayerData.PlayerState.Lift);
+                playerData.CallRpcStateSwitch(PlayerData.PlayerState.Lift);
                 playerData.enemy.GetComponent<Rigidbody>().isKinematic=true;
                 
                 playerData.enemy.transform.Rotate(-90f,90f,0f,Space.Self);
@@ -186,7 +186,7 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
                 PlayerData enemyData = enemy.GetComponent<PlayerData>();
                 playerData.Lifting = false;
                 //把敵人的狀態改為CantMove
-                enemyData.SwitchState(PlayerData.PlayerState.CantMove);
+                enemyData.CallRpcStateSwitch(PlayerData.PlayerState.CantMove);
                 //把對方的throwMe設為自己
                 enemyData.throwMe = this.gameObject;
                 enemyRig.isKinematic=false;
@@ -195,7 +195,7 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
                 //丟出去
                 enemyRig.AddForce(transform.forward*throwPower,ForceMode.Impulse);
                 //自己狀態設為Idle
-                playerData.SwitchState(PlayerData.PlayerState.Idle);
+                playerData.CallRpcStateSwitch(PlayerData.PlayerState.Idle);
                 //刪掉敵人
                 playerData.enemy = null;
                 //playerData.enemyList.Clear();
@@ -231,7 +231,7 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
                 if (_pv.IsMine)
                 {//限制只能控制自己
                     //向前衝刺一下
-                    playerData.SwitchState(PlayerData.PlayerState.Dash);
+                    playerData.CallRpcStateSwitch(PlayerData.PlayerState.Dash);
                     rigidbody.AddForce(new Vector3(movevector.x,0,movevector.y)*DashPower,ForceMode.Impulse);
                     playerInput.SwitchCurrentActionMap("CD");//取消玩家控制
                     // if (Time.deltaTime >= CanMoveTime)
@@ -295,7 +295,7 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
             }
     }
 
-    public void Idle(){
-        //boxCollider.enabled=false;
+    public void ScapeJumpe(){
+        rigidbody.AddForce(transform.forward*MoveSpeed,ForceMode.Impulse);
     }
 }

@@ -104,34 +104,8 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         ReSetPlayerData(Player.GetComponent<PlayerData>());
         //Player.name = PlayerName;
         
-        print("revival");
+        print(Player.name +" revival");
     }
-
-//-------玩家死亡-------
-/*
-    public void CallRpcPlayerDead(GameObject DeadPlayer){
-        //用RPC呼叫所有玩家場景中的"RpcPlayerDead"方法
-        _pv.RPC("RpcPlayerDead",RpcTarget.Others,DeadPlayer);
-    }
-    [PunRPC]
-    void RpcPlayerDead(GameObject DeadPlayer,PhotonMessageInfo info){//RPC接收訊息執行玩家死亡
-        //執行玩家死亡
-        if (DeadPlayer != null)
-        {
-            print("RPC RevivalPlayer");
-            ReSetPlayer(DeadPlayer);
-            //PhotonNetwork.Destroy(GameObject.Find(DeadPlayerName));
-        }
-
-        // if(alivePlayerMap.ContainsKey(info.Sender)){
-        //     alivePlayerMap[info.Sender] = false;
-        // }
-        // if (PhotonNetwork.IsMasterClient)
-        // {
-        //     //檢查玩家存活狀態，顯示結果或轉換場景
-        // }
-    }
-*/
 //-------用Rpc向其他玩家發送訊息-------
     public void CallRpcSendMessageToAll(string message){//用photon的RPC功能發送訊息
         _pv.RPC("RpcSendMessage",RpcTarget.All,message);//對所有人發送"RpcSendMessage"，呼叫RpcSendMessage這個方法
@@ -185,7 +159,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
 
 //-------重設玩家數值-------
     public void ReSetPlayerData(PlayerData player){
-        player.Point = 0;
+        // player.Point = 0;
         player.enemy = null;
         player._playerState = PlayerData.PlayerState.Idle;
         player.throwMe = null;

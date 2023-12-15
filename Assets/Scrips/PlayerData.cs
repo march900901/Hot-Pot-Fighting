@@ -79,11 +79,13 @@ public class PlayerData : MonoBehaviourPunCallbacks
                 this.gameObject.GetComponent<MeshRenderer>().material.color=Color.white;
                 playerInput.SwitchCurrentActionMap("CD");
                 LiftPoint.UpdateCanLift(true);
+                Lifting = false;
                 if (scapeCount>=10)
                 {
                     //如果達成逃脫條件，變回IDLE狀態，並從子物件中移出，再取消Kinematic
                     _playerState=PlayerState.Idle;
                     enemy.GetComponent<PlayerData>()._playerState=PlayerState.Idle;
+                    playerContaller.ScapeJumpe();
                     enemy=null;
                     this.transform.parent=null;
                     rigidbody.isKinematic=false;
@@ -99,8 +101,8 @@ public class PlayerData : MonoBehaviourPunCallbacks
                 this.gameObject.GetComponent<MeshRenderer>().material.color=Color.black;
                 LiftPoint.UpdateCanLift(CanLift);
                 //_gm.CallRpcPlayerDead(this.gameObject);
-                _gm.ReSetPlayer(this.gameObject);
-                SwitchState(PlayerState.Idle);
+                
+                // SwitchState(PlayerState.Idle);
 
                 break;
 
@@ -135,22 +137,21 @@ public class PlayerData : MonoBehaviourPunCallbacks
     }
 //-------改變狀態-------
     public void SwitchState(PlayerState state){
-        //hashTable table = new hashTable();
         _playerState=state;
-        //table.Add("_playerState",_playerState);
-        //PhotonNetwork.LocalPlayer.SetCustomProperties(table);
+        print(this.gameObject.name +" " + state);
         string stateText = state.ToString();
-        CallRpcStateSwitch(state,stateText);
+        //CallRpcStateSwitch(state,stateText);
     }
 
-    public void CallRpcStateSwitch(PlayerData.PlayerState playerState,string playerStateText){//呼叫RPC執行切換角色狀態
-        _pv.RPC("RpcStateSwitch",RpcTarget.All,playerState,playerStateText);
+    public void CallRpcStateSwitch(PlayerData.PlayerState playerState){//呼叫RPC執行切換角色狀態
+        _pv.RPC("RpcStateSwitch",RpcTarget.All,playerState);
     }
 
     [PunRPC]
-    void RpcStateSwitch(PlayerData.PlayerState playerState,string text,PhotonMessageInfo info){//RPC執行切換角色狀態
-        print(playerState);
-        _playerState = playerState;
+    void RpcStateSwitch(PlayerData.PlayerState playerState,PhotonMessageInfo info){//RPC執行切換角色狀態
+        
+        SwitchState(playerState);
+        //_playerState = playerState;
     }
     
     //-------撞到時-------
@@ -162,7 +163,7 @@ public class PlayerData : MonoBehaviourPunCallbacks
             _gm.CallRpcSendMessageToAll(other._pv.Owner.NickName + "撞到" + _pv.Owner.NickName);
             _gm.CallRpcSendMessageToAll(_pv.Owner.NickName + "RCP Say Hello");
             //如果碰撞時自己的狀態是衝刺，對方的tag是player，就把對方的狀態變成CantMove
-            SwitchState(_playerState=PlayerState.CantMove);
+            CallRpcStateSwitch(_playerState=PlayerState.CantMove);
             //enemyList.Add(other.gameObject);
             //other.enemy = this.gameObject;
             //other.gameObject.GetComponent<Rigidbody>().AddForce(-playerDirection*playerContaller.BouncePower,ForceMode.Force);
@@ -190,39 +191,19 @@ public class PlayerData : MonoBehaviourPunCallbacks
         print("Hit Face!!");
     }
 
-    //private void OnCollisionEnter(Collision other) {
-    //     if(other.gameObject.tag == "Player")
-    //     {
-    //         //OnHitFace(other.gameObject.GetComponent<PlayerData>());
-    //     }
-    // }
-
-    // public override void OnPlayerPropertiesUpdate(Player targetPlayer, hashTable changedProps)
-    // {//接收數值更新
-    //     if (targetPlayer != null && changedProps != null)
-    //     {
-    //         if (targetPlayer == _pv.Owner)
-    //         {
-    //             //_playerState = (PlayerState)changedProps["_playerState"]; 
-    //             if (scapeCount != null && changedProps != null)
-    //             {
-    //                 scapeCount = (int)changedProps["scapeCount"];
-    //             }
-    //         }
-    //     }
-    // }
-
-//-------同步角色狀態-------
-    
-
     //-------加分-------
     public void CountingPoint(){//加分&&勝利
-        throwMe.GetComponent<PlayerData>().Point += 1;
-        print("+1");
-        if(throwMe.GetComponent<PlayerData>().Point >= 3){
-            //_gm.GameOver();
-            _gm.GameOver();
-            _gm.SetWinerName(this.gameObject.name);
+        if (throwMe)
+        {
+            throwMe.GetComponent<PlayerData>().Point += 1;
+            print(throwMe.name + "+1");
+            _gm.ReSetPlayer(this.gameObject);
+        }
+        if(throwMe && throwMe.GetComponent<PlayerData>().Point >= 3){
+            // _gm.GameOver();
+            
+            _gm.SetWinerName(throwMe.gameObject.name);
+            _gm.CallRpcGameOver();
             //_gm.CallRpcSetWinerName(this.gameObject.name);
             print(this.gameObject.name + " Point!!");
         }

@@ -28,6 +28,8 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
     [SerializeField]
     InputActionReference ThrowActionRef;
     [SerializeField]
+    InputActionReference ScapeActionRef;
+    [SerializeField]
     Text ForwordActionText;
     [SerializeField]
     Text BackwordActionText;
@@ -41,6 +43,8 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
     Text LiftActionText;
     [SerializeField]
     Text ThrowActionText;
+    [SerializeField]
+    Text ScapeActionText;
     public int CharacterIndex = 0;
     public List<GameObject> CharacterList = new List<GameObject>();
     public Transform GeneratPoint;
@@ -208,6 +212,7 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
 
 //--------綁定按鍵-------
     public void SetBindingBT(){//初始化綁定按鈕顯示文字
+        //----移動控制
         var vec = MoveActionRef.action.ChangeCompositeBinding("2DVector");
         var forword = vec.NextPartBinding("Up");
         var backword = vec.NextPartBinding("Down");
@@ -225,16 +230,20 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
         BackwordActionText.text = bs;
         LeftActionText.text = ls;
         RightActionText.text = rs;
-
-        var dash = DashActionRef.action.bindings[0].effectivePath;
+        //----動作控制
+        var dash = DashActionRef.action.bindings[0].effectivePath;//取得目前綁定的按鍵名
         var lift = LiftActionRef.action.bindings[0].effectivePath;
         var Throw = ThrowActionRef.action.bindings[0].effectivePath;
+        var scap = ScapeActionRef.action.bindings[0].effectivePath;
         var dashBT = InputControlPath.ToHumanReadableString(dash,InputControlPath.HumanReadableStringOptions.OmitDevice);
+        //將取得的按鍵名轉為可讀字串
         var liftBT = InputControlPath.ToHumanReadableString(lift,InputControlPath.HumanReadableStringOptions.OmitDevice);
         var throwBT = InputControlPath.ToHumanReadableString(Throw,InputControlPath.HumanReadableStringOptions.OmitDevice);
-        DashActionText.text = XboxController(dashBT);
+        var scapeBT = InputControlPath.ToHumanReadableString(scap,InputControlPath.HumanReadableStringOptions.OmitDevice);
+        DashActionText.text = XboxController(dashBT);//設定為Button顯示字串
         LiftActionText.text = XboxController(liftBT);
         ThrowActionText.text = XboxController(throwBT);
+        ScapeActionText.text = XboxController(scapeBT);
     }
 
     public void RebindingForword(){//重新綁定往前按鍵
@@ -378,6 +387,13 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
         Rebinding(ThrowActionRef,ThrowActionText);
     }
 
+    public void RebindingScape(){//重新綁定Scape按鍵
+        print("Rebinding");
+        playerInput.SwitchCurrentActionMap("NotMe");
+        ScapeActionText.text = ("請輸入...");
+        Rebinding(ScapeActionRef,ScapeActionText);
+    }
+    
     public void Rebinding(InputActionReference reference,Text actionText){//重新綁定
         reference.action.PerformInteractiveRebinding()
         .OnMatchWaitForAnother(0.1f)

@@ -19,15 +19,16 @@ public class dieCollider : MonoBehaviour
         
     }
 
-    // private void OnCollisionEnter(Collision other) {
-    //     print(other.gameObject.name + "Dead!!");
-    //     other.gameObject.GetComponent<PlayerData>().SwitchState(PlayerData.PlayerState.Dead);
-    //     other.gameObject.GetComponent<PlayerData>().CountingPoint();
-    // }
+    IEnumerator DelayPointCount(float s,Collider other){
+        yield return new WaitForSecondsRealtime(s);
+        
+    }
 
     private void OnTriggerEnter(Collider other) {
         if (other.tag == "Player")
         {
+            //StartCoroutine(DelayPointCount(1,other));
+            print("DelayPointCount");
             print(other.name + "Dead!!");
             other.gameObject.GetComponent<PlayerData>().SwitchState(PlayerData.PlayerState.Dead);
             other.gameObject.GetComponent<PlayerData>().CountingPoint();

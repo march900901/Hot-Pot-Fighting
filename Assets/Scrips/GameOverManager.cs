@@ -15,10 +15,6 @@ public class GameOverManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void SetWiner(){
         string winerName =  PlayerPrefs.GetString("WinerName");
