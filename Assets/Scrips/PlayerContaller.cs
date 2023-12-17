@@ -9,7 +9,6 @@ using Photon.Pun;
 using hashTable = ExitGames.Client.Photon.Hashtable;
 using UnityEditor;
 using Unity.VisualScripting;
-
 public class PlayerContaller : MonoBehaviourPunCallbacks
 {   
     PlayerData playerData;
@@ -20,6 +19,8 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
     GameObject LiftPoint;
     [SerializeField]
     Animator _animator;
+    [SerializeField]
+    ParticleSystem DashEffect;
 
     public float MoveSpeed=5.0f;
     public float DashPower=5.0f;
@@ -54,11 +55,6 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
             print("設定完成");
             playerInput.actions.LoadBindingOverridesFromJson(bindingDate);
         }else{print("沒有綁定資料");}
-        // if (!_pv.IsMine)
-        // {
-        //     playerInput.SwitchCurrentActionMap("NotMe");
-        //     playerData.DefaultColor=Color.red;
-        // }
     }
 
     // Update is called once per frame
@@ -107,6 +103,7 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
         //延遲過後將角色控制設為預設Map，並將狀態改為Idle
         yield return new WaitForSecondsRealtime(s);
         //playerInput.SwitchCurrentActionMap(defaultMap);
+        DashEffect.Stop();  
         playerData.CallRpcStateSwitch(PlayerData.PlayerState.Idle);
     }
 //--------抬人--------
@@ -232,13 +229,9 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
                 {//限制只能控制自己
                     //向前衝刺一下
                     playerData.CallRpcStateSwitch(PlayerData.PlayerState.Dash);
+                    DashEffect.Play();
                     rigidbody.AddForce(new Vector3(movevector.x,0,movevector.y)*DashPower,ForceMode.Impulse);
                     playerInput.SwitchCurrentActionMap("CD");//取消玩家控制
-                    // if (Time.deltaTime >= CanMoveTime)
-                    // {
-                    //     playerData.SwitchState(PlayerData.PlayerState.Idle);
-                    //     CanMoveTime = Time.deltaTime + CDTime;
-                    // }
                     StartCoroutine(DelayAction(DashCD));//玩家進入CD時間
                 }
             }

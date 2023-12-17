@@ -21,6 +21,8 @@ public class PlayerData : MonoBehaviourPunCallbacks
     public int Point = 0;
     [SerializeField]
     public Text nameText;
+    [SerializeField]
+    ParticleSystem HitEffect;
     public GameObject enemy;
     public PlayerState _playerState;
     public Color DefaultColor;
@@ -138,7 +140,7 @@ public class PlayerData : MonoBehaviourPunCallbacks
 //-------改變狀態-------
     public void SwitchState(PlayerState state){
         _playerState=state;
-        print(this.gameObject.name +" " + state);
+        //print(this.gameObject.name +" " + state);
         string stateText = state.ToString();
         //CallRpcStateSwitch(state,stateText);
     }
@@ -162,6 +164,7 @@ public class PlayerData : MonoBehaviourPunCallbacks
             //throwMe = other.gameObject;
             _gm.CallRpcSendMessageToAll(other._pv.Owner.NickName + "撞到" + _pv.Owner.NickName);
             _gm.CallRpcSendMessageToAll(_pv.Owner.NickName + "RCP Say Hello");
+            HitEffect.Play();
             //如果碰撞時自己的狀態是衝刺，對方的tag是player，就把對方的狀態變成CantMove
             CallRpcStateSwitch(_playerState=PlayerState.CantMove);
             //enemyList.Add(other.gameObject);

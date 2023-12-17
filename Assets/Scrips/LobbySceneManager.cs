@@ -20,6 +20,7 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
     public Transform contenObject;
     public float timeBettwinUpdate = 1.5f;
     float nextUpdateTime;
+    public AudioManager _am;
     void Start()
     {
 
@@ -30,6 +31,7 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
             PhotonNetwork.JoinLobby();
         }
         WarningText.GetComponent<Text>().text = null;//初始化WarningText
+        _am = GameObject.Find("AudioManager").GetComponent<AudioManager>();
     }
 
     public override void OnConnectedToMaster()
@@ -63,6 +65,7 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
         {//確認房間名和玩家名不是空的，然後就創建房間並設定自己的名字
             PhotonNetwork.CreateRoom(roomName);
             PhotonNetwork.LocalPlayer.NickName = PlayerName;
+            //_am.PlayAudio(8);
         }else{
             Debug.Log("Please enter Room name and Player name");
         }
@@ -121,4 +124,5 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
             }
         }
     }
+
 }

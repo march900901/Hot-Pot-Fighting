@@ -457,7 +457,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1001 &1835230957
+--- !u!1001 &1519212311
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -472,6 +472,22 @@ PrefabInstance:
     - target: {fileID: 3565059113061548435, guid: 12661ffde831111468cbe2912228518d, type: 3}
       propertyPath: m_Name
       value: fish
+      objectReference: {fileID: 0}
+    - target: {fileID: 4544953026424473457, guid: 12661ffde831111468cbe2912228518d, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4544953026424473457, guid: 12661ffde831111468cbe2912228518d, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4544953026424473457, guid: 12661ffde831111468cbe2912228518d, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7667786346405306489, guid: 12661ffde831111468cbe2912228518d, type: 3}
+      propertyPath: simulationSpeed
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8641646075716855716, guid: 12661ffde831111468cbe2912228518d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -579,7 +595,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 179b014dc5f07e542957bd6ecba0fe91, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -686,7 +702,7 @@ Camera:
   field of view: 60
   orthographic: 0
   orthographic size: 5
-  m_Depth: -1
+  m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -725,4 +741,4 @@ SceneRoots:
   - {fileID: 791321868}
   - {fileID: 124801544}
   - {fileID: 1885785917}
-  - {fileID: 1835230957}
+  - {fileID: 1519212311}

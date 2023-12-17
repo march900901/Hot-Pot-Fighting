@@ -50,11 +50,11 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
     public Transform GeneratPoint;
     public string selectCharacterName;
     public Text text_Confirm;
-    
     public bool CanStart;
     public int CanStartPlayer;
     PhotonView _pv;
     PlayerInput playerInput;
+    AudioManager _am;
     // Start is called before the first frame update
     void Start()
     {
@@ -75,6 +75,7 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
         _pv = this.transform.GetComponent<PhotonView>();
         playerInput = this.transform.GetComponent<PlayerInput>();
         SetBindingBT();
+        _am = GameObject.Find("AudioManager").GetComponent<AudioManager>();
     }
 
     public override void OnMasterClientSwitched(Player newMasterClient){//當房主切換的時候
@@ -100,12 +101,13 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
     }
 
     public void OnClickStart(){//按下Start按紐時
-        
+        StartGame();
         SceneManager.LoadScene("Game");
         PhotonNetwork.CurrentRoom.IsVisible = false;
     }
 
     public void OnClickLeaveRoom(){//按下LeaveRoom按鈕時
+        Leave();
         PhotonNetwork.LeaveRoom();
     }
 
@@ -261,6 +263,7 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
                 string text = XboxController(s);
                 ForwordActionText.text = $"{text}";
                 print("done");
+                Rebind();
                 operation.Dispose();
                 playerInput.SwitchCurrentActionMap("Player1");
             })
@@ -270,10 +273,12 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
                 string text = XboxController(s);
                 ForwordActionText.text = $"{text}";
                 print("done");
+                Cancel();
                 operation.Dispose();
                 playerInput.SwitchCurrentActionMap("Player1");
             })
             .Start();
+            
     }
 
     public void RebindingBackword(){//重新綁定往後按鍵
@@ -291,6 +296,7 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
             string text = XboxController(s);
             BackwordActionText.text = $"{text}";
             print("done");
+            Rebind();
             operation.Dispose();
             playerInput.SwitchCurrentActionMap("Player1");
         })
@@ -300,10 +306,12 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
             string text = XboxController(s);
             BackwordActionText.text = $"{text}";
             print("done");
+            Cancel();
             operation.Dispose();
             playerInput.SwitchCurrentActionMap("Player1");
         })
         .Start();
+        Rebind();
     }
 
     public void RebindingLeft(){//重新綁定往左按鍵
@@ -321,6 +329,7 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
             string text = XboxController(s);
             LeftActionText.text = $"{text}";
             print("done");
+            Rebind();
             operation.Dispose();
             playerInput.SwitchCurrentActionMap("Player1");
         })
@@ -330,10 +339,12 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
             string text = XboxController(s);
             LeftActionText.text = $"{text}";
             print("done");
+            Cancel();
             operation.Dispose();
             playerInput.SwitchCurrentActionMap("Player1");
         })
         .Start();
+        Rebind();
     }
 
     public void RebindingRght(){//重新綁定往右按鍵
@@ -351,6 +362,7 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
             string text = XboxController(s);
             RightActionText.text = $"{text}";
             print("done");
+            Rebind();
             operation.Dispose();
             playerInput.SwitchCurrentActionMap("Player1");
         })
@@ -360,10 +372,12 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
             string text = XboxController(s);
             RightActionText.text = $"{text}";
             print("done");
+            Cancel();
             operation.Dispose();
             playerInput.SwitchCurrentActionMap("Player1");
         })
         .Start();
+        Rebind();
     }
 
     public void RebindingDash(){//重新綁定Dash按鍵
@@ -404,6 +418,7 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
             string text = XboxController(s);
             actionText.text = $"{text}";
             print("done");
+            Rebind();
             operation.Dispose();
             playerInput.SwitchCurrentActionMap("Player1");
         })
@@ -413,10 +428,12 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
             string text = XboxController(s);
             actionText.text = $"{text}";
             print("done");
+            Cancel();
             operation.Dispose();
             playerInput.SwitchCurrentActionMap("Player1");
         })
         .Start();
+        
     }
 
     public string XboxController(string input){//修正Xbox手把按鈕名稱
@@ -444,5 +461,26 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
     public void SaveRebinding(){//儲存綁定後按鍵配置
         string AllActionBindingDate = playerInput.actions.SaveBindingOverridesAsJson();
         PlayerPrefs.SetString("binding",AllActionBindingDate);
+    }
+
+//-------按鈕音效-------
+    public void ClickRebindButton(){//按下綁定按鈕的音效
+        _am.PlayAudio(9);
+    }
+
+    public void Rebind(){//綁定完成的音效
+        _am.PlayAudio(10);
+    }
+
+    public void Cancel(){
+        _am.PlayAudio(11);
+    }
+
+    public void Leave(){
+        _am.PlayAudio(16);
+    }
+
+    public void StartGame(){
+        _am.PlayAudio(2);
     }
 }

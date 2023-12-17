@@ -21,17 +21,17 @@ public class dieCollider : MonoBehaviour
 
     IEnumerator DelayPointCount(float s,Collider other){
         yield return new WaitForSecondsRealtime(s);
-        
-    }
+        print("DelayPointCount");
+        print(other.name + "Dead!!");
+        other.gameObject.GetComponent<PlayerData>().SwitchState(PlayerData.PlayerState.Dead);
+        other.gameObject.GetComponent<PlayerData>().CountingPoint();
+}
 
     private void OnTriggerEnter(Collider other) {
         if (other.tag == "Player")
         {
-            //StartCoroutine(DelayPointCount(1,other));
-            print("DelayPointCount");
-            print(other.name + "Dead!!");
-            other.gameObject.GetComponent<PlayerData>().SwitchState(PlayerData.PlayerState.Dead);
-            other.gameObject.GetComponent<PlayerData>().CountingPoint();
+            StartCoroutine(DelayPointCount(1,other));
+            
         }
     }
 }

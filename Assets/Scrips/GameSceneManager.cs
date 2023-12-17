@@ -23,6 +23,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     public string CharacterName;
     public GameObject instruction;
     public GameObject GameOverPanlel;
+    public AudioSource audio;
     // Start is called before the first frame update
     void Start()
     {
@@ -39,6 +40,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         PhotonNetwork.SerializationRate = 100;
         print("SendRate: " + PhotonNetwork.SendRate);
         print("SerializaationRate: " + PhotonNetwork.SerializationRate);
+        audio.PlayDelayed(1.5f);
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -159,10 +161,10 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
 
 //-------重設玩家數值-------
     public void ReSetPlayerData(PlayerData player){
-        // player.Point = 0;
+
         player.enemy = null;
         player._playerState = PlayerData.PlayerState.Idle;
-        player.throwMe = null;
+        //player.throwMe = null;
         player.Lifting = false;
         player.CanLift = false;
     }
