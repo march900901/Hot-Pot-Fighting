@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class sauceCollition : MonoBehaviour
@@ -10,6 +11,7 @@ public class sauceCollition : MonoBehaviour
             other.GetComponent<PlayerData>().SwitchState(PlayerData.PlayerState.CantMove);
             other.GetComponent<PlayerContaller>().StopAllCoroutines();
             print("Sauce");
+            Destroy(this.gameObject);
         }
         
     }
