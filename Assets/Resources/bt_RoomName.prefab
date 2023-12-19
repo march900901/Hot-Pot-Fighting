@@ -46,7 +46,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 0dd46c7aa0a1ad444aaf0850e528bc61, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 25622e0496414d64986b93a58ecceaf2, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -360,3 +360,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RoomName: {fileID: 1792399475532506175}
   WarningText: {fileID: 7174448220768208204}
+  audio: {fileID: 923414215844289477}

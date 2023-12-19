@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class dieCollider : MonoBehaviour
 {
     public GameSceneManager gameManager;
-    public string P1;
-    public string P2;
+    public GameObject particle;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +30,8 @@ public class dieCollider : MonoBehaviour
     private void OnTriggerEnter(Collider other) {
         if (other.tag == "Player")
         {
+            GameObject smoke = Instantiate(particle,other.transform);
+            smoke.GetComponent<ParticleSystem>().Play();
             StartCoroutine(DelayPointCount(1,other));
             
         }

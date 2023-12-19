@@ -21,13 +21,15 @@ public class PlayerData : MonoBehaviourPunCallbacks
     public int Point = 0;
     [SerializeField]
     public Text nameText;
+    public  ParticleSystem HitEffect;
     [SerializeField]
-    ParticleSystem HitEffect;
+    ParticleSystem scapeEffect;
     public GameObject enemy;
     public PlayerState _playerState;
     public Color DefaultColor;
     public GameObject throwMe;
     public LiftCollider LiftPoint;
+    public GameObject Star;
     GameSceneManager _gm;
     PlayerContaller playerContaller;
     Rigidbody rigidbody;
@@ -74,6 +76,7 @@ public class PlayerData : MonoBehaviourPunCallbacks
                 playerInput.SwitchCurrentActionMap(defaultMap);
                 this.gameObject.GetComponent<MeshRenderer>().material.color=DefaultColor;
                 LiftPoint.UpdateCanLift(CanLift);
+                Star.active = false;
                 break;
 
             case PlayerState.CantMove:
@@ -82,13 +85,19 @@ public class PlayerData : MonoBehaviourPunCallbacks
                 playerInput.SwitchCurrentActionMap("CD");
                 LiftPoint.UpdateCanLift(true);
                 Lifting = false;
+                Star.active = true;
                 if (scapeCount>=10)
                 {
+                    scapeEffect.Play();
                     //如果達成逃脫條件，變回IDLE狀態，並從子物件中移出，再取消Kinematic
                     _playerState=PlayerState.Idle;
-                    enemy.GetComponent<PlayerData>()._playerState=PlayerState.Idle;
-                    playerContaller.ScapeJumpe();
-                    enemy=null;
+                    if (enemy)
+                    {
+                        enemy.GetComponent<PlayerData>()._playerState=PlayerState.Idle;
+                        playerContaller.ScapeJumpe();
+                        enemy=null;
+                    }
+                    
                     this.transform.parent=null;
                     rigidbody.isKinematic=false;
                 }
@@ -107,13 +116,6 @@ public class PlayerData : MonoBehaviourPunCallbacks
                 // SwitchState(PlayerState.Idle);
 
                 break;
-
-            // case PlayerState.Fly:
-            //     if (!_pv.IsMine)
-            //     {
-            //         rigidbody.isKinematic=true;
-            //     }
-            //     break;
 
             case PlayerState.Lift:
                 LiftPoint.UpdateCanLift(CanLift);
@@ -206,7 +208,6 @@ public class PlayerData : MonoBehaviourPunCallbacks
             // _gm.GameOver();
             
             _gm.SetWinerName(throwMe.gameObject.name);
-            _gm.CallRpcGameOver();
             //_gm.CallRpcSetWinerName(this.gameObject.name);
             print(this.gameObject.name + " Point!!");
         }

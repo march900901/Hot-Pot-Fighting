@@ -128,6 +128,8 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     }
 //-------離開遊戲-------
     public void OnClickLeaveGame(){
+        AudioSource audio = this.gameObject.GetComponent<AudioSource>();
+        audio.Play();
         PhotonNetwork.LeaveRoom();
     }
 
@@ -148,6 +150,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
 
     public void SetWinerName(string winerName){
         PlayerPrefs.SetString("WinerName",winerName);
+        CallRpcGameOver();
     }
 
     public void CallRpcSetWinerName(string winerName){//呼叫RPC傳送贏家名字

@@ -21,6 +21,7 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
     Animator _animator;
     [SerializeField]
     ParticleSystem DashEffect;
+    public GameObject smoke;
 
     public float MoveSpeed=5.0f;
     public float DashPower=5.0f;
@@ -230,6 +231,9 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
                     //向前衝刺一下
                     playerData.CallRpcStateSwitch(PlayerData.PlayerState.Dash);
                     DashEffect.Play();
+                    //playerData.HitEffect.Play();
+                    GameObject dashSmoke = Instantiate(smoke,this.transform.position,Quaternion.identity);
+                    dashSmoke.GetComponent<ParticleSystem>().Play();
                     rigidbody.AddForce(new Vector3(movevector.x,0,movevector.y)*DashPower,ForceMode.Impulse);
                     playerInput.SwitchCurrentActionMap("CD");//取消玩家控制
                     StartCoroutine(DelayAction(DashCD));//玩家進入CD時間
@@ -256,11 +260,12 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
         //計算逃脫按的次數
         if (callback.performed && playerData._playerState==PlayerData.PlayerState.CantMove)
         {
-            DoScape();            
+            DoScape();
+            CallRpcDoScape();            
         }
     }
 
-    public void CallRpcDoScaper(){
+    public void CallRpcDoScape(){
         //用RPC呼叫其他玩家場景的自己執行DoScape
         _pv.RPC("RpcDoScape",RpcTarget.Others);
     }
