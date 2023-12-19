@@ -101,17 +101,17 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
     }
 
     public void OnClickStart(){//按下Start按紐時
-        StartGame();
         SceneManager.LoadScene("Game");
         PhotonNetwork.CurrentRoom.IsVisible = false;
     }
 
     public void OnClickLeaveRoom(){//按下LeaveRoom按鈕時
-        Leave();
+        _am.PlayAudio(16);
         PhotonNetwork.LeaveRoom();
     }
 
     public override void OnLeftRoom(){//當離開房間時
+        
         SceneManager.LoadScene("Lobby");
     }
 //---------選角區--------
@@ -478,13 +478,5 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
 
     public void Cancel(){
         _am.PlayAudio(11);
-    }
-
-    public void Leave(){
-        _am.PlayAudio(16);
-    }
-
-    public void StartGame(){
-        _am.PlayAudio(2);
     }
 }

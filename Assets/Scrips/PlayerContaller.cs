@@ -294,6 +294,6 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
     }
 
     public void ScapeJumpe(){
-        rigidbody.AddForce(transform.forward*MoveSpeed,ForceMode.Impulse);
+        rigidbody.AddForce(transform.forward,ForceMode.Impulse);
     }
 }

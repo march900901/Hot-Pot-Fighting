@@ -23,7 +23,9 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     public string CharacterName;
     public GameObject instruction;
     public GameObject GameOverPanlel;
-    public AudioSource audio;
+    public AudioManager _am;
+    public AudioSource Leav;
+    public AudioSource StartGame;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,11 +38,13 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         instruction.SetActive(true);
         GameOverPanlel.SetActive(false);
         InisGame();
-        PhotonNetwork.SendRate = 100;
-        PhotonNetwork.SerializationRate = 100;
+        PhotonNetwork.SendRate = 1000;
+        PhotonNetwork.SerializationRate = 1000;
         print("SendRate: " + PhotonNetwork.SendRate);
         print("SerializaationRate: " + PhotonNetwork.SerializationRate);
-        audio.PlayDelayed(1.5f);
+        //StartGame.PlayDelayed(1.5f);
+        _am = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        _am.PlayAudio(2);
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -127,9 +131,9 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         messageText.text = string.Join("\n",messageList);
     }
 //-------離開遊戲-------
-    public void OnClickLeaveGame(){
-        AudioSource audio = this.gameObject.GetComponent<AudioSource>();
-        audio.Play();
+    public void OnClickLeaveGame(){//按下離開按鈕
+        //Leav.Play();
+        _am.PlayAudio(4);
         PhotonNetwork.LeaveRoom();
     }
 

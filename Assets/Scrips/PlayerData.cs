@@ -86,6 +86,7 @@ public class PlayerData : MonoBehaviourPunCallbacks
                 LiftPoint.UpdateCanLift(true);
                 Lifting = false;
                 Star.active = true;
+                playerContaller.StopAllCoroutines();
                 if (scapeCount>=10)
                 {
                     scapeEffect.Play();
