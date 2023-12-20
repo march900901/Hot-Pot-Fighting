@@ -22,6 +22,7 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
     [SerializeField]
     ParticleSystem DashEffect;
     public GameObject smoke;
+    public AudioSource DashAudio;
 
     public float MoveSpeed=5.0f;
     public float DashPower=5.0f;
@@ -32,7 +33,7 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
     public float beLiftCD=5;
     public float BouncePower=5.0f;
     public string defaultMap;
-    public float throwPower=5.0f;
+    public float throwPower=1.0f;
     private float moveingSpeed;
     //public GameObject enemy;
     public PhotonView _pv;
@@ -170,7 +171,7 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
     public void Throw(InputAction.CallbackContext callback){
         if (callback.performed)
         {//收到輸入指令時
-            print(gameObject.name + "Throw!!!");
+            //print(gameObject.name + "Throw!!!");
             CallRpcDoThrow();   
             DoThrow();
         }
@@ -191,7 +192,7 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
                 //把對方從子物件移出
                 enemy.transform.parent=null;
                 //丟出去
-                enemyRig.AddForce(transform.forward*throwPower,ForceMode.Impulse);
+                enemyRig.AddForce(transform.forward *throwPower + transform.up*(throwPower/2),ForceMode.Impulse);
                 //自己狀態設為Idle
                 playerData.CallRpcStateSwitch(PlayerData.PlayerState.Idle);
                 //刪掉敵人
@@ -230,10 +231,12 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
                 {//限制只能控制自己
                     //向前衝刺一下
                     playerData.CallRpcStateSwitch(PlayerData.PlayerState.Dash);
+                    DashAudio.Play();
                     DashEffect.Play();
                     //playerData.HitEffect.Play();
                     GameObject dashSmoke = Instantiate(smoke,this.transform.position,Quaternion.identity);
                     dashSmoke.GetComponent<ParticleSystem>().Play();
+                    Destroy(dashSmoke,2);
                     rigidbody.AddForce(new Vector3(movevector.x,0,movevector.y)*DashPower,ForceMode.Impulse);
                     playerInput.SwitchCurrentActionMap("CD");//取消玩家控制
                     StartCoroutine(DelayAction(DashCD));//玩家進入CD時間

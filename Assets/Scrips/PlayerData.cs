@@ -30,6 +30,7 @@ public class PlayerData : MonoBehaviourPunCallbacks
     public GameObject throwMe;
     public LiftCollider LiftPoint;
     public GameObject Star;
+    public AudioSource hit;
     GameSceneManager _gm;
     PlayerContaller playerContaller;
     Rigidbody rigidbody;
@@ -73,6 +74,7 @@ public class PlayerData : MonoBehaviourPunCallbacks
             case PlayerState.Idle:
                 //狀態Idle時，將輸入設為預設Map角色顏色設為預設
                 scapeCount=0;
+                this.transform.localScale = new Vector3(1,1,1);
                 playerInput.SwitchCurrentActionMap(defaultMap);
                 this.gameObject.GetComponent<MeshRenderer>().material.color=DefaultColor;
                 LiftPoint.UpdateCanLift(CanLift);
@@ -160,19 +162,15 @@ public class PlayerData : MonoBehaviourPunCallbacks
     }
     
     //-------撞到時-------
-    public void OnHit(PlayerData other){
-        //PlayerData otherData=other.transform.GetComponent<PlayerData>();
+    public void OnHit(PlayerData other){//被撞到的時候
         if (other._playerState==PlayerState.Dash)
-        {//被撞到的時候
-            //throwMe = other.gameObject;
+        {
+            hit.Play();
             _gm.CallRpcSendMessageToAll(other._pv.Owner.NickName + "撞到" + _pv.Owner.NickName);
             _gm.CallRpcSendMessageToAll(_pv.Owner.NickName + "RCP Say Hello");
             HitEffect.Play();
             //如果碰撞時自己的狀態是衝刺，對方的tag是player，就把對方的狀態變成CantMove
             CallRpcStateSwitch(_playerState=PlayerState.CantMove);
-            //enemyList.Add(other.gameObject);
-            //other.enemy = this.gameObject;
-            //other.gameObject.GetComponent<Rigidbody>().AddForce(-playerDirection*playerContaller.BouncePower,ForceMode.Force);
             print("Hit!!");
         }
     }
@@ -199,17 +197,15 @@ public class PlayerData : MonoBehaviourPunCallbacks
 
     //-------加分-------
     public void CountingPoint(){//加分&&勝利
-        if (throwMe)
+        if (throwMe && throwMe.GetComponent<PlayerData>().Point <= 2)
         {
             throwMe.GetComponent<PlayerData>().Point += 1;
             print(throwMe.name + "+1");
             _gm.ReSetPlayer(this.gameObject);
         }
-        if(throwMe && throwMe.GetComponent<PlayerData>().Point >= 3){
-            // _gm.GameOver();
-            
-            _gm.SetWinerName(throwMe.gameObject.name);
-            //_gm.CallRpcSetWinerName(this.gameObject.name);
+        if(throwMe && throwMe.GetComponent<PlayerData>().Point >= 3){            
+            //_gm.SetWinerName(throwMe.gameObject.name);
+            _gm.CallRpcSetWinerName(throwMe.gameObject.name);
             print(this.gameObject.name + " Point!!");
         }
     }

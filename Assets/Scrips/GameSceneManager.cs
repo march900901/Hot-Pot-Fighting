@@ -44,7 +44,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         print("SerializaationRate: " + PhotonNetwork.SerializationRate);
         //StartGame.PlayDelayed(1.5f);
         _am = GameObject.Find("AudioManager").GetComponent<AudioManager>();
-        _am.PlayAudio(2);
+        StartGame.Play();
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -164,6 +164,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     [PunRPC]
     void RpcSetWinerName(string winerName,PhotonMessageInfo info){//RPC執行贏家名字
         PlayerPrefs.SetString("WinerName",winerName);
+        GameOver();
     }
 
 //-------重設玩家數值-------
