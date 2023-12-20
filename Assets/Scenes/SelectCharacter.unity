@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 21058722}
   - component: {fileID: 21058721}
   - component: {fileID: 21058724}
+  - component: {fileID: 21058725}
   m_Layer: 5
   m_Name: PreviousButten
   m_TagString: Untagged
@@ -150,13 +151,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 21058719}
-  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.8875861, y: 5.0751224, z: 1.6716}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1994717836}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -72, y: -43}
@@ -206,6 +207,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 21058725}
+        m_TargetAssemblyTypeName: DoTween, Assembly-CSharp
+        m_MethodName: ScaleButton
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0.7
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 2022884461}
         m_TargetAssemblyTypeName: SelectCharacterManager, Assembly-CSharp
         m_MethodName: ReduceCharacterIndex
@@ -250,7 +263,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 936345f7fc3934efa8119a8700d904c7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3b85f7aac2c9d2d49a74da4cc8201db5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -364,6 +377,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &21058725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 21058719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d10d4383d58700d449b8290917bc81b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objScale: {x: 0, y: 0, z: 0}
 --- !u!1 &22687253
 GameObject:
   m_ObjectHideFlags: 0
@@ -455,6 +481,7 @@ GameObject:
   - component: {fileID: 24011614}
   - component: {fileID: 24011613}
   - component: {fileID: 24011612}
+  - component: {fileID: 24011615}
   m_Layer: 5
   m_Name: ChangRight
   m_TagString: Untagged
@@ -527,6 +554,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 24011615}
+        m_TargetAssemblyTypeName: DoTween, Assembly-CSharp
+        m_MethodName: Scale
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0.7
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 2022884461}
         m_TargetAssemblyTypeName: SelectCharacterManager, Assembly-CSharp
         m_MethodName: RebindingRght
@@ -589,6 +628,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 24011610}
   m_CullTransparentMesh: 1
+--- !u!114 &24011615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 24011610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d10d4383d58700d449b8290917bc81b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objScale: {x: 0, y: 0, z: 0}
 --- !u!1 &65422933
 GameObject:
   m_ObjectHideFlags: 0
@@ -765,6 +817,7 @@ GameObject:
   - component: {fileID: 208337783}
   - component: {fileID: 208337782}
   - component: {fileID: 208337785}
+  - component: {fileID: 208337786}
   m_Layer: 5
   m_Name: NextButten
   m_TagString: Untagged
@@ -779,16 +832,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 208337780}
-  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.8875861, y: 5.0751224, z: 1.6716}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1994717836}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 579, y: -43}
+  m_AnchoredPosition: {x: 615, y: -31}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &208337782
@@ -835,6 +888,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 21058725}
+        m_TargetAssemblyTypeName: DoTween, Assembly-CSharp
+        m_MethodName: ScaleButton
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0.7
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 2022884461}
         m_TargetAssemblyTypeName: SelectCharacterManager, Assembly-CSharp
         m_MethodName: AddCharaterIndex
@@ -879,7 +944,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 936345f7fc3934efa8119a8700d904c7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e698f2db6e40195448168c3efee00fa0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -993,6 +1058,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &208337786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 208337780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d10d4383d58700d449b8290917bc81b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objScale: {x: 0, y: 0, z: 0}
 --- !u!1 &247794468
 GameObject:
   m_ObjectHideFlags: 0
@@ -1585,6 +1663,7 @@ GameObject:
   - component: {fileID: 560686480}
   - component: {fileID: 560686479}
   - component: {fileID: 560686478}
+  - component: {fileID: 560686481}
   m_Layer: 5
   m_Name: ChangLeft
   m_TagString: Untagged
@@ -1657,6 +1736,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 560686481}
+        m_TargetAssemblyTypeName: DoTween, Assembly-CSharp
+        m_MethodName: Scale
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0.7
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 2022884461}
         m_TargetAssemblyTypeName: SelectCharacterManager, Assembly-CSharp
         m_MethodName: RebindingLeft
@@ -1719,6 +1810,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 560686476}
   m_CullTransparentMesh: 1
+--- !u!114 &560686481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 560686476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d10d4383d58700d449b8290917bc81b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objScale: {x: 0, y: 0, z: 0}
 --- !u!1 &560716572
 GameObject:
   m_ObjectHideFlags: 0
@@ -1732,6 +1836,7 @@ GameObject:
   - component: {fileID: 560716575}
   - component: {fileID: 560716574}
   - component: {fileID: 560716577}
+  - component: {fileID: 560716578}
   m_Layer: 5
   m_Name: BT_Start
   m_TagString: Untagged
@@ -1803,6 +1908,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 560716578}
+        m_TargetAssemblyTypeName: DoTween, Assembly-CSharp
+        m_MethodName: ScaleButton
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0.7
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 2022884461}
         m_TargetAssemblyTypeName: SelectCharacterManager, Assembly-CSharp
         m_MethodName: OnClickStart
@@ -1815,10 +1932,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
-        m_MethodName: PlayAudio
-        m_Mode: 3
+      - m_Target: {fileID: 560716577}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Play
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1875,7 +1992,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: a0973989b24e35b41b99184240e88067, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 0dd46c7aa0a1ad444aaf0850e528bc61, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -1961,6 +2078,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &560716578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 560716572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d10d4383d58700d449b8290917bc81b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objScale: {x: 0, y: 0, z: 0}
 --- !u!1 &607476584
 GameObject:
   m_ObjectHideFlags: 0
@@ -2210,6 +2340,7 @@ GameObject:
   - component: {fileID: 688231233}
   - component: {fileID: 688231232}
   - component: {fileID: 688231231}
+  - component: {fileID: 688231234}
   m_Layer: 5
   m_Name: BT_Cloce
   m_TagString: Untagged
@@ -2281,6 +2412,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 688231234}
+        m_TargetAssemblyTypeName: DoTween, Assembly-CSharp
+        m_MethodName: Scale
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0.7
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 103902135}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
@@ -2355,6 +2498,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 688231229}
   m_CullTransparentMesh: 1
+--- !u!114 &688231234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 688231229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d10d4383d58700d449b8290917bc81b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objScale: {x: 0, y: 0, z: 0}
 --- !u!1 &797676814
 GameObject:
   m_ObjectHideFlags: 0
@@ -2525,6 +2681,7 @@ GameObject:
   - component: {fileID: 829948454}
   - component: {fileID: 829948453}
   - component: {fileID: 829948452}
+  - component: {fileID: 829948455}
   m_Layer: 5
   m_Name: ChangScape
   m_TagString: Untagged
@@ -2597,6 +2754,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 829948455}
+        m_TargetAssemblyTypeName: DoTween, Assembly-CSharp
+        m_MethodName: Scale
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0.7
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 2022884461}
         m_TargetAssemblyTypeName: SelectCharacterManager, Assembly-CSharp
         m_MethodName: RebindingScape
@@ -2659,6 +2828,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 829948450}
   m_CullTransparentMesh: 1
+--- !u!114 &829948455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 829948450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d10d4383d58700d449b8290917bc81b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objScale: {x: 0, y: 0, z: 0}
 --- !u!1 &851497652
 GameObject:
   m_ObjectHideFlags: 0
@@ -3571,6 +3753,7 @@ GameObject:
   - component: {fileID: 1068901991}
   - component: {fileID: 1068901990}
   - component: {fileID: 1068901993}
+  - component: {fileID: 1068901994}
   m_Layer: 5
   m_Name: BT_Confirm
   m_TagString: Untagged
@@ -3642,6 +3825,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 560716578}
+        m_TargetAssemblyTypeName: DoTween, Assembly-CSharp
+        m_MethodName: ScaleButton
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0.7
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 2022884461}
         m_TargetAssemblyTypeName: SelectCharacterManager, Assembly-CSharp
         m_MethodName: ConfirmCharacter
@@ -3800,6 +3995,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1068901994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1068901988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d10d4383d58700d449b8290917bc81b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objScale: {x: 0, y: 0, z: 0}
 --- !u!1 &1172485800
 GameObject:
   m_ObjectHideFlags: 0
@@ -3812,6 +4020,7 @@ GameObject:
   - component: {fileID: 1172485804}
   - component: {fileID: 1172485803}
   - component: {fileID: 1172485802}
+  - component: {fileID: 1172485805}
   m_Layer: 5
   m_Name: Chang_Throw
   m_TagString: Untagged
@@ -3884,6 +4093,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1172485805}
+        m_TargetAssemblyTypeName: DoTween, Assembly-CSharp
+        m_MethodName: Scale
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0.7
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 2022884461}
         m_TargetAssemblyTypeName: SelectCharacterManager, Assembly-CSharp
         m_MethodName: RebindingThrow
@@ -3946,6 +4167,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1172485800}
   m_CullTransparentMesh: 1
+--- !u!114 &1172485805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1172485800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d10d4383d58700d449b8290917bc81b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objScale: {x: 0, y: 0, z: 0}
 --- !u!1 &1203417653
 GameObject:
   m_ObjectHideFlags: 0
@@ -3958,6 +4192,7 @@ GameObject:
   - component: {fileID: 1203417657}
   - component: {fileID: 1203417656}
   - component: {fileID: 1203417655}
+  - component: {fileID: 1203417658}
   m_Layer: 5
   m_Name: ChangBack
   m_TagString: Untagged
@@ -4030,6 +4265,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1203417658}
+        m_TargetAssemblyTypeName: DoTween, Assembly-CSharp
+        m_MethodName: Scale
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0.7
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 2022884461}
         m_TargetAssemblyTypeName: SelectCharacterManager, Assembly-CSharp
         m_MethodName: RebindingBackword
@@ -4092,6 +4339,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1203417653}
   m_CullTransparentMesh: 1
+--- !u!114 &1203417658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1203417653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d10d4383d58700d449b8290917bc81b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objScale: {x: 0, y: 0, z: 0}
 --- !u!1 &1399694920
 GameObject:
   m_ObjectHideFlags: 0
@@ -4184,6 +4444,7 @@ GameObject:
   - component: {fileID: 1416887574}
   - component: {fileID: 1416887573}
   - component: {fileID: 1416887577}
+  - component: {fileID: 1416887578}
   m_Layer: 5
   m_Name: BT_Leave
   m_TagString: Untagged
@@ -4255,6 +4516,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 560716578}
+        m_TargetAssemblyTypeName: DoTween, Assembly-CSharp
+        m_MethodName: ScaleButton
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0.7
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 2022884461}
         m_TargetAssemblyTypeName: SelectCharacterManager, Assembly-CSharp
         m_MethodName: OnClickLeaveRoom
@@ -4413,6 +4686,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1416887578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1416887571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d10d4383d58700d449b8290917bc81b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objScale: {x: 0, y: 0, z: 0}
 --- !u!1 &1435728461
 GameObject:
   m_ObjectHideFlags: 0
@@ -4426,6 +4712,7 @@ GameObject:
   - component: {fileID: 1435728464}
   - component: {fileID: 1435728463}
   - component: {fileID: 1435728466}
+  - component: {fileID: 1435728467}
   m_Layer: 5
   m_Name: BT_Rebinding
   m_TagString: Untagged
@@ -4497,6 +4784,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 560716578}
+        m_TargetAssemblyTypeName: DoTween, Assembly-CSharp
+        m_MethodName: ScaleButton
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0.7
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
       - m_Target: {fileID: 103902135}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
@@ -4655,6 +4954,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1435728467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1435728461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d10d4383d58700d449b8290917bc81b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objScale: {x: 0, y: 0, z: 0}
 --- !u!1 &1444572933
 GameObject:
   m_ObjectHideFlags: 0
@@ -4808,6 +5120,7 @@ GameObject:
   - component: {fileID: 1454817347}
   - component: {fileID: 1454817346}
   - component: {fileID: 1454817345}
+  - component: {fileID: 1454817348}
   m_Layer: 5
   m_Name: Chang_Lift
   m_TagString: Untagged
@@ -4880,6 +5193,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1454817348}
+        m_TargetAssemblyTypeName: DoTween, Assembly-CSharp
+        m_MethodName: Scale
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0.7
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 2022884461}
         m_TargetAssemblyTypeName: SelectCharacterManager, Assembly-CSharp
         m_MethodName: RebindingLift
@@ -4942,6 +5267,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1454817343}
   m_CullTransparentMesh: 1
+--- !u!114 &1454817348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1454817343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d10d4383d58700d449b8290917bc81b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objScale: {x: 0, y: 0, z: 0}
 --- !u!1 &1622816024
 GameObject:
   m_ObjectHideFlags: 0
@@ -4985,6 +5323,7 @@ GameObject:
   - component: {fileID: 1694061572}
   - component: {fileID: 1694061571}
   - component: {fileID: 1694061570}
+  - component: {fileID: 1694061573}
   m_Layer: 5
   m_Name: ChangForword
   m_TagString: Untagged
@@ -5057,6 +5396,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1694061573}
+        m_TargetAssemblyTypeName: DoTween, Assembly-CSharp
+        m_MethodName: Scale
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0.7
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 2022884461}
         m_TargetAssemblyTypeName: SelectCharacterManager, Assembly-CSharp
         m_MethodName: RebindingForword
@@ -5119,6 +5470,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1694061568}
   m_CullTransparentMesh: 1
+--- !u!114 &1694061573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694061568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d10d4383d58700d449b8290917bc81b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objScale: {x: 0, y: 0, z: 0}
 --- !u!1 &1763030969
 GameObject:
   m_ObjectHideFlags: 0
@@ -5289,6 +5653,7 @@ GameObject:
   - component: {fileID: 1834449390}
   - component: {fileID: 1834449389}
   - component: {fileID: 1834449388}
+  - component: {fileID: 1834449391}
   m_Layer: 5
   m_Name: Chang_Dash
   m_TagString: Untagged
@@ -5361,6 +5726,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1834449391}
+        m_TargetAssemblyTypeName: DoTween, Assembly-CSharp
+        m_MethodName: Scale
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0.7
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 2022884461}
         m_TargetAssemblyTypeName: SelectCharacterManager, Assembly-CSharp
         m_MethodName: RebindingDash
@@ -5423,6 +5800,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1834449386}
   m_CullTransparentMesh: 1
+--- !u!114 &1834449391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1834449386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d10d4383d58700d449b8290917bc81b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objScale: {x: 0, y: 0, z: 0}
 --- !u!1 &1880292952
 GameObject:
   m_ObjectHideFlags: 0
@@ -5917,7 +6307,6 @@ MonoBehaviour:
   LiftActionText: {fileID: 518867581}
   ThrowActionText: {fileID: 1946653333}
   ScapeActionText: {fileID: 686776106}
-  Leav: {fileID: 2022884465}
   CharacterIndex: 0
   CharacterList:
   - {fileID: 3565059113061548435, guid: d4ae47f41403e2946b8ef3202b0dfebe, type: 3}

@@ -9,12 +9,10 @@ using System.Text;
 
 public class LobbySceneManager : MonoBehaviourPunCallbacks
 {
-    [SerializeField]
-    InputField inputRoomName;//輸入房間名的UI
-    [SerializeField]
-    InputField inputPlayerName;//輸入玩家名的UI
-    [SerializeField]
-    GameObject WarningText;//錯誤提示字串
+    [SerializeField]InputField inputRoomName;//輸入房間名的UI
+    [SerializeField]InputField inputPlayerName;//輸入玩家名的UI
+    [SerializeField]GameObject WarningText;//錯誤提示字串
+    [SerializeField]DoTween RoomListShack;
     public GameObject roomButtenPrefab;
     public List<GameObject> roomButtenList = new List<GameObject>();
     public Transform contenObject;
@@ -23,7 +21,7 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
     public AudioManager _am;
     void Start()
     {
-
+        RoomListShack.ShackRoomList();
         if (PhotonNetwork.IsConnected==false)
         {//如果執行時沒有連結到伺服器，就轉到Start場景
             SceneManager.LoadScene("Start");
@@ -44,6 +42,7 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
     public override void OnJoinedLobby()
     {//方便檢視進入photon的lobby
         Debug.Log("Lobby Joined!");
+        
     }
 
     public string GetRoomName(){

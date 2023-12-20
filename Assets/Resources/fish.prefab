@@ -418,7 +418,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 1
-  m_SynchronizeScale: 1
+  m_SynchronizeScale: 0
   m_UseLocal: 1
 --- !u!114 &-8993477054932842531
 MonoBehaviour:
@@ -1341,7 +1341,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 805296bf13291484f886a2c27a9dda8e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -1370,6 +1370,9 @@ MonoBehaviour:
   - Type: 9
     SynchronizeType: 2
     Name: Idle
+  - Type: 9
+    SynchronizeType: 0
+    Name: choose
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0

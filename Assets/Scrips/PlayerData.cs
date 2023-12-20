@@ -204,9 +204,11 @@ public class PlayerData : MonoBehaviourPunCallbacks
             _gm.ReSetPlayer(this.gameObject);
         }
         if(throwMe && throwMe.GetComponent<PlayerData>().Point >= 3){            
-            //_gm.SetWinerName(throwMe.gameObject.name);
-            _gm.CallRpcSetWinerName(throwMe.gameObject.name);
-            print(this.gameObject.name + " Point!!");
+            string winerName = throwMe.gameObject.GetComponent<PlayerData>().nameText.text;
+            string winerObj = throwMe.gameObject.name;
+            _gm.CallRpcSetWinerName(winerName,winerObj);
+            //print(throwMe.gameObject.GetComponent<PlayerData>().nameText.text + " Point!!");
+            print("Set " + winerObj);
         }
     }
 }

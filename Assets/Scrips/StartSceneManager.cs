@@ -23,6 +23,7 @@ public class StartSceneManager : MonoBehaviourPunCallbacks
         PhotonNetwork.ConnectUsingSettings();
         Debug.Log("Click Start");
         LoadingPanle.SetActive(true);
+        LoadingPanle.GetComponent<DoTween>().ScalePanel();
     }
 
     public override void OnConnectedToMaster()

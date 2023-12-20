@@ -20,13 +20,13 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 0.1509434, g: 0.1509434, b: 0.1509434, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
   m_AmbientMode: 0
-  m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SubtractiveShadowColor: {r: 0.6415094, g: 0.6415094, b: 0.6415094, a: 1}
+  m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: f243f71269c78ba4c9b4d4bc7816c6bb, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 274593530}
   - component: {fileID: 274593532}
   - component: {fileID: 274593531}
+  - component: {fileID: 274593533}
   m_Layer: 5
   m_Name: LoadingPanel
   m_TagString: Untagged
@@ -150,8 +151,8 @@ RectTransform:
   m_GameObject: {fileID: 274593529}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.49617, y: 0.49617, z: 0.49617}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1197461309}
   m_Father: {fileID: 767757019}
@@ -174,7 +175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.45490196}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.80784315}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -199,6 +200,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 274593529}
   m_CullTransparentMesh: 1
+--- !u!114 &274593533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274593529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d10d4383d58700d449b8290917bc81b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objScale: {x: 0, y: 0, z: 0}
 --- !u!1 &635653722
 GameObject:
   m_ObjectHideFlags: 0
@@ -630,6 +644,7 @@ GameObject:
   - component: {fileID: 1019415639}
   - component: {fileID: 1019415638}
   - component: {fileID: 1019415641}
+  - component: {fileID: 1019415642}
   m_Layer: 5
   m_Name: StartButton (Legacy)
   m_TagString: Untagged
@@ -646,15 +661,15 @@ RectTransform:
   m_GameObject: {fileID: 1019415636}
   m_LocalRotation: {x: -0, y: -0, z: 0.025291227, w: 0.99968016}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.8544097, y: 1.7662725, z: 1.7662725}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.8, y: 1.7144488, z: 1.7144488}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1848504159}
   m_Father: {fileID: 767757019}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 2.898}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -13, y: -131}
+  m_AnchoredPosition: {x: 4, y: -129}
   m_SizeDelta: {x: 160, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1019415638
@@ -701,6 +716,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1019415642}
+        m_TargetAssemblyTypeName: DoTween, Assembly-CSharp
+        m_MethodName: ScaleButton
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0.7
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1459708908}
         m_TargetAssemblyTypeName: StartSceneManager, Assembly-CSharp
         m_MethodName: OnClickStart
@@ -859,6 +886,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1019415642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019415636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d10d4383d58700d449b8290917bc81b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objScale: {x: 0, y: 0, z: 0}
 --- !u!1 &1197461308
 GameObject:
   m_ObjectHideFlags: 0
@@ -1208,7 +1248,7 @@ Transform:
   m_GameObject: {fileID: 1953309307}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.36, y: 1.13, z: 0}
+  m_LocalPosition: {x: -0, y: 1.13, z: 0}
   m_LocalScale: {x: 1.1149, y: 1.1149, z: 1.1149}
   m_ConstrainProportionsScale: 0
   m_Children: []

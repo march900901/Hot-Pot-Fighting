@@ -152,18 +152,20 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         GameOver();
     }
 
-    public void SetWinerName(string winerName){
+    public void SetWinerName(string winerName,string winerObj){
         PlayerPrefs.SetString("WinerName",winerName);
+        PlayerPrefs.SetString("WinerObj",winerObj);
         CallRpcGameOver();
     }
 
-    public void CallRpcSetWinerName(string winerName){//呼叫RPC傳送贏家名字
-        _pv.RPC("RpcSetWinerName",RpcTarget.All,winerName);
+    public void CallRpcSetWinerName(string winerName,string winerObj){//呼叫RPC傳送贏家名字
+        _pv.RPC("RpcSetWinerName",RpcTarget.All,winerName,winerObj);
     }
 
     [PunRPC]
-    void RpcSetWinerName(string winerName,PhotonMessageInfo info){//RPC執行贏家名字
+    void RpcSetWinerName(string winerName,string winerObj,PhotonMessageInfo info){//RPC執行贏家名字
         PlayerPrefs.SetString("WinerName",winerName);
+        PlayerPrefs.SetString("WinerObj",winerObj);
         GameOver();
     }
 

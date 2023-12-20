@@ -22,9 +22,10 @@ public class GameOverManager : MonoBehaviour
 
     public void SetWiner(){
         string winerName =  PlayerPrefs.GetString("WinerName");
+        string winerObj = PlayerPrefs.GetString("WinerObj");
         winertext.text = winerName.ToUpper() +" " + "WIN !!!";
-        print(winerName);
-        GameObject winer = Instantiate(Resources.Load<GameObject>(winerName),GeneratPoint.position,Quaternion.identity);
+        print(winerObj);
+        GameObject winer = Instantiate(Resources.Load<GameObject>(winerObj),GeneratPoint.position,Quaternion.identity);
         Destroy(winer.GetComponent<PlayerContaller>());
         Destroy(winer.GetComponent<PlayerData>());
         Destroy(winer.GetComponent<PlayerInput>());

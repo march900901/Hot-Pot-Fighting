@@ -224,6 +224,7 @@ GameObject:
   - component: {fileID: 2710125019680014094}
   - component: {fileID: 6630050647598737515}
   - component: {fileID: 8881605478187289033}
+  - component: {fileID: 3559871587653388627}
   m_Layer: 5
   m_Name: bt_RoomName
   m_TagString: RoomButten
@@ -334,6 +335,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 3559871587653388627}
+        m_TargetAssemblyTypeName: DoTween, Assembly-CSharp
+        m_MethodName: Scale
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0.7
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8881605478187289033}
         m_TargetAssemblyTypeName: Room, Assembly-CSharp
         m_MethodName: JoinRoom
@@ -361,3 +374,16 @@ MonoBehaviour:
   RoomName: {fileID: 1792399475532506175}
   WarningText: {fileID: 7174448220768208204}
   audio: {fileID: 923414215844289477}
+--- !u!114 &3559871587653388627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8630168227077992666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d10d4383d58700d449b8290917bc81b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objScale: {x: 0, y: 0, z: 0}
