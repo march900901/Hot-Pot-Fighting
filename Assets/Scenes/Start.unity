@@ -141,7 +141,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &274593530
 RectTransform:
   m_ObjectHideFlags: 0
@@ -151,7 +151,7 @@ RectTransform:
   m_GameObject: {fileID: 274593529}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1197461309}
@@ -160,7 +160,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -277.0411, y: -135.559}
+  m_SizeDelta: {x: -482.5063, y: -259.0997}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &274593531
 MonoBehaviour:
@@ -212,7 +212,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d10d4383d58700d449b8290917bc81b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objScale: {x: 0, y: 0, z: 0}
+  Button: []
+  ButtonMove: 0
 --- !u!1 &635653722
 GameObject:
   m_ObjectHideFlags: 0
@@ -661,7 +662,7 @@ RectTransform:
   m_GameObject: {fileID: 1019415636}
   m_LocalRotation: {x: -0, y: -0, z: 0.025291227, w: 0.99968016}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.8, y: 1.7144488, z: 1.7144488}
+  m_LocalScale: {x: 1.43406, y: 1.3659014, z: 1.3659014}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1848504159}
@@ -669,7 +670,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 2.898}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 4, y: -129}
+  m_AnchoredPosition: {x: 3.9383, y: -146.78}
   m_SizeDelta: {x: 160, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1019415638
@@ -718,7 +719,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1019415642}
         m_TargetAssemblyTypeName: DoTween, Assembly-CSharp
-        m_MethodName: ScaleButton
+        m_MethodName: ClickButton
         m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -898,7 +899,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d10d4383d58700d449b8290917bc81b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objScale: {x: 0, y: 0, z: 0}
+  Button: []
+  ButtonMove: 0
 --- !u!1 &1197461308
 GameObject:
   m_ObjectHideFlags: 0
@@ -958,7 +960,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 20
+    m_FontSize: 18
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -1023,6 +1025,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LoadingPanle: {fileID: 274593529}
+  BGM: []
 --- !u!1 &1647088568
 GameObject:
   m_ObjectHideFlags: 0
@@ -1249,8 +1252,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 1.13, z: 0}
-  m_LocalScale: {x: 1.1149, y: 1.1149, z: 1.1149}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2.09, y: 2.09, z: 2.09}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

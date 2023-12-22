@@ -11,40 +11,24 @@ using Unity.VisualScripting;
 
 public class SelectCharacterManager : MonoBehaviourPunCallbacks
 {
-    [SerializeField]
-    Text textRoomName;
-    [SerializeField]
-    Text textPlayerList;
-    [SerializeField]
-    Button buttonStartGame;
-    [SerializeField]
-    GameObject rebindingPanel;
-    [SerializeField]
-    InputActionReference MoveActionRef;
-    [SerializeField]
-    InputActionReference DashActionRef;
-    [SerializeField]
-    InputActionReference LiftActionRef;
-    [SerializeField]
-    InputActionReference ThrowActionRef;
-    [SerializeField]
-    InputActionReference ScapeActionRef;
-    [SerializeField]
-    Text ForwordActionText;
-    [SerializeField]
-    Text BackwordActionText;
-    [SerializeField]
-    Text LeftActionText;
-    [SerializeField]
-    Text RightActionText;
-    [SerializeField]
-    Text DashActionText;
-    [SerializeField]
-    Text LiftActionText;
-    [SerializeField]
-    Text ThrowActionText;
-    [SerializeField]
-    Text ScapeActionText;
+    [SerializeField]Text textRoomName;
+    [SerializeField]Text textPlayerList;
+    [SerializeField]Button buttonStartGame;
+    [SerializeField]GameObject rebindingPanel;
+    [SerializeField]InputActionReference MoveActionRef;
+    [SerializeField]InputActionReference DashActionRef;
+    [SerializeField]InputActionReference LiftActionRef;
+    [SerializeField]InputActionReference ThrowActionRef;
+    [SerializeField]InputActionReference ScapeActionRef;
+    [SerializeField]Text ForwordActionText;
+    [SerializeField]Text BackwordActionText;
+    [SerializeField]Text LeftActionText;
+    [SerializeField]Text RightActionText;
+    [SerializeField]Text DashActionText;
+    [SerializeField]Text LiftActionText;
+    [SerializeField]Text ThrowActionText;
+    [SerializeField]Text ScapeActionText;
+    
     public int CharacterIndex = 0;
     public List<GameObject> CharacterList = new List<GameObject>();
     public Transform GeneratPoint;
@@ -52,6 +36,10 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
     public Text text_Confirm;
     public bool CanStart;
     public int CanStartPlayer;
+    public DoTween PlayerListAni;
+    public DoTween NextButton;
+    public DoTween PreviousButton;
+    DoTween ButtonMoveIn;
     PhotonView _pv;
     PlayerInput playerInput;
     AudioManager _am;
@@ -76,6 +64,12 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
         playerInput = this.transform.GetComponent<PlayerInput>();
         SetBindingBT();
         _am = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        PlayerListAni.PlayerListAni();
+        ButtonMoveIn = this.gameObject.GetComponent<DoTween>();
+        ButtonMoveIn.StartCoroutine("ButtonMoveIn");
+        NextButton.ScaleButton(0.5f);
+        PreviousButton.ScaleButton(0.5f);
+
     }
 
     public override void OnMasterClientSwitched(Player newMasterClient){//當房主切換的時候
@@ -105,6 +99,10 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
         PhotonNetwork.CurrentRoom.IsVisible = false;
     }
 
+    public void OnClickHome(){
+        PhotonNetwork.Disconnect();
+    }
+    
     public void OnClickLeaveRoom(){//按下LeaveRoom按鈕時
         _am.PlayAudio(16);
         PhotonNetwork.LeaveRoom();

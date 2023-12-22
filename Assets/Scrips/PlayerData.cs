@@ -22,8 +22,7 @@ public class PlayerData : MonoBehaviourPunCallbacks
     [SerializeField]
     public Text nameText;
     public  ParticleSystem HitEffect;
-    [SerializeField]
-    ParticleSystem scapeEffect;
+    public GameObject scapeEffect;
     public GameObject enemy;
     public PlayerState _playerState;
     public Color DefaultColor;
@@ -91,7 +90,8 @@ public class PlayerData : MonoBehaviourPunCallbacks
                 playerContaller.StopAllCoroutines();
                 if (scapeCount>=10)
                 {
-                    scapeEffect.Play();
+                    GameObject ScapeParticle = Instantiate(scapeEffect,this.transform);
+                    Destroy(ScapeParticle,5);
                     //如果達成逃脫條件，變回IDLE狀態，並從子物件中移出，再取消Kinematic
                     _playerState=PlayerState.Idle;
                     if (enemy)

@@ -9,9 +9,18 @@ public class StartSceneManager : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     [SerializeField]
     GameObject LoadingPanle;
+    public List<GameObject>BGM = new List<GameObject>();
 
     private void Start() {
         LoadingPanle.SetActive(false);
+        BGM.Add(GameObject.Find("BGM"));
+        if (BGM.Count>1)
+        {
+            for (int i = 1; i < BGM.Count-1; i++)
+            {
+                Destroy(BGM[i]);
+            }
+        }
     }
     public void GoToGameScene(){
         //移到遊戲場景

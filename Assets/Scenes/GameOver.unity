@@ -651,7 +651,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1019415641}
         m_TargetAssemblyTypeName: DoTween, Assembly-CSharp
-        m_MethodName: ScaleButton
+        m_MethodName: ClickButton
         m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -723,7 +723,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d10d4383d58700d449b8290917bc81b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objScale: {x: 0, y: 0, z: 0}
 --- !u!1 &1165615679
 GameObject:
   m_ObjectHideFlags: 0

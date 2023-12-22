@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DontDestroy : MonoBehaviour
 {
@@ -13,6 +14,14 @@ public class DontDestroy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (SceneManager.GetActiveScene().name == "Start")
+        {
+            if (this.gameObject.name == "HotPotBGM")
+            {
+                this.gameObject.GetComponent<AudioSource>().Stop();
+            }else{
+                //this.gameObject.GetComponent<AudioSource>().Stop();
+            }
+        }
     }
 }

@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 using Photon.Realtime;
 using System.IO;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class GameSceneManager : MonoBehaviourPunCallbacks
 {
@@ -21,11 +22,13 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     Text messageText;
     public Dictionary<Player, bool> alivePlayerMap = new Dictionary<Player, bool>();
     public string CharacterName;
-    public GameObject instruction;
+    //public GameObject instruction;
     public GameObject GameOverPanlel;
+    public GameObject BT_Leav;
     public AudioManager _am;
     public AudioSource Leav;
     public AudioSource StartGame;
+    public DoTween instruction;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,7 +38,8 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         {
             SceneManager.LoadScene("Lobby");
         }
-        instruction.SetActive(true);
+        instruction.gameObject.SetActive(true);
+        instruction.PanelIn();
         GameOverPanlel.SetActive(false);
         InisGame();
         PhotonNetwork.SendRate = 1000;
@@ -45,6 +49,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         //StartGame.PlayDelayed(1.5f);
         _am = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         StartGame.Play();
+        BT_Leav.transform.localScale = Vector3.zero;
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
