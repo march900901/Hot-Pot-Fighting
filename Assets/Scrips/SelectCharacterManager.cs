@@ -361,6 +361,7 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
         .OnComplete(operation=>{
             var p = MoveActionRef.action.GetBindingDisplayString(right.bindingIndex);
             var s = InputControlPath.ToHumanReadableString(p,InputControlPath.HumanReadableStringOptions.OmitDevice);
+            print(p);
             string text = XboxController(s);
             RightActionText.text = $"{text}";
             print("done");
@@ -417,6 +418,7 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
         .OnComplete(operation=>{
             var p = operation.action.bindings[0].effectivePath;
             var s = InputControlPath.ToHumanReadableString(p,InputControlPath.HumanReadableStringOptions.OmitDevice);
+            print(s);
             string text = XboxController(s);
             actionText.text = $"{text}";
             print("done");
