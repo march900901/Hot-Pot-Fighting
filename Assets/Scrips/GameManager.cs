@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
+        _gr = (GameRull)PlayerPrefs.GetInt("GameMode");                                                                                                                                               
         CharacterName = PlayerPrefs.GetString("CharacterName");//取得玩家選擇的角色名
         _pv = this.transform.GetComponent<PhotonView>();
         if (PhotonNetwork.CurrentRoom==null)//如果運行時沒有創建的房間，就會轉到Lobby場景
@@ -234,7 +235,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                 {
                     CallRpcSetWinerName(winDatas[0].nameText.text,winDatas[0].gameObject.name);
                 }else{
-                    
+
                 }
                 
             break;

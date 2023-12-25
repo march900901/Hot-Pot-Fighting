@@ -14,11 +14,19 @@ public class GameModeText : MonoBehaviour
     }
     
     public void NextMode(){
-        
+        if (index < GameMode.Count-1)
+        {
+            index++;
+        }else{index = 0;}
     }
 
     public void PreviousMode(){
-        
+        if (index > 0)
+        {
+            index--;
+        }else if(index <= 0){
+            index = GameMode.Count-1;
+        }
     }
 
 }

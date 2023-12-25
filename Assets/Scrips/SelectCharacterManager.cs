@@ -39,6 +39,7 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
     public DoTween PlayerListAni;
     public DoTween NextButton;
     public DoTween PreviousButton;
+    public GameObject GameMode;
     DoTween ButtonMoveIn;
     PhotonView _pv;
     PlayerInput playerInput;
@@ -69,7 +70,7 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
         ButtonMoveIn.StartCoroutine("ButtonMoveIn");
         NextButton.ScaleButton(0.5f);
         PreviousButton.ScaleButton(0.5f);
-
+        GameMode.active = PhotonNetwork.IsMasterClient;
     }
 
     public override void OnMasterClientSwitched(Player newMasterClient){//當房主切換的時候
@@ -87,6 +88,7 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerEnteredRoom(Player newPlayer){//當玩家加入房間時更新玩家列表
         UpDatePlayerList();
+        UpdateCanStart();
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer){//當玩家離開房間時更新玩家列表
@@ -95,6 +97,7 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
     }
 
     public void OnClickStart(){//按下Start按紐時
+        PlayerPrefs.SetInt("GameMode",GameMode.GetComponent<GameModeText>().index);
         SceneManager.LoadScene("Game");
         PhotonNetwork.CurrentRoom.IsVisible = false;
     }

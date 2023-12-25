@@ -1028,6 +1028,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 887386655}
+        m_TargetAssemblyTypeName: GameModeText, Assembly-CSharp
+        m_MethodName: PreviousMode
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 206506771}
         m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: Play
@@ -2170,6 +2182,18 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0.7
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 887386655}
+        m_TargetAssemblyTypeName: GameModeText, Assembly-CSharp
+        m_MethodName: NextMode
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
@@ -3704,6 +3728,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3eab4261ae5fae48b5d87a73997d847, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameMode_Text: {fileID: 887386656}
+  index: 0
+  GameMode:
+  - TIME
+  - LIFE
 --- !u!114 &887386656
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7088,6 +7117,7 @@ MonoBehaviour:
   PlayerListAni: {fileID: 1816225743}
   NextButton: {fileID: 208337786}
   PreviousButton: {fileID: 21058725}
+  GameMode: {fileID: 887386653}
 --- !u!4 &2022884462
 Transform:
   m_ObjectHideFlags: 0
