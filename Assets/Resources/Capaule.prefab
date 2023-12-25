@@ -189,13 +189,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd210a1dcee113c4db56640272c5b8db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerState: 0
   Name: Capaule
   Point: 0
   nameText: {fileID: 6774569807595874641}
   HitEffect: {fileID: 4973158665756128036}
-  scapeEffect: {fileID: 2075260875558043106}
+  scapeEffect: {fileID: 7669277632233567989, guid: aa6f970f60335ba468bd95ca4c82c26a, type: 3}
   enemy: {fileID: 0}
-  _playerState: 0
   DefaultColor: {r: 0, g: 0.17254902, b: 1, a: 1}
   throwMe: {fileID: 0}
   LiftPoint: {fileID: 7916744158950958469}
@@ -1295,11 +1295,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa6f970f60335ba468bd95ca4c82c26a, type: 3}
---- !u!198 &2075260875558043106 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 7095511220683015608, guid: aa6f970f60335ba468bd95ca4c82c26a, type: 3}
-  m_PrefabInstance: {fileID: 9130097278461884506}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7551168052667655456 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1621221442625707386, guid: aa6f970f60335ba468bd95ca4c82c26a, type: 3}

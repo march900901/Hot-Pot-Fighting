@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class dieCollider : MonoBehaviour
 {
-    public GameSceneManager gameManager;
+    public GameManager _gm;
     public GameObject particle;
     // Start is called before the first frame update
     void Start()

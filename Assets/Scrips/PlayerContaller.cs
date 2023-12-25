@@ -38,7 +38,7 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
     //public GameObject enemy;
     public PhotonView _pv;
     BoxCollider liftCollider;
-    GameSceneManager _gm;
+    GameManager _gm;
     
 
     // Start is called before the first frame update
@@ -51,7 +51,7 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
         LiftPoint = this.transform.GetChild(0).gameObject;
         liftCollider = LiftPoint.GetComponent<BoxCollider>();
         _pv = this.transform.GetComponent<PhotonView>();
-        _gm = GameObject.Find("GameManager").GetComponent<GameSceneManager>();
+        _gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         var bindingDate = PlayerPrefs.GetString("binding");
         if(bindingDate!=""){
             print("設定完成");
@@ -283,16 +283,16 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
         //計算ScapeCount並將playerData的ScapeCount數值上傳HashTable
         if (playerData.scapeCount>10)
             {
-                hashTable table = new hashTable();
+                // hashTable table = new hashTable();
                 playerData.scapeCount=0;
-                table.Add("scapeCount",playerData.scapeCount);
-                PhotonNetwork.LocalPlayer.SetCustomProperties(table);
+                // table.Add("scapeCount",playerData.scapeCount);
+                // PhotonNetwork.LocalPlayer.SetCustomProperties(table);
             }
             else{
-                hashTable table = new hashTable();
+                // hashTable table = new hashTable();
                 playerData.scapeCount++;
-                table.Add("scapeCount",playerData.scapeCount);
-                PhotonNetwork.LocalPlayer.SetCustomProperties(table);
+                // table.Add("scapeCount",playerData.scapeCount);
+                // PhotonNetwork.LocalPlayer.SetCustomProperties(table);
             }
     }
 

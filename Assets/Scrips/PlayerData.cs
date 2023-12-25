@@ -12,25 +12,26 @@ using hashTable = ExitGames.Client.Photon.Hashtable;
 using Photon.Realtime;
 using ExitGames.Client.Photon.StructWrapping;
 using System.Text.RegularExpressions;
+using System;
 
 
 public class PlayerData : MonoBehaviourPunCallbacks
 {
     public enum PlayerState{Idle,Dash,Fly,Lift,BeLift,Dead,CantMove}
+    public PlayerState _playerState;
     public string Name;
-    public int Point = 0;
+    public int Point = 3;
     [SerializeField]
     public Text nameText;
     public  ParticleSystem HitEffect;
     public GameObject scapeEffect;
     public GameObject enemy;
-    public PlayerState _playerState;
     public Color DefaultColor;
     public GameObject throwMe;
     public LiftCollider LiftPoint;
     public GameObject Star;
     public AudioSource hit;
-    GameSceneManager _gm;
+    GameManager _gm;
     PlayerContaller playerContaller;
     Rigidbody rigidbody;
     PlayerInput playerInput;    
@@ -47,20 +48,36 @@ public class PlayerData : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {//初始化
-        if (this.gameObject.name.EndsWith("(Clone)"))
-        {
-            Name = this.gameObject.name.TrimEnd("(Clone)");
-            this.gameObject.name = Name;
-        }else{Name = this.gameObject.name;}
-        Point = 0;
+        
         _playerState=PlayerState.Idle;
         playerContaller=this.transform.GetComponent<PlayerContaller>();
         playerInput=this.transform.GetComponent<PlayerInput>();
         defaultMap=playerInput.defaultActionMap;
         rigidbody=this.transform.GetComponent<Rigidbody>();
-        _gm = GameObject.Find("GameManager").GetComponent<GameSceneManager>(); 
+        _gm = GameObject.Find("GameManager").GetComponent<GameManager>(); 
         _pv = this.transform.GetComponent<PhotonView>();
         nameText.text = _pv.Owner.NickName;
+        if (this.gameObject.name.EndsWith("(Clone)"))
+        {
+            Name = this.gameObject.name.TrimEnd("(Clone)");
+            this.gameObject.name = Name;
+        }else{Name = this.gameObject.name;}
+
+        switch(_gm._gr){
+            case GameManager.GameRull.TIME:
+                Point = 0;
+                _gm.players.Add(this.gameObject.GetComponent<PlayerData>());
+                // print("Add PlayerPoint");
+                // foreach (var kvp in _gm.PlayerPoint)
+                // {
+                //     print(kvp.Key);
+                // }
+            break;
+
+            case GameManager.GameRull.LIVE:
+                Point = _gm.Life;
+            break;
+        }
         
     }
 
@@ -83,7 +100,10 @@ public class PlayerData : MonoBehaviourPunCallbacks
             case PlayerState.CantMove:
                 //進入不可動狀態，物件變白，操作的MAP改成CD
                 this.gameObject.GetComponent<MeshRenderer>().material.color=Color.white;
-                playerInput.SwitchCurrentActionMap("CD");
+                if (_pv.IsMine)
+                {
+                    playerInput.SwitchCurrentActionMap("CD");
+                }
                 LiftPoint.UpdateCanLift(true);
                 Lifting = false;
                 Star.active = true;
@@ -91,6 +111,7 @@ public class PlayerData : MonoBehaviourPunCallbacks
                 if (scapeCount>=10)
                 {
                     GameObject ScapeParticle = Instantiate(scapeEffect,this.transform);
+                    ScapeParticle.transform.parent = null;
                     Destroy(ScapeParticle,5);
                     //如果達成逃脫條件，變回IDLE狀態，並從子物件中移出，再取消Kinematic
                     _playerState=PlayerState.Idle;
@@ -195,20 +216,33 @@ public class PlayerData : MonoBehaviourPunCallbacks
         print("Hit Face!!");
     }
 
-    //-------加分-------
-    public void CountingPoint(){//加分&&勝利
-        if (throwMe && throwMe.GetComponent<PlayerData>().Point <= 2)
-        {
-            throwMe.GetComponent<PlayerData>().Point += 1;
-            print(throwMe.name + "+1");
-            _gm.ReSetPlayer(this.gameObject);
+    //-------計算分數-------
+    public void CountingPoint(){//依規則計算分數
+    switch(_gm._gr){
+            case GameManager.GameRull.TIME://是時間規則時
+                throwMe.GetComponent<PlayerData>().Point += 1;
+                print(throwMe.gameObject.name + "+1");
+                _gm.ReSetPlayer(this.gameObject);
+            break;
+
+            case GameManager.GameRull.LIVE://是生命數規則時
+                if (Point > 0){//
+                        Point -= 1;
+                        print(this.name + "-1");
+                        _gm.ReSetPlayer(this.gameObject);
+                }
+                if(Point <= 0){           
+                    _gm.PlayerCount--;
+                    Destroy(this.gameObject);
+                    _gm.JudgeGameOver();
+                    // string winerName = throwMe.gameObject.GetComponent<PlayerData>().nameText.text;
+                    // string winerObj = throwMe.gameObject.name;
+                    // _gm.CallRpcSetWinerName(winerName,winerObj);
+                    // //print(throwMe.gameObject.GetComponent<PlayerData>().nameText.text + " Point!!");
+                    // print("Set " + winerObj);
+                }
+            break;
         }
-        if(throwMe && throwMe.GetComponent<PlayerData>().Point >= 3){            
-            string winerName = throwMe.gameObject.GetComponent<PlayerData>().nameText.text;
-            string winerObj = throwMe.gameObject.name;
-            _gm.CallRpcSetWinerName(winerName,winerObj);
-            //print(throwMe.gameObject.GetComponent<PlayerData>().nameText.text + " Point!!");
-            print("Set " + winerObj);
-        }
+        
     }
 }

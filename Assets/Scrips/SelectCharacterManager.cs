@@ -198,7 +198,7 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void RpcDoConfirm(PhotonMessageInfo info){
+    void RpcDoConfirm(PhotonMessageInfo info){//RPC接收訊號執行DoConfirm
         DoConfirm();
     }
 

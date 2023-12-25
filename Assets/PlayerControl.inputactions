@@ -55,17 +55,6 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "c4c2a149-60ac-4468-92ea-b0d0ac4f0658",
-                    "path": "<Gamepad>/buttonSouth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Dash",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
                     "name": "2D Vector(keybord)",
                     "id": "c7290d68-513d-43f0-b48c-d7c2d470ea62",
                     "path": "2DVector",
