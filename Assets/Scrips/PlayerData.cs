@@ -31,7 +31,7 @@ public class PlayerData : MonoBehaviourPunCallbacks
     public LiftCollider LiftPoint;
     public GameObject Star;
     public AudioSource hit;
-    GameManager _gm;
+    public GameManager _gm;
     PlayerContaller playerContaller;
     Rigidbody rigidbody;
     PlayerInput playerInput;    
@@ -241,6 +241,11 @@ public class PlayerData : MonoBehaviourPunCallbacks
                     // //print(throwMe.gameObject.GetComponent<PlayerData>().nameText.text + " Point!!");
                     // print("Set " + winerObj);
                 }
+            break;
+
+            case GameManager.GameRull.FINAL:
+                string winName = throwMe.gameObject.GetComponent<PlayerData>().nameText.text;
+                _gm.CallRpcSetWinerName(winName,throwMe.gameObject.name);
             break;
         }
         

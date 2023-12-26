@@ -13,7 +13,7 @@ using System.Linq;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
-    public enum GameRull{TIME,LIVE}
+    public enum GameRull{TIME,LIVE,FINAL}
     public GameRull _gr;
     public int PlayerCount;
     public int Life;
@@ -65,6 +65,11 @@ public class GameManager : MonoBehaviourPunCallbacks
 
             case GameRull.LIVE:
                 Timer.SetActive(false);
+            break;
+
+            case GameRull.FINAL:
+                Timer.SetActive(true);
+                Timer.GetComponent<Timer>().reminingTime = 60;
             break;
         }
         
@@ -215,10 +220,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
                 for (int i = 1; i < players.Count; i++)
                 {
-                    if (winDatas[0].Point > players[i].Point)
-                    {
-                        
-                    }else if (winDatas[0].Point < players[i].Point)
+                    if (winDatas[0].Point < players[i].Point)
                     {
                         if (winDatas.Count==1)
                         {
@@ -235,7 +237,24 @@ public class GameManager : MonoBehaviourPunCallbacks
                 {
                     CallRpcSetWinerName(winDatas[0].nameText.text,winDatas[0].gameObject.name);
                 }else{
-
+                    _gr = GameRull.FINAL;
+                    List<string> winName = new List<string>();
+                    foreach (var item in winDatas)
+                    {//將分數最高的玩家物件名加入list
+                        winName.Add(item.gameObject.name);
+                    }
+                    foreach (var item in winDatas)
+                    {//將分數最高的玩家data從players列表移除
+                        players.Remove(item);
+                    }
+                    foreach (var item in players)
+                    {
+                        Destroy(item.gameObject);
+                    }
+                    foreach (var item in winDatas)
+                    {//生成分數最高的玩家
+                        item._gm.ReSetPlayer(item.gameObject);
+                    }
                 }
                 
             break;
@@ -251,6 +270,10 @@ public class GameManager : MonoBehaviourPunCallbacks
                 }
             break;
 
+            case GameRull.FINAL:
+
+            break;
+            
         }
     }
 

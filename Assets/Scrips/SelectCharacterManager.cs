@@ -97,8 +97,8 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
     }
 
     public void OnClickStart(){//按下Start按紐時
-        PlayerPrefs.SetInt("GameMode",GameMode.GetComponent<GameModeText>().index);
-        SceneManager.LoadScene("Game");
+        CallRpcSetGameMode(GameMode.gameObject.GetComponent<GameModeText>().index);
+        
         PhotonNetwork.CurrentRoom.IsVisible = false;
     }
 
@@ -215,6 +215,16 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
             print("Can't Start");
             buttonStartGame.interactable = false;
         }
+    }
+
+    public void CallRpcSetGameMode(int gameMode){
+        _pv.RPC("RpcSetGameMode",RpcTarget.All,gameMode);
+    }
+
+    [PunRPC]
+    public void RpcSetGameMode(int gameMode,PhotonMessageInfo info){
+        PlayerPrefs.SetInt("GameMode",gameMode);
+        SceneManager.LoadScene("Game");
     }
 
 //--------綁定按鍵-------
