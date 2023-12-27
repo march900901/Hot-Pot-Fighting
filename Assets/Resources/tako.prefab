@@ -268,6 +268,7 @@ MonoBehaviour:
   LiftPoint: {fileID: 756940056766339087}
   Star: {fileID: 8057004268573264564}
   hit: {fileID: 4314196588933558234}
+  _gm: {fileID: 0}
   defaultMap: Player1
   Lifting: 0
   CanLift: 0
@@ -451,7 +452,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 13ee89889501ad94bb58cd694c544325, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
-  m_Pitch: 0.1
+  m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0

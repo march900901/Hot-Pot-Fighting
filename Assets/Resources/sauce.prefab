@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8587096304502441057}
   - component: {fileID: 7010669449880449997}
   - component: {fileID: -7681204990549522304}
+  - component: {fileID: 4973649988212246153}
   m_Layer: 0
   m_Name: sauce
   m_TagString: Untagged
@@ -30,8 +31,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.63126945, y: 0.064717, z: 0.38319826}
-  m_LocalScale: {x: 2.264, y: 0.20104152, z: 2.264}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -42,7 +43,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 170564965286659243}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 1615099753484646668, guid: 26149291c45d93349aa10e67297b2d49, type: 3}
 --- !u!23 &8587096304502441057
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -104,8 +105,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.5067167, y: 0.74664325, z: 1.4959354}
+  m_Center: {x: -0.0053904853, y: 0.11050694, z: 0.00000031789145}
 --- !u!114 &-7681204990549522304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,3 +119,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b493cc84adf09044ac2cceacb0043b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4973649988212246153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 170564965286659243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
