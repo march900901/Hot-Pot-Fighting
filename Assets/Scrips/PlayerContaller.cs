@@ -23,6 +23,7 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
     ParticleSystem DashEffect;
     public GameObject smoke;
     public AudioSource DashAudio;
+    public AudioSource ThrowAudio;
 
     public float MoveSpeed=5.0f;
     public float DashPower=5.0f;
@@ -52,11 +53,14 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
         liftCollider = LiftPoint.GetComponent<BoxCollider>();
         _pv = this.transform.GetComponent<PhotonView>();
         _gm = GameObject.Find("GameManager").GetComponent<GameManager>();
-        var bindingDate = PlayerPrefs.GetString("binding");
-        if(bindingDate!=""){
-            print("設定完成");
-            playerInput.actions.LoadBindingOverridesFromJson(bindingDate);
-        }else{print("沒有綁定資料");}
+        Bind();
+        if (_pv.IsMine)
+        {
+            ReBindingManager bindingManager = GameObject.Find("ReBindingManager").GetComponent<ReBindingManager>();
+            bindingManager._pc = this.gameObject;
+            //bindingManager.playerInput = GetComponent<PlayerInput>();
+            print("get input");
+        }
     }
 
     // Update is called once per frame
@@ -100,6 +104,14 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
             }
         }
     } 
+
+    public void Bind(){
+        string bindingDate = PlayerPrefs.GetString("binding");
+        if(bindingDate!=""){
+            print("設定完成");
+            playerInput.actions.LoadBindingOverridesFromJson(bindingDate);
+        }else{print("沒有綁定資料");}
+    }
 
     IEnumerator DelayAction(float s){
         //延遲過後將角色控制設為預設Map，並將狀態改為Idle
@@ -193,6 +205,7 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
                 enemy.transform.parent=null;
                 //丟出去
                 enemyRig.AddForce(transform.forward *throwPower + transform.up*(throwPower/2),ForceMode.Impulse);
+                ThrowAudio.Play();
                 //自己狀態設為Idle
                 playerData.CallRpcStateSwitch(PlayerData.PlayerState.Idle);
                 //刪掉敵人

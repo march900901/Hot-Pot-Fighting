@@ -38,11 +38,12 @@ public class DoTween : MonoBehaviour
         
         foreach (var item in Button)
         {
-            item.transform.localPosition = new Vector3(item.transform.localPosition.x,-600,0);
+            item.transform.localPosition = new Vector3(item.transform.localPosition.x,item.transform.localPosition.y-250,0);
         }
         yield return new WaitForSeconds(0.4f);
         foreach (var item in Button)
         {
+            float targate = item.transform.localPosition.y+250;
             item.transform.DOMoveY(ButtonMove,0.5f).SetEase(Ease.OutBack);
             yield return new WaitForSeconds(0.1f);
         }
@@ -62,6 +63,11 @@ public class DoTween : MonoBehaviour
     public void PanelOut(){
         this.transform.localScale = new Vector3(1,1,1);
         this.transform.DOScale(Vector3.zero,0.2f);
+    }
+
+    public void ConfirmIn(){
+        this.transform.localScale = new Vector3(10,10,10);
+        this.transform.DOScale(1,0.2f);
     }
 
 }

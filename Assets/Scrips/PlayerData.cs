@@ -31,6 +31,7 @@ public class PlayerData : MonoBehaviourPunCallbacks
     public LiftCollider LiftPoint;
     public GameObject Star;
     public AudioSource hit;
+    public AudioSource ScapeAudio;
     public GameManager _gm;
     PlayerContaller playerContaller;
     Rigidbody rigidbody;
@@ -111,6 +112,7 @@ public class PlayerData : MonoBehaviourPunCallbacks
                 if (scapeCount>=10)
                 {
                     GameObject ScapeParticle = Instantiate(scapeEffect,this.transform);
+                    ScapeAudio.Play();
                     ScapeParticle.transform.parent = null;
                     Destroy(ScapeParticle,5);
                     //如果達成逃脫條件，變回IDLE狀態，並從子物件中移出，再取消Kinematic

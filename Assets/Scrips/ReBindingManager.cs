@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ReBindingManager : MonoBehaviour
 {
@@ -19,20 +20,21 @@ public class ReBindingManager : MonoBehaviour
     [SerializeField]Text LiftActionText;
     [SerializeField]Text ThrowActionText;
     [SerializeField]Text ScapeActionText;
-    PlayerInput playerInput;
+    public PlayerInput playerInput;
     public AudioManager _am;
-    // Start is called before the first frame update
+    public GameObject _pc;
+
     void Start()
-    {
-        playerInput = this.transform.GetComponent<PlayerInput>();
-        _am = GameObject.Find("AudioManager").GetComponent<AudioManager>();
-        if (_am)
+    {   
+        
+        if (SceneManager.GetActiveScene().name == "SelectCharacter")
         {
-            print(_am.name);
+            playerInput = GetComponent<PlayerInput>();
         }
+        _am = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         SetBindingBT();
     }
-
+    
     //--------綁定按鍵-------
     public void SetBindingBT(){//初始化綁定按鈕顯示文字
         //----移動控制
@@ -72,6 +74,7 @@ public class ReBindingManager : MonoBehaviour
     public void RebindingForword(){//重新綁定往前按鍵
         print("Rebinding");
         playerInput.SwitchCurrentActionMap("NotMe");
+        print(playerInput.currentActionMap.name);
         ForwordActionText.text = ("請輸入...");
         var vec = MoveActionRef.action.ChangeCompositeBinding("2DVector");
         var forword = vec.NextPartBinding("Up");
@@ -279,8 +282,20 @@ public class ReBindingManager : MonoBehaviour
     }
 
     public void SaveRebinding(){//儲存綁定後按鍵配置
-        string AllActionBindingDate = playerInput.actions.SaveBindingOverridesAsJson();
-        PlayerPrefs.SetString("binding",AllActionBindingDate);
+        playerInput = GetComponent<PlayerInput>();//在這邊取得組件比較保險，可排除null的可能
+        if (playerInput != null)
+        {
+            string AllActionBindingDate = playerInput.actions.SaveBindingOverridesAsJson(); 
+            PlayerPrefs.SetString("binding",AllActionBindingDate);
+        }else{print("input is null");}
+               
+        if (SceneManager.GetActiveScene().name == "Game"){//如果再Game場景就找到場景中的玩家，執行身上的Bind方法
+            PlayerContaller contaller = GameObject.FindWithTag("Player").GetComponent<PlayerContaller>();
+            if (contaller != null)
+            {
+                contaller.Bind();
+            }else{print("contaller is null");}
+        }
     }
 
 //-------按鈕音效-------

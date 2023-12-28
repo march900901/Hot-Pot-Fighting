@@ -9,6 +9,7 @@ TagManager:
   - BGM
   - Table
   - AM
+  - Me
   layers:
   - Default
   - TransparentFX
