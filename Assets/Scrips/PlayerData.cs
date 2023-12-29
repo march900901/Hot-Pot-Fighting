@@ -36,7 +36,7 @@ public class PlayerData : MonoBehaviourPunCallbacks
     PlayerContaller playerContaller;
     Rigidbody rigidbody;
     PlayerInput playerInput;    
-    PhotonView _pv;
+    public PhotonView _pv;
     hashTable table = new hashTable();
     public string defaultMap;
     public bool Lifting=false;
@@ -189,8 +189,8 @@ public class PlayerData : MonoBehaviourPunCallbacks
         if (other._playerState==PlayerState.Dash)
         {
             hit.Play();
-            _gm.CallRpcSendMessageToAll(other._pv.Owner.NickName + "撞到" + _pv.Owner.NickName);
-            _gm.CallRpcSendMessageToAll(_pv.Owner.NickName + "RCP Say Hello");
+            //_gm.CallRpcSendMessageToAll(other._pv.Owner.NickName + "撞到" + _pv.Owner.NickName);
+            //_gm.CallRpcSendMessageToAll(_pv.Owner.NickName + "RCP Say Hello");
             HitEffect.Play();
             //如果碰撞時自己的狀態是衝刺，對方的tag是player，就把對方的狀態變成CantMove
             CallRpcStateSwitch(_playerState=PlayerState.CantMove);
@@ -207,8 +207,8 @@ public class PlayerData : MonoBehaviourPunCallbacks
         if (other._playerState==PlayerState.Dash)
         {//被撞到的時候
             //throwMe = other.gameObject;
-            _gm.CallRpcSendMessageToAll(other._pv.Owner.NickName + "撞到" + _pv.Owner.NickName);
-            _gm.CallRpcSendMessageToAll(_pv.Owner.NickName + "RCP Say Hello");
+            //_gm.CallRpcSendMessageToAll(other._pv.Owner.NickName + "撞到" + _pv.Owner.NickName);
+            //_gm.CallRpcSendMessageToAll(_pv.Owner.NickName + "RCP Say Hello");
             //如果碰撞時自己的狀態是衝刺，對方的tag是player，就把對方的狀態變成CantMove
             //SwitchState(_playerState=PlayerState.CantMove);
             //enemyList.Add(other.gameObject);

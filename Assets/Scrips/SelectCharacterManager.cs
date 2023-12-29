@@ -38,8 +38,10 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
     public DoTween PlayerListAni;
     public DoTween NextButton;
     public DoTween PreviousButton;
+    public DoTween PanelRebind;
     public GameObject GameMode;
     public GameObject PanelStory;
+
     DoTween ButtonMoveIn;
     PhotonView _pv;
     PlayerInput playerInput;
@@ -63,7 +65,6 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
         text_Confirm.enabled = false;//將UI初始化
         _pv = this.transform.GetComponent<PhotonView>();
         playerInput = this.transform.GetComponent<PlayerInput>();
-        //SetBindingBT();
         _am = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         PlayerListAni.PlayerListAni();
         ButtonMoveIn = this.gameObject.GetComponent<DoTween>();
@@ -71,7 +72,8 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
         NextButton.ScaleButton(0.5f);
         PreviousButton.ScaleButton(0.5f);
         GameMode.active = PhotonNetwork.IsMasterClient;
-        PanelStory.transform.GetComponent<DoTween>().PanelIn();
+        PanelRebind.PanelIn();
+        //PanelStory.transform.GetComponent<DoTween>().PanelIn();
     }
 
     public override void OnMasterClientSwitched(Player newMasterClient){//當房主切換的時候
@@ -157,6 +159,7 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
         Destroy(gameObject.GetComponent<PlayerContaller>());
         Destroy(gameObject.GetComponent<PlayerData>());
         Destroy(gameObject.GetComponent<PlayerInput>());
+        Destroy(gameObject.GetComponent<PlayerData>().nameText.gameObject);
     }
 
     public void UpdateCharacter(){//刷新角色預覽

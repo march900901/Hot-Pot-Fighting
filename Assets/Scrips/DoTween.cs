@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class DoTween : MonoBehaviour
 {
      Vector3 objScale;
+     public Transform panelHome;
      public List<GameObject> Button = new List<GameObject>();
      public float ButtonMove = 0;
     private void Start() {
@@ -57,17 +58,31 @@ public class DoTween : MonoBehaviour
 
     public void PanelIn(){
         this.transform.localScale = Vector3.zero;
+        if (panelHome != null)
+        {
+            transform.position = panelHome.position;
+        }else{panelHome.position = new Vector3(940,540,0);}
+        transform.DOMove(new Vector3(960,540,0),0.2f);
         this.transform.DOScale(1,0.2f);
     }
 
     public void PanelOut(){
         this.transform.localScale = new Vector3(1,1,1);
+        transform.DOMove(panelHome.position,0.2f);
         this.transform.DOScale(Vector3.zero,0.2f);
     }
 
     public void ConfirmIn(){
         this.transform.localScale = new Vector3(10,10,10);
         this.transform.DOScale(1,0.2f);
+    }
+
+    public void ButtonScaleIn(){
+        transform.DOScale(objScale,0.2f);
+    }
+
+    public void ButtonScaleOut(){
+        transform.DOScale(Vector3.zero,0.2f);
     }
 
 }

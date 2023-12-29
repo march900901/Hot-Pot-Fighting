@@ -43,8 +43,8 @@ public class GameManager : MonoBehaviourPunCallbacks
             SceneManager.LoadScene("Lobby");
         }
         PlayerCount = PhotonNetwork.CurrentRoom.PlayerCount;
-        instruction.gameObject.SetActive(true);
-        instruction.PanelIn();
+        //instruction.gameObject.SetActive(true);
+        //instruction.PanelIn();
         GameOverPanlel.SetActive(false);
         InisGame();
         PhotonNetwork.SendRate = 1000;
@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public override void OnLeftRoom()
     {//離開房間的時候將場景換到Lobby
-        SceneManager.LoadScene("LObby");
+        SceneManager.LoadScene("Lobby");
     }
 
     public void InisGame(){
@@ -161,8 +161,15 @@ public class GameManager : MonoBehaviourPunCallbacks
 //-------離開遊戲-------
     public void OnClickLeaveGame(){//按下離開按鈕
         //Leav.Play();
+        foreach (PlayerData item in players)
+        {
+            if(item._pv.IsMine){
+                PlayerPrefs.SetString("PlayerName",item.nameText.text);
+            }
+        }
         _am.PlayAudio(4);
-        PhotonNetwork.LeaveRoom();
+        SceneManager.LoadScene("selectCharacter");
+        //PhotonNetwork.LeaveRoom();
     }
 
 //-------遊戲結束-------

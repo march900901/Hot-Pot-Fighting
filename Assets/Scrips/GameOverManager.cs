@@ -32,9 +32,9 @@ public class GameOverManager : MonoBehaviour
         winer.GetComponent<MeshRenderer>().material.color = Color.blue;
     }
 
-    public void GoLobby(){
-        PhotonNetwork.LeaveRoom();
-        SceneManager.LoadScene("Lobby");
+    public void GoRoom(){
+        //PhotonNetwork.LeaveRoom();
+        SceneManager.LoadScene("SelectCharacter");
     }
 
     public void PlayParticle(){
