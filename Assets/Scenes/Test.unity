@@ -170,6 +170,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fish
       objectReference: {fileID: 0}
+    - target: {fileID: 4099277194351436583, guid: 12661ffde831111468cbe2912228518d, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 805296bf13291484f886a2c27a9dda8e, type: 2}
     - target: {fileID: 8641646075716855716, guid: 12661ffde831111468cbe2912228518d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.01
@@ -303,7 +307,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!328 &916035874
 VideoPlayer:
   m_ObjectHideFlags: 0
@@ -5349,6 +5353,71 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!1001 &1309979916
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 423493400046424583, guid: 9a30e3b9f111f5840b8d41da98ffd247, type: 3}
+      propertyPath: sceneViewId
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3565059113061548435, guid: 9a30e3b9f111f5840b8d41da98ffd247, type: 3}
+      propertyPath: m_Name
+      value: ball
+      objectReference: {fileID: 0}
+    - target: {fileID: 8048673497949248904, guid: 9a30e3b9f111f5840b8d41da98ffd247, type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: d36620f622255fb478ed2bff63c55a6b, type: 3}
+    - target: {fileID: 8641646075716855716, guid: 9a30e3b9f111f5840b8d41da98ffd247, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.41
+      objectReference: {fileID: 0}
+    - target: {fileID: 8641646075716855716, guid: 9a30e3b9f111f5840b8d41da98ffd247, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 8641646075716855716, guid: 9a30e3b9f111f5840b8d41da98ffd247, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.53
+      objectReference: {fileID: 0}
+    - target: {fileID: 8641646075716855716, guid: 9a30e3b9f111f5840b8d41da98ffd247, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8641646075716855716, guid: 9a30e3b9f111f5840b8d41da98ffd247, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8641646075716855716, guid: 9a30e3b9f111f5840b8d41da98ffd247, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8641646075716855716, guid: 9a30e3b9f111f5840b8d41da98ffd247, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8641646075716855716, guid: 9a30e3b9f111f5840b8d41da98ffd247, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8641646075716855716, guid: 9a30e3b9f111f5840b8d41da98ffd247, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8641646075716855716, guid: 9a30e3b9f111f5840b8d41da98ffd247, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9a30e3b9f111f5840b8d41da98ffd247, type: 3}
 --- !u!1 &1885785913
 GameObject:
   m_ObjectHideFlags: 0
@@ -5654,6 +5723,14 @@ PrefabInstance:
       propertyPath: _animator
       value: 
       objectReference: {fileID: 827086437}
+    - target: {fileID: 3351259717750794162, guid: 2f51a95cfeea434449a5dd123decd52e, type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: 0e1dc4ff67818ff4088fcbaf06eec8bf, type: 3}
+    - target: {fileID: 3351259717750794162, guid: 2f51a95cfeea434449a5dd123decd52e, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 030ef29ced5612c4c8d2e59f4b07b38c, type: 2}
     - target: {fileID: 3565059113061548435, guid: 2f51a95cfeea434449a5dd123decd52e, type: 3}
       propertyPath: m_Name
       value: mrshroom
@@ -5810,3 +5887,4 @@ SceneRoots:
   - {fileID: 1889812846}
   - {fileID: 256417444}
   - {fileID: 2041287528}
+  - {fileID: 1309979916}

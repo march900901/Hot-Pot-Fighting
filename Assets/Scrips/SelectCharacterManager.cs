@@ -39,6 +39,7 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
     public DoTween NextButton;
     public DoTween PreviousButton;
     public GameObject GameMode;
+    public GameObject PanelStory;
     DoTween ButtonMoveIn;
     PhotonView _pv;
     PlayerInput playerInput;
@@ -70,6 +71,7 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
         NextButton.ScaleButton(0.5f);
         PreviousButton.ScaleButton(0.5f);
         GameMode.active = PhotonNetwork.IsMasterClient;
+        PanelStory.transform.GetComponent<DoTween>().PanelIn();
     }
 
     public override void OnMasterClientSwitched(Player newMasterClient){//當房主切換的時候
