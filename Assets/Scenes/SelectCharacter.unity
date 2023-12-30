@@ -5144,6 +5144,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Panel_Rebinding
       objectReference: {fileID: 0}
+    - target: {fileID: 2375053233352008075, guid: 865515805ee90784a97a38e25c715909, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2413845885094693167, guid: 865515805ee90784a97a38e25c715909, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 

@@ -37,6 +37,10 @@ public class GameOverManager : MonoBehaviour
         SceneManager.LoadScene("SelectCharacter");
     }
 
+    public void ReStart(){
+        SceneManager.LoadScene("Game");
+    }
+
     public void PlayParticle(){
         float beetwinDelayTime = 0.5f;
         float delayTime = 0;
