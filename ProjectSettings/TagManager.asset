@@ -10,6 +10,7 @@ TagManager:
   - Table
   - AM
   - Me
+  - UI
   layers:
   - Default
   - TransparentFX

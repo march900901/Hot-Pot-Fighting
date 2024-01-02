@@ -1490,9 +1490,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41dd2638d99b9c54fa40b5240be97d68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputRoomName: {fileID: 625542565}
   inputPlayerName: {fileID: 2092675741}
-  WarningText: {fileID: 1480013209}
+  inputRoomName: {fileID: 625542565}
+  WarningText: {fileID: 1480013211}
   RoomListShack: {fileID: 578847147}
   roomButtenPrefab: {fileID: 8630168227077992666, guid: 5521819a64ccf7d4b8033d77f7615186, type: 3}
   roomButtenList: []
@@ -1691,7 +1691,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 23910e56b2c0b054295f3c907adf43ac, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.4
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0

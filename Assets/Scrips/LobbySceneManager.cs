@@ -9,9 +9,9 @@ using System.Text;
 
 public class LobbySceneManager : MonoBehaviourPunCallbacks
 {
-    [SerializeField]InputField inputRoomName;//輸入房間名的UI
     [SerializeField]InputField inputPlayerName;//輸入玩家名的UI
-    [SerializeField]GameObject WarningText;//錯誤提示字串
+    [SerializeField]InputField inputRoomName;//輸入房間名的UI
+    [SerializeField]Text WarningText;//錯誤提示字串
     [SerializeField]DoTween RoomListShack;
     public GameObject roomButtenPrefab;
     public List<GameObject> roomButtenList = new List<GameObject>();
@@ -65,8 +65,10 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
             PhotonNetwork.CreateRoom(roomName);
             PhotonNetwork.LocalPlayer.NickName = PlayerName;
             //_am.PlayAudio(8);
-        }else{
+        }else if(roomName.Length<=0 || PlayerName.Length<=0){
+            WarningText.text = "Please enter Room name and Player name";
             Debug.Log("Please enter Room name and Player name");
+            StartCoroutine(Delay(5));
         }
     }
 
@@ -90,7 +92,8 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
 
     IEnumerator Delay(float s){
         yield return new WaitForSecondsRealtime(s);
-        WarningText.GetComponent<Text>().text = null;
+        WarningText.text = "";
+        print("Delay!!");
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)

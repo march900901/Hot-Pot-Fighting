@@ -11,6 +11,7 @@ public class GameOverManager : MonoBehaviour
     public Transform GeneratPoint;
     public Text winertext;
     public List<ParticleSystem> particles = new List<ParticleSystem>();
+    public AudioManager _am;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,9 +24,10 @@ public class GameOverManager : MonoBehaviour
     public void SetWiner(){
         string winerName =  PlayerPrefs.GetString("WinerName");
         string winerObj = PlayerPrefs.GetString("WinerObj");
-        winertext.text = winerName.ToUpper() +" " + "WIN !!!";
+        winertext.text = winerName.ToUpper() +" " + "WIN !!!";//將顯示的字設為大寫
         print(winerObj);
         GameObject winer = Instantiate(Resources.Load<GameObject>(winerObj),GeneratPoint.position,Quaternion.identity);
+        winer.GetComponent<PlayerData>().nameText.text = winerName;
         Destroy(winer.GetComponent<PlayerContaller>());
         Destroy(winer.GetComponent<PlayerData>());
         Destroy(winer.GetComponent<PlayerInput>());
@@ -39,6 +41,7 @@ public class GameOverManager : MonoBehaviour
 
     public void ReStart(){
         SceneManager.LoadScene("Game");
+        _am.PlayAudio(2);
     }
 
     public void PlayParticle(){

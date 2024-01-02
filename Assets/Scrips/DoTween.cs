@@ -61,8 +61,10 @@ public class DoTween : MonoBehaviour
         if (panelHome != null)
         {
             transform.position = panelHome.position;
-        }else{panelHome.position = new Vector3(940,540,0);}
-        transform.DOMove(new Vector3(960,540,0),0.2f);
+        }else{
+            panelHome.position = new Vector3(Screen.width/2,Screen.height/2,0);
+        }
+        transform.DOMove(new Vector3(Screen.width/2,Screen.height/2,0),0.2f);
         this.transform.DOScale(1,0.2f);
     }
 

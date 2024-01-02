@@ -881,7 +881,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 2375a0d30b3227b4ba3580dfebe20217, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.4
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -2213,6 +2213,7 @@ MonoBehaviour:
   _am: {fileID: 0}
   Leav: {fileID: 960759208}
   StartGame: {fileID: 960759209}
+  BGM: {fileID: 338569117}
   instruction: {fileID: 1093692686}
   Timer: {fileID: 2014016643}
 --- !u!114 &960759207
@@ -2535,7 +2536,7 @@ GameObject:
   - component: {fileID: 989362412}
   m_Layer: 5
   m_Name: Canvas
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5144,11 +5145,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 754429490200366065, guid: 865515805ee90784a97a38e25c715909, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 75.563
       objectReference: {fileID: 0}
     - target: {fileID: 754429490200366065, guid: 865515805ee90784a97a38e25c715909, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 42.5039
       objectReference: {fileID: 0}
     - target: {fileID: 754429490200366065, guid: 865515805ee90784a97a38e25c715909, type: 3}
       propertyPath: m_LocalScale.x

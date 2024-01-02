@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public AudioManager _am;
     public AudioSource Leav;
     public AudioSource StartGame;
+    public AudioSource BGM;
     public DoTween instruction;
     public GameObject Timer;
     // Start is called before the first frame update
@@ -175,6 +176,8 @@ public class GameManager : MonoBehaviourPunCallbacks
 //-------遊戲結束-------
     public void GameOver(){//執行遊戲結束
         GameOverPanlel.SetActive(true);
+        _am.PlayAudio(4);
+        BGM.Stop();
         print("GameOver");
     }
 
