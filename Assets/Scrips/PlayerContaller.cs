@@ -105,7 +105,7 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
         }
     } 
 
-    public void Bind(){
+    public void Bind(){//導入綁定的按鍵
         string bindingDate = PlayerPrefs.GetString("binding");
         if(bindingDate!=""){
             print("設定完成");
@@ -274,10 +274,13 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
 //-------逃脫機制-------
     public void Scaper(InputAction.CallbackContext callback){
         //計算逃脫按的次數
-        if (callback.performed && playerData._playerState==PlayerData.PlayerState.CantMove)
+        if (_pv.IsMine==true)
         {
-            DoScape();
-            CallRpcDoScape();            
+            if (callback.performed && playerData._playerState==PlayerData.PlayerState.CantMove)
+            {
+                DoScape();
+                CallRpcDoScape();            
+            }
         }
     }
 

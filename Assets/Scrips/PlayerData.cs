@@ -111,13 +111,14 @@ public class PlayerData : MonoBehaviourPunCallbacks
                 playerContaller.StopAllCoroutines();
                 if (scapeCount>=10)
                 {
+                    print(this.gameObject.name);
                     GameObject ScapeParticle = Instantiate(scapeEffect,this.transform);
                     ScapeAudio.Play();
                     ScapeParticle.transform.parent = null;
                     Destroy(ScapeParticle,5);
                     //如果達成逃脫條件，變回IDLE狀態，並從子物件中移出，再取消Kinematic
                     _playerState=PlayerState.Idle;
-                    if (enemy)
+                    if (enemy && enemy.GetComponent<PlayerData>()._playerState == PlayerState.Lift)
                     {
                         enemy.GetComponent<PlayerData>()._playerState=PlayerState.Idle;
                         playerContaller.ScapeJumpe();
