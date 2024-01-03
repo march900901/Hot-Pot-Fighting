@@ -6,11 +6,19 @@ using UnityEngine.UI;
 public class GameModeText : MonoBehaviour
 {
     public Text GameMode_Text;
+    public GameObject GameTimeInPut;
     public int index;
     public List<string> GameMode = new List<string>();
 
     void Update() {
         GameMode_Text.text = GameMode[index];
+
+        if (index == 0)
+        {
+            GameTimeInPut.SetActive(true);
+        }else{
+            GameTimeInPut.SetActive(false);
+        }
     }
     
     public void NextMode(){

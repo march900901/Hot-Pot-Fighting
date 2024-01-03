@@ -13,8 +13,8 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
     [SerializeField]InputField inputPlayerName;//輸入玩家名的UI
     [SerializeField]InputField inputRoomName;//輸入房間名的UI
     [SerializeField]Text WarningText;//錯誤提示字串
-    [SerializeField]DoTween RoomListShack;
     public GameObject roomButtenPrefab;
+    public GameObject PanleCreatRoom;
     public List<GameObject> roomButtenList = new List<GameObject>();
     public List<string> roomName = new List<string>();
     public Transform contenObject;
@@ -23,7 +23,6 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
     public AudioManager _am;
     void Start()
     {
-        RoomListShack.ShackRoomList();
         if (PhotonNetwork.IsConnected==false)
         {//如果執行時沒有連結到伺服器，就轉到Start場景
             SceneManager.LoadScene("Start");
@@ -32,6 +31,7 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
         }
         WarningText.GetComponent<Text>().text = null;//初始化WarningText
         _am = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        PanleCreatRoom.transform.localScale = Vector3.zero;
     }
 
     public override void OnConnectedToMaster()

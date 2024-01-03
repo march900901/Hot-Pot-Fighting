@@ -22,22 +22,20 @@ public class StartSceneManager : MonoBehaviourPunCallbacks
             }
         }
     }
-    public void GoToGameScene(){
-        //移到遊戲場景
-        SceneManager.LoadScene("Game");
-    }
 
     public void OnClickStart(){
         PhotonNetwork.AutomaticallySyncScene=true;
         PhotonNetwork.ConnectUsingSettings();
         Debug.Log("Click Start");
+        //SceneManager.LoadScene("Story");
         LoadingPanle.SetActive(true);
         LoadingPanle.GetComponent<DoTween>().ScalePanel();
+
     }
 
     public override void OnConnectedToMaster()
     {
         Debug.Log("Conneted!");
-        SceneManager.LoadScene("Lobby");
+        SceneManager.LoadScene("Story");
     }
 }

@@ -87,4 +87,12 @@ public class DoTween : MonoBehaviour
         transform.DOScale(Vector3.zero,0.2f);
     }
 
+    public void SelectGameMode(float scale){
+        transform.DOScale(objScale*scale,0.2f);
+    }
+
+    public void DisSelectGameMode(){
+        transform.DOScale(objScale,0.2f);
+    }
+
 }

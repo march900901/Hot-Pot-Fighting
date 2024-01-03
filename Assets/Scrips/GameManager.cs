@@ -36,6 +36,12 @@ public class GameManager : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
+        if (PlayerPrefs.GetInt("GameTime") != 0)
+        {
+            GameTime = PlayerPrefs.GetInt("GameTime");
+        }else{
+            GameTime = 60;
+        }
         _gr = (GameRull)PlayerPrefs.GetInt("GameMode");                                                                                                                                               
         CharacterName = PlayerPrefs.GetString("CharacterName");//取得玩家選擇的角色名
         _pv = this.transform.GetComponent<PhotonView>();
