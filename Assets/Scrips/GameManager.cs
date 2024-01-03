@@ -166,8 +166,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             if(item._pv.IsMine){
                 PlayerPrefs.SetString("PlayerName",item.nameText.text);
+                PhotonNetwork.Destroy(item.gameObject);
             }
         }
+        
         _am.PlayAudio(4);
         SceneManager.LoadScene("selectCharacter");
         //PhotonNetwork.LeaveRoom();

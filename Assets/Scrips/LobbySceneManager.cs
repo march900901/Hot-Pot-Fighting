@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Photon.Realtime;
 using System.Text;
+using System.Linq;
 
 public class LobbySceneManager : MonoBehaviourPunCallbacks
 {
@@ -15,6 +16,7 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
     [SerializeField]DoTween RoomListShack;
     public GameObject roomButtenPrefab;
     public List<GameObject> roomButtenList = new List<GameObject>();
+    public List<string> roomName = new List<string>();
     public Transform contenObject;
     public float timeBettwinUpdate = 1.5f;
     float nextUpdateTime;
@@ -107,24 +109,38 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
     }
 
     public void UpdateRoom(List<RoomInfo> list){
-        // foreach (GameObject item in roomButtenList)
-        // {
-        //     Destroy(item.gameObject);
-        // }
+        foreach (GameObject item in roomButtenList)
+        {
+            Destroy(item.gameObject);
+        }
         roomButtenList.Clear();
+        List<string> Name = roomName;
         foreach (RoomInfo room in list)
         {
             if (room.PlayerCount > 0)
             {
-                GameObject newButton = Instantiate(roomButtenPrefab,Vector3.zero,Quaternion.identity,GameObject.Find("Content").transform);
-                newButton.gameObject.name = room.Name;
-                roomButtenList.Add(newButton);
+                Name.Add(room.Name);
                 print("新增 " + room.Name);
             }else if(room.PlayerCount<=0){
                 string NullRoom = room.Name;
+                Name.Remove(room.Name);
                 Destroy(GameObject.Find(NullRoom));
             }
+            
         }
-    }
+        roomName = ConparList(Name);
+        foreach (var item in roomName){//照過濾後的roomName列表生成房間按鈕
+        
+            GameObject newButton = Instantiate(roomButtenPrefab,Vector3.zero,Quaternion.identity,GameObject.Find("Content").transform);
+            newButton.gameObject.name = item;
+            roomButtenList.Add(newButton);
+        }
+        
 
+    }
+    
+    public List<string> ConparList(List<string> list){//過濾重複的房間名稱
+        List<string> List = list.Distinct().ToList();
+        return List;
+    }
 }

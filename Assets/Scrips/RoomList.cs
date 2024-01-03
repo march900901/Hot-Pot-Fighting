@@ -58,6 +58,10 @@ public class RoomList : MonoBehaviourPunCallbacks
 
     public void UpdateRoomList(List<string> strings){
         //一個一個處理伺服器房間列表的房間
+        foreach (var item in buttonList)
+        {
+            Destroy(item.gameObject);
+        }
         buttonList.Clear();
         Destroy(GameObject.FindWithTag("RoomButten"));
         print("更新房間列表");
