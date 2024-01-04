@@ -36,6 +36,7 @@ public class GameOverManager : MonoBehaviour
 
     public void GoRoom(){
         //PhotonNetwork.LeaveRoom();
+        PhotonNetwork.CurrentRoom.IsVisible = true;
         SceneManager.LoadScene("SelectCharacter");
     }
 

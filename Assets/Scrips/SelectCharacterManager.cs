@@ -14,19 +14,7 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
     [SerializeField]Text textRoomName;
     [SerializeField]Text textPlayerList;
     [SerializeField]Button buttonStartGame;
-    // [SerializeField]InputActionReference MoveActionRef;
-    // [SerializeField]InputActionReference DashActionRef;
-    // [SerializeField]InputActionReference LiftActionRef;
-    // [SerializeField]InputActionReference ThrowActionRef;
-    // [SerializeField]InputActionReference ScapeActionRef;
-    // [SerializeField]Text ForwordActionText;
-    // [SerializeField]Text BackwordActionText;
-    // [SerializeField]Text LeftActionText;
-    // [SerializeField]Text RightActionText;
-    // [SerializeField]Text DashActionText;
-    // [SerializeField]Text LiftActionText;
-    // [SerializeField]Text ThrowActionText;
-    // [SerializeField]Text ScapeActionText;
+
     
     public int CharacterIndex = 0;
     public List<GameObject> CharacterList = new List<GameObject>();
@@ -39,9 +27,9 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
     public DoTween NextButton;
     public DoTween PreviousButton;
     public DoTween PanelRebind;
-    public GameObject GameMode;
     public GameObject PanelStory;
-    public Text GameTime;
+    public int GameMode;
+    public int GameTime;
 
     DoTween ButtonMoveIn;
     PhotonView _pv;
@@ -72,9 +60,11 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
         ButtonMoveIn.StartCoroutine("ButtonMoveIn");
         NextButton.ScaleButton(0.5f);
         PreviousButton.ScaleButton(0.5f);
-        GameMode.active = PhotonNetwork.IsMasterClient;
         PanelRebind.PanelIn();
-        PlayerPrefs.SetInt("GameTime",0);
+        GameMode = PlayerPrefs.GetInt("GameMode");
+        GameTime = PlayerPrefs.GetInt("GameTime");
+        print("GameMode: " + GameMode);
+        print("GameTime: " + GameTime);
     }
 
     public override void OnMasterClientSwitched(Player newMasterClient){//當房主切換的時候
@@ -101,10 +91,8 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
     }
 
     public void OnClickStart(){//按下Start按紐時
-        string timeString = GameTime.text.ToString();
-        int timeint = int.Parse(timeString);
-        CallRpcSetGameMode(GameMode.gameObject.GetComponent<GameModeText>().index, timeint);
-        
+
+        CallRpcSetGameMode(GameMode, GameTime);
         PhotonNetwork.CurrentRoom.IsVisible = false;
     }
 

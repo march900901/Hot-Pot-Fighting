@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class ButtonDoTween : MonoBehaviour
+public class ButtonSelect : MonoBehaviour
 {
     public Vector3 Scale;
 

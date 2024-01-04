@@ -477,7 +477,6 @@ GameObject:
   - component: {fileID: 1019415638}
   - component: {fileID: 1019415641}
   - component: {fileID: 1019415642}
-  - component: {fileID: 1019415643}
   m_Layer: 5
   m_Name: Button_OK
   m_TagString: Untagged
@@ -573,6 +572,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1019415641}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1019415639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -621,7 +632,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: a0973989b24e35b41b99184240e88067, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 2339e48c340f4334d87ee0c3b856ab13, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -722,19 +733,6 @@ MonoBehaviour:
   panelHome: {fileID: 0}
   Button: []
   ButtonMove: 0
---- !u!114 &1019415643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1019415636}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b094c24d784ee0945912143e78afa06a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Scale: {x: 0, y: 0, z: 0}
 --- !u!1 &1147160464
 GameObject:
   m_ObjectHideFlags: 0

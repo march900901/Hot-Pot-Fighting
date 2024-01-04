@@ -21,6 +21,7 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
     public float timeBettwinUpdate = 1.5f;
     float nextUpdateTime;
     public AudioManager _am;
+    public GameObject Panel_Help;
     void Start()
     {
         if (PhotonNetwork.IsConnected==false)
@@ -32,6 +33,7 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
         WarningText.GetComponent<Text>().text = null;//初始化WarningText
         _am = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         PanleCreatRoom.transform.localScale = Vector3.zero;
+        Panel_Help.transform.localScale = Vector3.zero;
     }
 
     public override void OnConnectedToMaster()
