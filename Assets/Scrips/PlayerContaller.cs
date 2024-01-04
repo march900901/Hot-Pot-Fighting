@@ -9,6 +9,7 @@ using Photon.Pun;
 using hashTable = ExitGames.Client.Photon.Hashtable;
 using UnityEditor;
 using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 public class PlayerContaller : MonoBehaviourPunCallbacks
 {   
     PlayerData playerData;
@@ -60,6 +61,10 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
             bindingManager._pc = this.gameObject;
             //bindingManager.playerInput = GetComponent<PlayerInput>();
             print("get input");
+        }
+        if (SceneManager.GetActiveScene().name == "SelectCharacter")
+        {
+            _animator.SetTrigger("choose");
         }
     }
 

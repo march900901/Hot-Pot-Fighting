@@ -1441,6 +1441,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: mushroom_modle
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0e1dc4ff67818ff4088fcbaf06eec8bf, type: 3}
+      propertyPath: m_TagString
+      value: Animator
+      objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 0e1dc4ff67818ff4088fcbaf06eec8bf, type: 3}
       propertyPath: m_Controller
       value: 

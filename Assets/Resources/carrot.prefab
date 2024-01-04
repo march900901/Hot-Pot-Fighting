@@ -1450,6 +1450,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: carrot_mesh
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 37aa3b7d4c1d6874191d47b54e5ca114, type: 3}
+      propertyPath: m_TagString
+      value: Animator
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: -840777845830954692, guid: 37aa3b7d4c1d6874191d47b54e5ca114, type: 3}

@@ -12,9 +12,11 @@ public class GameOverManager : MonoBehaviour
     public Text winertext;
     public List<ParticleSystem> particles = new List<ParticleSystem>();
     public AudioManager _am;
+    PhotonView _pv;
     // Start is called before the first frame update
     void Start()
     {
+        _pv = GetComponent<PhotonView>();
         SetWiner();
         PlayParticle();
     }
@@ -36,15 +38,32 @@ public class GameOverManager : MonoBehaviour
 
     public void GoRoom(){
         //PhotonNetwork.LeaveRoom();
-        PhotonNetwork.CurrentRoom.IsVisible = true;
-        SceneManager.LoadScene("SelectCharacter");
+        CallRpcGoRoom();
     }
 
     public void ReStart(){
-        SceneManager.LoadScene("Game");
+        CallRpcReStart();
         _am.PlayAudio(2);
     }
 
+    public void CallRpcReStart(){
+        _pv.RPC("RpcReStart",RpcTarget.All);
+    }
+
+    [PunRPC]
+    void RpcReStart(PhotonMessageInfo info){
+        SceneManager.LoadScene("Game");
+    }
+
+    public void CallRpcGoRoom(){
+        _pv.RPC("RpcGoRoom",RpcTarget.All);
+    }
+
+    [PunRPC]
+    void RpcGoRoom(PhotonMessageInfo info){
+        PhotonNetwork.CurrentRoom.IsVisible = true;
+        SceneManager.LoadScene("SelectCharacter");
+    }
     public void PlayParticle(){
         float beetwinDelayTime = 0.5f;
         float delayTime = 0;

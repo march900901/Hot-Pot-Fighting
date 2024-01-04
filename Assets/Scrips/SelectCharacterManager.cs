@@ -147,7 +147,7 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
     }
 
     public void ReSetCharacter(GameObject gameObject){//刪除角色物件中可能報錯的腳本
-        Destroy(gameObject.GetComponent<PlayerContaller>());
+        //Destroy(gameObject.GetComponent<PlayerContaller>());
         Destroy(gameObject.GetComponent<PlayerData>());
         Destroy(gameObject.GetComponent<PlayerInput>());
         Destroy(gameObject.GetComponent<PlayerData>().nameText.gameObject);
@@ -160,11 +160,11 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
         //將生成的角色物件名字改成跟角色列表的一樣，預防clone等字出現，方便之後操作
         Character.name = CharacterList[CharacterIndex].name;
         ReSetCharacter(Character);//重製角色物件
-        Animator animator = Character.GetComponentInChildren<Animator>();
-        if (animator)
-        {
-            animator.SetTrigger("choose");
-        }
+        // Animator animator = GameObject.FindWithTag("Animator").GetComponentInChildren<Animator>();
+        // if (animator)
+        // {
+        //     animator.SetTrigger("choose");
+        // }
         //將所selectCharcterName設為當前所選角色名字
         selectCharacterName = Character.name;
     }

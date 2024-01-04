@@ -168,15 +168,22 @@ public class GameManager : MonoBehaviourPunCallbacks
 //-------離開遊戲-------
     public void OnClickLeaveGame(){//按下離開按鈕
         //Leav.Play();
+        
+        PhotonView pv;
         foreach (PlayerData item in players)
         {
-            if(item._pv.IsMine){
-                PlayerPrefs.SetString("PlayerName",item.nameText.text);
-                PhotonNetwork.Destroy(item.gameObject);
+            if (item)
+            {
+                pv = item.transform.GetComponent<PhotonView>();
+                if(pv.IsMine == true){
+                    PlayerPrefs.SetString("PlayerName",item.nameText.text);
+                    PhotonNetwork.Destroy(item.gameObject);
+                }
             }
         }
         
         _am.PlayAudio(4);
+        PhotonNetwork.CurrentRoom.IsVisible = true;
         SceneManager.LoadScene("selectCharacter");
         //PhotonNetwork.LeaveRoom();
     }

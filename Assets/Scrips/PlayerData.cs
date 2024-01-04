@@ -56,6 +56,7 @@ public class PlayerData : MonoBehaviourPunCallbacks
         defaultMap=playerInput.defaultActionMap;
         rigidbody=this.transform.GetComponent<Rigidbody>();
         _gm = GameObject.Find("GameManager").GetComponent<GameManager>(); 
+        _gm.players.Add(GetComponent<PlayerData>());
         _pv = this.transform.GetComponent<PhotonView>();
         nameText.text = _pv.Owner.NickName;
         if (this.gameObject.name.EndsWith("(Clone)"))
@@ -236,8 +237,9 @@ public class PlayerData : MonoBehaviourPunCallbacks
                 }
                 if(Point <= 0){           
                     _gm.PlayerCount--;
-                    Destroy(this.gameObject);
                     _gm.JudgeGameOver();
+                    Destroy(this.gameObject);
+                    
                     // string winerName = throwMe.gameObject.GetComponent<PlayerData>().nameText.text;
                     // string winerObj = throwMe.gameObject.name;
                     // _gm.CallRpcSetWinerName(winerName,winerObj);

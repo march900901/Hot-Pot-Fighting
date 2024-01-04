@@ -1988,12 +1988,12 @@ RectTransform:
   - {fileID: 1932297060}
   - {fileID: 2092675744}
   - {fileID: 208792187}
-  - {fileID: 1079705421}
   - {fileID: 1480013210}
   - {fileID: 350900986}
-  - {fileID: 43654553}
   - {fileID: 1699371781}
   - {fileID: 1916511583}
+  - {fileID: 1079705421}
+  - {fileID: 43654553}
   - {fileID: 1164603804}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3583,8 +3583,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 56.887512, y: -70.6926}
-  m_SizeDelta: {x: -96.6185, y: -87.6926}
+  m_AnchoredPosition: {x: 18.114403, y: -46.018806}
+  m_SizeDelta: {x: -43.3055, y: -63.0188}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1320362467
 MonoBehaviour:
@@ -3807,7 +3807,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6238a0390190ff489c067e454a689e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameTimeText: {fileID: 0}
+  GameTimeText: {fileID: 994431162}
   GameMode: 0
   GameTime: 0
 --- !u!1 &1378488292
@@ -4851,7 +4851,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 54.425, y: -0.000028586926}
+  m_AnchoredPosition: {x: 42.088116, y: -0.000028586926}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1760469964
@@ -4881,7 +4881,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 15
+    m_Left: 0
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
