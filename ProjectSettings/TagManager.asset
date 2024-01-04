@@ -11,6 +11,7 @@ TagManager:
   - AM
   - Me
   - UI
+  - Animator
   layers:
   - Default
   - TransparentFX

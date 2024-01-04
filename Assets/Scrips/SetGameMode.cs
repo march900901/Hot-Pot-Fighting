@@ -18,7 +18,6 @@ public class SetGameMode : MonoBehaviour
     public void SetTimeMode(){
         PlayerPrefs.SetInt("GameMode",0);
         GameMode = 0;
-        print("GameMode: 0");
     }
 
     public void SetLifeMode(){
@@ -27,9 +26,13 @@ public class SetGameMode : MonoBehaviour
     }
 
     public void SetGameTime(){
-        if (GameTimeText != null)
+        string timeString = GameTimeText.text.ToString();
+        if (timeString != "")
         {
-            GameTime = int.Parse(GameTimeText.ToString());
+            GameTime = int.Parse(timeString);
+        }else
+        {
+            GameTime = 60;
         }
         PlayerPrefs.SetInt("GameTime",GameTime);
     }
