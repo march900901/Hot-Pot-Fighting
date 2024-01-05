@@ -74,7 +74,7 @@ public class ReBindingManager : MonoBehaviour
     public void RebindingForword(){//重新綁定往前按鍵
         print("Rebinding");
         playerInput.SwitchCurrentActionMap("NotMe");
-        print(playerInput.currentActionMap.name);
+        MoveActionRef.action.Disable();
         ForwordActionText.text = ("請輸入...");
         var vec = MoveActionRef.action.ChangeCompositeBinding("2DVector");
         var forword = vec.NextPartBinding("Up");
@@ -89,6 +89,7 @@ public class ReBindingManager : MonoBehaviour
                 print("done");
                 Rebind();
                 operation.Dispose();
+                MoveActionRef.action.Enable();
                 playerInput.SwitchCurrentActionMap("Player1");
             })
             .OnCancel(operation=>{
@@ -99,6 +100,7 @@ public class ReBindingManager : MonoBehaviour
                 print("done");
                 Cancel();
                 operation.Dispose();
+                MoveActionRef.action.Enable();
                 playerInput.SwitchCurrentActionMap("Player1");
             })
             .Start();
@@ -108,6 +110,7 @@ public class ReBindingManager : MonoBehaviour
     public void RebindingBackword(){//重新綁定往後按鍵
         print("Rebinding");
         playerInput.SwitchCurrentActionMap("NotMe");
+        MoveActionRef.action.Disable();
         BackwordActionText.text = ("請輸入...");
         var vec = MoveActionRef.action.ChangeCompositeBinding("2DVector");
         var backword = vec.NextPartBinding("Down");
@@ -122,6 +125,7 @@ public class ReBindingManager : MonoBehaviour
             print("done");
             Rebind();
             operation.Dispose();
+            MoveActionRef.action.Enable();
             playerInput.SwitchCurrentActionMap("Player1");
         })
         .OnCancel(operation=>{
@@ -132,6 +136,7 @@ public class ReBindingManager : MonoBehaviour
             print("done");
             Cancel();
             operation.Dispose();
+            MoveActionRef.action.Enable();
             playerInput.SwitchCurrentActionMap("Player1");
         })
         .Start();
@@ -140,6 +145,7 @@ public class ReBindingManager : MonoBehaviour
     public void RebindingLeft(){//重新綁定往左按鍵
         print("Rebinding");
         playerInput.SwitchCurrentActionMap("NotMe");
+        MoveActionRef.action.Disable();
         LeftActionText.text = ("請輸入...");
         var vec = MoveActionRef.action.ChangeCompositeBinding("2DVector");
         var Left = vec.NextPartBinding("Left");
@@ -154,6 +160,7 @@ public class ReBindingManager : MonoBehaviour
             print("done");
             Rebind();
             operation.Dispose();
+            MoveActionRef.action.Enable();
             playerInput.SwitchCurrentActionMap("Player1");
         })
         .OnCancel(operation=>{
@@ -164,6 +171,7 @@ public class ReBindingManager : MonoBehaviour
             print("done");
             Cancel();
             operation.Dispose();
+            MoveActionRef.action.Enable();
             playerInput.SwitchCurrentActionMap("Player1");
         })
         .Start();
@@ -172,6 +180,7 @@ public class ReBindingManager : MonoBehaviour
     public void RebindingRght(){//重新綁定往右按鍵
         print("Rebinding");
         playerInput.SwitchCurrentActionMap("NotMe");
+        MoveActionRef.action.Disable();
         RightActionText.text = ("請輸入...");
         var vec = MoveActionRef.action.ChangeCompositeBinding("2DVector");
         var right = vec.NextPartBinding("Right");
@@ -187,6 +196,7 @@ public class ReBindingManager : MonoBehaviour
             print("done");
             Rebind();
             operation.Dispose();
+            MoveActionRef.action.Enable();
             playerInput.SwitchCurrentActionMap("Player1");
         })
         .OnCancel(operation=>{
@@ -197,6 +207,7 @@ public class ReBindingManager : MonoBehaviour
             print("done");
             Cancel();
             operation.Dispose();
+            MoveActionRef.action.Enable();
             playerInput.SwitchCurrentActionMap("Player1");
         })
         .Start();
@@ -205,6 +216,7 @@ public class ReBindingManager : MonoBehaviour
     public void RebindingDash(){//重新綁定Dash按鍵
         print("Rebinding");
         playerInput.SwitchCurrentActionMap("NotMe");
+        DashActionRef.action.Disable();
         DashActionText.text = ("請輸入...");
         Rebinding(DashActionRef,DashActionText);
     }
@@ -212,6 +224,7 @@ public class ReBindingManager : MonoBehaviour
     public void RebindingLift(){//重新綁定Lift按鍵
         print("Rebinding");
         playerInput.SwitchCurrentActionMap("NotMe");
+        LiftActionRef.action.Disable();
         LiftActionText.text = ("請輸入...");
         Rebinding(LiftActionRef,LiftActionText);
     }
@@ -219,6 +232,7 @@ public class ReBindingManager : MonoBehaviour
     public void RebindingThrow(){//重新綁定Throw按鍵
         print("Rebinding");
         playerInput.SwitchCurrentActionMap("NotMe");
+        ThrowActionRef.action.Disable();
         ThrowActionText.text = ("請輸入...");
         Rebinding(ThrowActionRef,ThrowActionText);
     }
@@ -226,6 +240,7 @@ public class ReBindingManager : MonoBehaviour
     public void RebindingScape(){//重新綁定Scape按鍵
         print("Rebinding");
         playerInput.SwitchCurrentActionMap("NotMe");
+        ScapeActionRef.action.Disable();
         ScapeActionText.text = ("請輸入...");
         Rebinding(ScapeActionRef,ScapeActionText);
     }
@@ -243,6 +258,7 @@ public class ReBindingManager : MonoBehaviour
             print("done");
             Rebind();
             operation.Dispose();
+            reference.action.Enable();
             playerInput.SwitchCurrentActionMap("Player1");
         })
         .OnCancel(operation=>{
@@ -253,6 +269,7 @@ public class ReBindingManager : MonoBehaviour
             print("done");
             Cancel();
             operation.Dispose();
+            reference.action.Enable();
             playerInput.SwitchCurrentActionMap("Player1");
         })
         .Start();

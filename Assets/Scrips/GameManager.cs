@@ -237,48 +237,46 @@ public class GameManager : MonoBehaviourPunCallbacks
         switch(_gr){
             case GameRull.TIME:
                 List<PlayerData> winDatas = new List<PlayerData>();
-                winDatas.Add(players[0]);
-                foreach (PlayerData item in players)
-                {
-                    print(item.Point);
-                }
-
+                winDatas.Add(players[0]);//將玩家列表中第一個加入winDatas
                 for (int i = 1; i < players.Count; i++)
-                {
+                {//一個個判斷winDatas的玩家分數是否比較高
                     if (winDatas[0].Point < players[i].Point)
-                    {
+                    {//如果winDatas分數低
                         if (winDatas.Count==1)
-                        {
+                        {//winDatas中只有一人的話，把分數高的換到windDatas
                             winDatas[0] = players[i];
-                        }else{
+                        }else{//如果winDatas不只一個人的話，把winDatas清空再加入分數高的人
                             winDatas.Clear();
                             winDatas.Add(players[i]);
                         }
-                    }else if(winDatas[0].Point == players[i].Point){
+                    }else if(winDatas[0].Point == players[i].Point){//如果兩者分數一樣就把比對的人加入winData
                         winDatas.Add(players[i]);
                     }
                 }
                 if (winDatas.Count == 1)
-                {
+                {//找出分數最高的人後，判斷如果分數最高的只有一人，就執行設定贏家
                     CallRpcSetWinerName(winDatas[0].nameText.text,winDatas[0].gameObject.name);
-                }else{
+                }else{//如果分數最高的不只一人，就進入FINAL模式
                     _gr = GameRull.FINAL;
                     List<string> winName = new List<string>();
+                    
                     foreach (var item in winDatas)
                     {//將分數最高的玩家物件名加入list
                         winName.Add(item.gameObject.name);
+                        players.Remove(item);
+                        item._gm.ReSetPlayer(item.gameObject);
                     }
                     foreach (var item in winDatas)
                     {//將分數最高的玩家data從players列表移除
-                        players.Remove(item);
+                        
                     }
                     foreach (var item in players)
-                    {
+                    {//刪除分數最高的玩家以外的人
                         Destroy(item.gameObject);
                     }
                     foreach (var item in winDatas)
                     {//生成分數最高的玩家
-                        item._gm.ReSetPlayer(item.gameObject);
+                        
                     }
                 }
                 
