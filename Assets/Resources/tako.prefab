@@ -408,6 +408,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 3386166995992427764}
   - {fileID: -8993477054932842531}
+  - {fileID: 3187546807460401391}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -1541,6 +1542,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a15a60eca8be699409c6913a3a3ee253, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2725760635151622142}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a15a60eca8be699409c6913a3a3ee253, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3187546807460401391}
   m_SourcePrefab: {fileID: 100100000, guid: a15a60eca8be699409c6913a3a3ee253, type: 3}
 --- !u!1 &6924094713154854626 stripped
 GameObject:
@@ -1568,6 +1572,22 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3187546807460401391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6924094713154854626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters: []
+  m_SynchronizeLayers: []
 --- !u!4 &7736203225034982488 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a15a60eca8be699409c6913a3a3ee253, type: 3}

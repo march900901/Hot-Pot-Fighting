@@ -30,6 +30,8 @@ public class GameOverManager : MonoBehaviour
         print(winerObj);
         GameObject winer = Instantiate(Resources.Load<GameObject>(winerObj),GeneratPoint.position,Quaternion.identity);
         winer.GetComponent<PlayerData>().nameText.text = winerName;
+        Animator _animator = winer.GetComponentInChildren<Animator>();
+        _animator.SetTrigger("Choose");
         Destroy(winer.GetComponent<PlayerContaller>());
         Destroy(winer.GetComponent<PlayerData>());
         Destroy(winer.GetComponent<PlayerInput>());

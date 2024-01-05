@@ -62,10 +62,6 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
             //bindingManager.playerInput = GetComponent<PlayerInput>();
             print("get input");
         }
-        if (SceneManager.GetActiveScene().name == "SelectCharacter")
-        {
-            _animator.SetTrigger("choose");
-        }
     }
 
     // Update is called once per frame

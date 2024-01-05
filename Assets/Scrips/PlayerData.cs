@@ -68,7 +68,7 @@ public class PlayerData : MonoBehaviourPunCallbacks
         switch(_gm._gr){
             case GameManager.GameRull.TIME:
                 Point = 0;
-                _gm.players.Add(this.gameObject.GetComponent<PlayerData>());
+                //_gm.players.Add(this.gameObject.GetComponent<PlayerData>());
                 // print("Add PlayerPoint");
                 // foreach (var kvp in _gm.PlayerPoint)
                 // {

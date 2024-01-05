@@ -12,6 +12,11 @@ public class HitCollider : MonoBehaviour
         {
             _pd.OnHit(other.gameObject.GetComponent<PlayerData>());
         }
+
+        if (other.tag == "Soup")
+        {
+            Instantiate(_pd.HitEffect,other.transform);
+        }
         
     }
 }

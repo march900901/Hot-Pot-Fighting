@@ -1434,7 +1434,8 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 95b6e7bde82d620479a9b4cde3c26cf6, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5866666021909216657, guid: 1eb01368f5eb99b4988346022d39d010, type: 3}
     m_RemovedGameObjects:
     - {fileID: 3306512618393000541, guid: 1eb01368f5eb99b4988346022d39d010, type: 3}
     m_AddedGameObjects:
@@ -1504,7 +1505,7 @@ MonoBehaviour:
     Name: Idle
   - Type: 9
     SynchronizeType: 0
-    Name: choose
+    Name: Choose
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
