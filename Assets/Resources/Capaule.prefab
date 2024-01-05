@@ -195,23 +195,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerState: 0
   Name: Capaule
-  Point: 0
   nameText: {fileID: 6774569807595874641}
-  HitEffect: {fileID: 4973158665756128036}
-  scapeEffect: {fileID: 7669277632233567989, guid: aa6f970f60335ba468bd95ca4c82c26a, type: 3}
-  enemy: {fileID: 0}
-  DefaultColor: {r: 0, g: 0.17254902, b: 1, a: 1}
-  throwMe: {fileID: 0}
-  LiftPoint: {fileID: 7916744158950958469}
-  Star: {fileID: 2953857107212740357}
-  hit: {fileID: 4557216365139784817}
-  ScapeAudio: {fileID: 6434828771963060905}
-  _gm: {fileID: 0}
-  _pv: {fileID: 0}
-  defaultMap: Player1
+  Point: 0
+  scapeCount: 0
   Lifting: 0
   CanLift: 0
-  scapeCount: 0
+  defaultMap: Player1
+  PointText: {fileID: 0}
+  scapeEffect: {fileID: 7669277632233567989, guid: aa6f970f60335ba468bd95ca4c82c26a, type: 3}
+  enemy: {fileID: 0}
+  throwMe: {fileID: 0}
+  Star: {fileID: 2953857107212740357}
+  HitEffect: {fileID: 4973158665756128036}
+  hit: {fileID: 4557216365139784817}
+  ScapeAudio: {fileID: 6434828771963060905}
+  DefaultColor: {r: 0, g: 0.17254902, b: 1, a: 1}
+  LiftPoint: {fileID: 7916744158950958469}
+  _pv: {fileID: 0}
+  _gm: {fileID: 0}
 --- !u!114 &4634476352361722460
 MonoBehaviour:
   m_ObjectHideFlags: 0

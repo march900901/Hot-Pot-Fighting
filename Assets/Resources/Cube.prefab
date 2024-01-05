@@ -277,6 +277,7 @@ MonoBehaviour:
   Lifting: 0
   CanLift: 0
   scapeCount: 0
+  PointText: {fileID: 0}
 --- !u!114 &4634476352361722460
 MonoBehaviour:
   m_ObjectHideFlags: 0

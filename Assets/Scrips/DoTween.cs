@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using TMPro;
 
 
 public class DoTween : MonoBehaviour
@@ -93,6 +94,12 @@ public class DoTween : MonoBehaviour
 
     public void DisSelectGameMode(){
         transform.DOScale(objScale,0.2f);
+    }
+
+    public void ReduceLife(){
+        CanvasGroup canvasGroup = GetComponent<CanvasGroup>();
+        transform.DOMoveY(transform.position.y-85,1);
+        
     }
 
 }

@@ -10,17 +10,18 @@ using System.IO;
 using UnityEngine.UI;
 using DG.Tweening;
 using System.Linq;
+using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
     public enum GameRull{TIME,LIVE,FINAL}
+    [Header("遊戲模式")]
     public GameRull _gr;
     public int PlayerCount;
     public int Life;
     public int GameTime;
     public List<Transform> startTransform = new List<Transform>();
     public List<PlayerData> players = new List<PlayerData>();
-    PhotonView _pv;
     [SerializeField]List<string> messageList;
     [SerializeField]Text messageText;
     public Dictionary<Player, bool> alivePlayerMap = new Dictionary<Player, bool>();
@@ -33,6 +34,10 @@ public class GameManager : MonoBehaviourPunCallbacks
     public AudioSource BGM;
     public DoTween instruction;
     public GameObject Timer;
+    public PointUI _pointUI;
+    public Text ui_PlayerName;
+    PhotonView _pv;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -58,7 +63,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         PhotonNetwork.SerializationRate = 1000;
         print("SendRate: " + PhotonNetwork.SendRate);
         print("SerializaationRate: " + PhotonNetwork.SerializationRate);
-        //StartGame.PlayDelayed(1.5f);
         _am = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         Timer = GameObject.Find("Timer");
         StartGame.Play();

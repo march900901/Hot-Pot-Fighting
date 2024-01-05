@@ -18,30 +18,41 @@ using System;
 public class PlayerData : MonoBehaviourPunCallbacks
 {
     public enum PlayerState{Idle,Dash,Fly,Lift,BeLift,Dead,CantMove}
+    [Header("狀態")]
     public PlayerState _playerState;
+    [Header("名稱")]
     public string Name;
+    [SerializeField]public Text nameText;
+    [Header("變數")]
     public int Point = 3;
-    [SerializeField]
-    public Text nameText;
-    public  ParticleSystem HitEffect;
+    public int scapeCount=0;
+    public bool Lifting=false;
+    public bool CanLift;
+    public string defaultMap;
+    public Text PointText;
+    [Header("物件")]
     public GameObject scapeEffect;
     public GameObject enemy;
-    public Color DefaultColor;
     public GameObject throwMe;
-    public LiftCollider LiftPoint;
     public GameObject Star;
+    [Header("粒子特效")]
+    public  ParticleSystem HitEffect;
+    [Header("聲音")]
     public AudioSource hit;
     public AudioSource ScapeAudio;
+    [Header("其他")]
+    public Color DefaultColor;
+    public LiftCollider LiftPoint;
+    public PhotonView _pv;
     public GameManager _gm;
     PlayerContaller playerContaller;
     Rigidbody rigidbody;
     PlayerInput playerInput;    
-    public PhotonView _pv;
+    
     hashTable table = new hashTable();
-    public string defaultMap;
-    public bool Lifting=false;
-    public bool CanLift;
-    public int scapeCount=0;
+    
+    
+    
 
     
 
@@ -57,7 +68,7 @@ public class PlayerData : MonoBehaviourPunCallbacks
         rigidbody=this.transform.GetComponent<Rigidbody>();
         _gm = GameObject.Find("GameManager").GetComponent<GameManager>(); 
         _gm.players.Add(GetComponent<PlayerData>());
-        _pv = this.transform.GetComponent<PhotonView>();
+        _pv = this.transform.GetComponent<PhotonView>();      
         nameText.text = _pv.Owner.NickName;
         if (this.gameObject.name.EndsWith("(Clone)"))
         {
@@ -78,9 +89,15 @@ public class PlayerData : MonoBehaviourPunCallbacks
 
             case GameManager.GameRull.LIVE:
                 Point = _gm.Life;
+                if(_pv.IsMine){
+                    _gm._pointUI.Life = Point;
+                }
             break;
         }
-        
+        if (_pv.IsMine)
+        {
+            _gm.ui_PlayerName.text = nameText.text;
+        }
     }
 
     // Update is called once per frame
@@ -222,7 +239,7 @@ public class PlayerData : MonoBehaviourPunCallbacks
 
     //-------計算分數-------
     public void CountingPoint(){//依規則計算分數
-    switch(_gm._gr){
+        switch(_gm._gr){
             case GameManager.GameRull.TIME://是時間規則時
                 throwMe.GetComponent<PlayerData>().Point += 1;
                 print(throwMe.gameObject.name + "+1");
@@ -231,9 +248,14 @@ public class PlayerData : MonoBehaviourPunCallbacks
 
             case GameManager.GameRull.LIVE://是生命數規則時
                 if (Point > 0){//
-                        Point -= 1;
-                        print(this.name + "-1");
-                        _gm.ReSetPlayer(this.gameObject);
+                    Point -= 1;
+                    if (_pv.IsMine)
+                    {
+                        _gm._pointUI.Life--;
+                        _gm._pointUI.UpDatePointUI();
+                    }
+                    print(this.name + "-1");
+                    _gm.ReSetPlayer(this.gameObject);
                 }
                 if(Point <= 0){           
                     _gm.PlayerCount--;
@@ -253,6 +275,5 @@ public class PlayerData : MonoBehaviourPunCallbacks
                 _gm.CallRpcSetWinerName(winName,throwMe.gameObject.name);
             break;
         }
-        
     }
 }

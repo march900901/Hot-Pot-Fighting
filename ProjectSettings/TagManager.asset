@@ -12,6 +12,7 @@ TagManager:
   - Me
   - UI
   - Animator
+  - Point
   layers:
   - Default
   - TransparentFX
