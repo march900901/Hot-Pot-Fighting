@@ -5693,6 +5693,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Target
       value: 
       objectReference: {fileID: 1994717837}
+    - target: {fileID: 2172442083510433862, guid: 1f43f9e23fe60554e9a063d762b10df9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: SaveRebinding
+      objectReference: {fileID: 0}
     - target: {fileID: 2961315679895044463, guid: 1f43f9e23fe60554e9a063d762b10df9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
