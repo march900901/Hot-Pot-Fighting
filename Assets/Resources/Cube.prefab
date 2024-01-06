@@ -260,24 +260,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerState: 0
   Name: Cube
-  Point: 0
   nameText: {fileID: 6774569807595874641}
-  HitEffect: {fileID: 8240621378934758534}
-  scapeEffect: {fileID: 7669277632233567989, guid: aa6f970f60335ba468bd95ca4c82c26a, type: 3}
-  enemy: {fileID: 0}
-  DefaultColor: {r: 0, g: 0.17254902, b: 1, a: 1}
-  throwMe: {fileID: 0}
-  LiftPoint: {fileID: 756940056766339087}
-  Star: {fileID: 3835796139092911603}
-  hit: {fileID: 1159212713081602361}
-  ScapeAudio: {fileID: 9153344609268306826}
-  _gm: {fileID: 0}
-  _pv: {fileID: 0}
-  defaultMap: Player1
+  Point: 0
+  scapeCount: 0
   Lifting: 0
   CanLift: 0
-  scapeCount: 0
+  defaultMap: Player1
   PointText: {fileID: 0}
+  scapeEffect: {fileID: 7669277632233567989, guid: aa6f970f60335ba468bd95ca4c82c26a, type: 3}
+  enemy: {fileID: 0}
+  throwMe: {fileID: 0}
+  Star: {fileID: 3835796139092911603}
+  HitEffect: {fileID: 8240621378934758534}
+  hit: {fileID: 1159212713081602361}
+  ScapeAudio: {fileID: 9153344609268306826}
+  DefaultColor: {r: 0, g: 0.17254902, b: 1, a: 1}
+  LiftPoint: {fileID: 756940056766339087}
+  _pv: {fileID: 0}
+  _gm: {fileID: 0}
 --- !u!114 &4634476352361722460
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -17,6 +17,8 @@ public class PointUI : MonoBehaviour
     {
         _gm = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
         Icon = GameObject.FindGameObjectsWithTag("Life");
+        Life = 3;
+        _point = 0;
         UpDatePointUI();
     }
 

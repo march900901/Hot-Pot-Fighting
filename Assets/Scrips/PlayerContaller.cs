@@ -58,7 +58,7 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
         if (_pv.IsMine)
         {
             ReBindingManager bindingManager = GameObject.Find("ReBindingManager").GetComponent<ReBindingManager>();
-            bindingManager._pc = this.gameObject;
+            //bindingManager._pc = this.gameObject;
             //bindingManager.playerInput = GetComponent<PlayerInput>();
             print("get input");
         }

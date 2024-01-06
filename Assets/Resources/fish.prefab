@@ -258,23 +258,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerState: 0
   Name: fish
-  Point: 0
   nameText: {fileID: 6774569807595874641}
-  HitEffect: {fileID: 7667786346405306489}
-  scapeEffect: {fileID: 7669277632233567989, guid: aa6f970f60335ba468bd95ca4c82c26a, type: 3}
-  enemy: {fileID: 0}
-  DefaultColor: {r: 0, g: 0.17254902, b: 1, a: 1}
-  throwMe: {fileID: 0}
-  LiftPoint: {fileID: 756940056766339087}
-  Star: {fileID: 3963156958087960013}
-  hit: {fileID: 113018246648207951}
-  ScapeAudio: {fileID: 1922402006945784130}
-  _gm: {fileID: 0}
-  _pv: {fileID: 0}
-  defaultMap: Player1
+  Point: 0
+  scapeCount: 0
   Lifting: 0
   CanLift: 0
-  scapeCount: 0
+  defaultMap: Player1
+  PointText: {fileID: 0}
+  scapeEffect: {fileID: 7669277632233567989, guid: aa6f970f60335ba468bd95ca4c82c26a, type: 3}
+  enemy: {fileID: 0}
+  throwMe: {fileID: 0}
+  Star: {fileID: 3963156958087960013}
+  HitEffect: {fileID: 7667786346405306489}
+  hit: {fileID: 113018246648207951}
+  ScapeAudio: {fileID: 1922402006945784130}
+  DefaultColor: {r: 0, g: 0.17254902, b: 1, a: 1}
+  LiftPoint: {fileID: 756940056766339087}
+  _pv: {fileID: 0}
+  _gm: {fileID: 0}
 --- !u!114 &4634476352361722460
 MonoBehaviour:
   m_ObjectHideFlags: 0

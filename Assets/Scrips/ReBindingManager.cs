@@ -22,7 +22,7 @@ public class ReBindingManager : MonoBehaviour
     [SerializeField]Text ScapeActionText;
     public PlayerInput playerInput;
     public AudioManager _am;
-    public GameObject _pc;
+    //public GameObject _pc;
 
     void Start()
     {   
