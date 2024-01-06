@@ -103,7 +103,7 @@ public class PlayerData : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-        
+
         switch (_playerState)
         {
             case PlayerState.Idle:
@@ -241,7 +241,7 @@ public class PlayerData : MonoBehaviourPunCallbacks
     public void CountingPoint(){//依規則計算分數
         switch(_gm._gr){
             case GameManager.GameRull.TIME://是時間規則時
-                throwMe.GetComponent<PlayerData>().Point += 1;
+                throwMe.GetComponent<PlayerData>().AddPoint();
                 print(throwMe.gameObject.name + "+1");
                 _gm.ReSetPlayer(this.gameObject);
             break;
@@ -274,6 +274,15 @@ public class PlayerData : MonoBehaviourPunCallbacks
                 string winName = throwMe.gameObject.GetComponent<PlayerData>().nameText.text;
                 _gm.CallRpcSetWinerName(winName,throwMe.gameObject.name);
             break;
+        }
+    }
+
+    public void AddPoint(){//TIME模式下加分機制
+        Point += 1;
+        if (_pv.IsMine)
+        {
+            _gm._pointUI._point = Point;
+            _gm._pointUI.UpDatePointUI();
         }
     }
 }

@@ -8,6 +8,7 @@ public class PointUI : MonoBehaviour
     public int Life;
     //public List<GameObject> Icon = new List<GameObject>();
     public GameObject[] Icon;
+    public int _point;
     public Text pointText;
     public PlayerData _pd;
     public GameManager _gm;
@@ -16,21 +17,24 @@ public class PointUI : MonoBehaviour
     {
         _gm = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
         Icon = GameObject.FindGameObjectsWithTag("Life");
+        UpDatePointUI();
     }
 
     public void UpDatePointUI(){
-        switch(_gm._gr){
+        switch (_gm._gr)
+        {
             case GameManager.GameRull.TIME:
-                
+                pointText.text = "得分: " + _point;
             break;
 
             case GameManager.GameRull.LIVE:
-                //Life += point;
-                Icon[Mathf.Abs(Life-2)].SetActive(false);
+                if (Life < 3)
+                {
+                    Icon[Mathf.Abs(Life-2)].SetActive(false);       
+                    //Icon[Life].GetComponent<DoTween>();
+                }
             break;
+            
         }
-
-        
-        //Icon[Life].GetComponent<DoTween>();
     }
 }

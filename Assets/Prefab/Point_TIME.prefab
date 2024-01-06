@@ -94,6 +94,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Life: 0
   Icon: []
-  point: {fileID: 0}
+  _point: 0
+  pointText: {fileID: 1239854468490152726}
   _pd: {fileID: 0}
   _gm: {fileID: 0}
