@@ -10,7 +10,7 @@ public class DoTween : MonoBehaviour
 {
      Vector3 objScale;
      public Transform panelHome;
-     public List<GameObject> Button = new List<GameObject>();
+     public List<GameObject> TweenObjects = new List<GameObject>();
      public float ButtonMove = 0;
     private void Start() {
         objScale = this.transform.localScale;
@@ -38,18 +38,41 @@ public class DoTween : MonoBehaviour
 
     IEnumerator ButtonMoveIn(){//按鈕進場動畫
         
-        foreach (var item in Button)
+        foreach (var item in TweenObjects)
         {
             item.transform.localPosition = new Vector3(item.transform.localPosition.x,item.transform.localPosition.y-250,0);
         }
         yield return new WaitForSeconds(0.4f);
-        foreach (var item in Button)
+        foreach (var item in TweenObjects)
         {
             float targate = item.transform.localPosition.y+250;
             item.transform.DOMoveY(ButtonMove,0.5f).SetEase(Ease.OutBack);
             yield return new WaitForSeconds(0.1f);
         }
         
+    }
+
+    // IEnumerator LobbyPanleIn(){
+    //     foreach (var item in TweenObjects)
+    //     {
+    //         item.transform.localPosition = TweenObjects[0].transform.position;
+    //     }
+    //     yield return new WaitForSeconds(0.4f);
+    //     TweenObjects[1].transform.DOMoveY(9.2f,0.1f).SetEase(Ease.OutBounce);
+    //     TweenObjects[2].transform.DOMoveY(-92.8f,0.3f).SetEase(Ease.OutBounce);
+    // }
+
+    public void LobbyPanleIn(){
+        Vector3 StartPos = new Vector3(TweenObjects[0].transform.position.x,TweenObjects[0].transform.position.y+10,TweenObjects[0].transform.position.z);
+        TweenObjects[3].transform.localScale = new Vector3(1,0,1);
+        for (int i = 0; i < TweenObjects.Count; i++)
+        {
+            TweenObjects[i].transform.position = StartPos;
+        }
+        TweenObjects[0].transform.DOMoveY(730,1).SetEase(Ease.OutBounce);
+        TweenObjects[1].transform.DOMoveY(563,1).SetEase(Ease.OutBounce);
+        TweenObjects[2].transform.DOMoveY(319,1).SetEase(Ease.OutBounce);
+        TweenObjects[3].transform.DOScaleY(1,1);
     }
 
     public void ScaleButton(float scaleTime){
@@ -101,5 +124,6 @@ public class DoTween : MonoBehaviour
         transform.DOMoveY(transform.position.y-85,1);
         
     }
+
 
 }

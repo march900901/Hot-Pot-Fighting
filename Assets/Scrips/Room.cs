@@ -19,7 +19,7 @@ public class Room : MonoBehaviour
         //初始化
         _lbm = GameObject.Find("LobbySceneManager").GetComponent<LobbySceneManager>();
         _roomList = GameObject.Find("RoomList").GetComponent<RoomList>();
-        WarningText = GameObject.Find("WarningText");
+        WarningText = GameObject.Find("Text_Warning");
         RoomName.text = this.gameObject.name;
     }
 

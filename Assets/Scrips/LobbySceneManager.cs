@@ -22,6 +22,7 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
     float nextUpdateTime;
     public AudioManager _am;
     public GameObject Panel_Help;
+    public DoTween PanleDOTween;
     void Start()
     {
         if (PhotonNetwork.IsConnected==false)
@@ -34,6 +35,7 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
         _am = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         PanleCreatRoom.transform.localScale = Vector3.zero;
         Panel_Help.transform.localScale = Vector3.zero;
+        PanleDOTween.LobbyPanleIn();
     }
 
     public override void OnConnectedToMaster()
@@ -69,9 +71,15 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
             PhotonNetwork.CreateRoom(roomName);
             PhotonNetwork.LocalPlayer.NickName = PlayerName;
             //_am.PlayAudio(8);
-        }else if(roomName.Length<=0 || PlayerName.Length<=0){
+        }else if(roomName.Length<=0 && PlayerName.Length<=0){//如果玩家和房間名稱都沒有輸入，顯示警告輸入
             WarningText.text = "Please enter Room name and Player name";
             Debug.Log("Please enter Room name and Player name");
+            StartCoroutine(Delay(5));
+        }else if(roomName.Length<=0){//如果沒有輸入房間名稱，顯示警告輸入房間名稱
+            WarningText.text = "Please enter Room name";
+            StartCoroutine(Delay(5));
+        }else if(PlayerName.Length<=0){//如果沒有輸入玩家名稱，顯示警告輸入玩家名稱
+            WarningText.text = "Please enter Player name";
             StartCoroutine(Delay(5));
         }
     }

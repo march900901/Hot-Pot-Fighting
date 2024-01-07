@@ -245,6 +245,7 @@ public class PlayerContaller : MonoBehaviourPunCallbacks
                 {//限制只能控制自己
                     //向前衝刺一下
                     playerData.CallRpcStateSwitch(PlayerData.PlayerState.Dash);
+                    _animator.SetTrigger("Idle"); 
                     DashAudio.Play();
                     DashEffect.Play();
                     //playerData.HitEffect.Play();

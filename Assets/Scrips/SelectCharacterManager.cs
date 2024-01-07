@@ -12,6 +12,8 @@ using Unity.VisualScripting;
 public class SelectCharacterManager : MonoBehaviourPunCallbacks
 {
     [SerializeField]Text textRoomName;
+    [SerializeField]Text textGameMode;
+    [SerializeField]Text textGameTime;
     [SerializeField]Text textPlayerList;
     [SerializeField]Button buttonStartGame;
 
@@ -42,7 +44,22 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
         {//如果沒連上伺服器的話就回到Lobby場景
             SceneManager.LoadScene("Lobby");
         }else{//如果有連上伺服器就把房間名稱UI設為房間名稱，並刷新玩家列表
+            GameMode = PlayerPrefs.GetInt("GameMode");
+            GameTime = PlayerPrefs.GetInt("GameTime");
             textRoomName.text="Room: " + PhotonNetwork.CurrentRoom.Name;
+            switch (GameMode)
+            {//顯示遊戲模式及時間
+                case 0:
+                    textGameMode.text = "Mode: TIME";
+                    textGameTime.gameObject.SetActive(true);
+                    textGameTime.text = "Game time: " + GameTime.ToString() + " sec";
+                break;
+                
+                case 1:
+                    textGameMode.text = "Mode: LIFE";
+                    textGameTime.gameObject.SetActive(false);
+                break;
+            }
             UpDatePlayerList();
         }
         buttonStartGame.interactable=false;//禁用開始按鈕
@@ -61,10 +78,6 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
         NextButton.ScaleButton(0.5f);
         PreviousButton.ScaleButton(0.5f);
         PanelRebind.PanelIn();
-        GameMode = PlayerPrefs.GetInt("GameMode");
-        GameTime = PlayerPrefs.GetInt("GameTime");
-        print("GameMode: " + GameMode);
-        print("GameTime: " + GameTime);
     }
 
     public override void OnMasterClientSwitched(Player newMasterClient){//當房主切換的時候
