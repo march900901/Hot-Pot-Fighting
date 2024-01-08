@@ -507,7 +507,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panelHome: {fileID: 0}
-  Button: []
+  TweenObjects: []
   ButtonMove: 0
 --- !u!82 &296315655
 AudioSource:
@@ -1373,7 +1373,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panelHome: {fileID: 2050112542}
-  Button: []
+  TweenObjects: []
   ButtonMove: 0
 --- !u!1001 &583896266
 PrefabInstance:
@@ -1878,7 +1878,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panelHome: {fileID: 0}
-  Button: []
+  TweenObjects: []
   ButtonMove: 0
 --- !u!114 &786196901
 MonoBehaviour:
@@ -2367,7 +2367,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panelHome: {fileID: 0}
-  Button: []
+  TweenObjects: []
   ButtonMove: 0
 --- !u!1 &840604119
 GameObject:
@@ -3151,7 +3151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panelHome: {fileID: 0}
-  Button: []
+  TweenObjects: []
   ButtonMove: 0
 --- !u!1 &1123479359
 GameObject:
@@ -3223,7 +3223,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ReBindKey
+  m_Text: SetUp
 --- !u!222 &1123479362
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3376,7 +3376,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panelHome: {fileID: 0}
-  Button: []
+  TweenObjects: []
   ButtonMove: 0
 --- !u!114 &1200278221
 MonoBehaviour:
@@ -5800,7 +5800,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panelHome: {fileID: 0}
-  Button: []
+  TweenObjects: []
   ButtonMove: 0
 --- !u!1 &2063362794
 GameObject:
@@ -5986,7 +5986,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panelHome: {fileID: 0}
-  Button: []
+  TweenObjects: []
   ButtonMove: 0
 --- !u!82 &2063362800
 AudioSource:
