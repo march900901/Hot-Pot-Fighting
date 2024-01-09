@@ -11,6 +11,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
@@ -26,6 +27,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     [SerializeField]List<string> messageList;
     [SerializeField]Text messageText;
     public Dictionary<Player, bool> alivePlayerMap = new Dictionary<Player, bool>();
+    public List<PlayerData> winDatas = new List<PlayerData>();
     public string CharacterName;
     public GameObject GameOverPanel;
     public Animator FinalPanel;
@@ -85,6 +87,19 @@ public class GameManager : MonoBehaviourPunCallbacks
             case GameRull.FINAL:
                 Timer.SetActive(true);
                 Timer.GetComponent<Timer>().reminingTime = 60;
+
+                List<string> winName = new List<string>();
+                    
+                    foreach (var item in winDatas)
+                    {//將分數最高的玩家物件名加入list並
+                        winName.Add(item.gameObject.name);
+                        players.Remove(item);//將分數最高的玩家data從players列表移除
+                        item._gm.ReSetPlayer(item.gameObject);//生成分數最高的玩家
+                    }
+                    foreach (var item in players)
+                    {//刪除分數最高的玩家以外的人
+                        Destroy(item.gameObject);
+                    }
             break;
         }
         
@@ -221,6 +236,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
 //-------遊戲結束-------
     public void GameOver(){//執行遊戲結束
+        MyCharacter.GetComponent<PlayerInput>().enabled = false;
         GameOverPanel.SetActive(true);
         _am.PlayAudio(4);
         BGM.Stop();
@@ -267,7 +283,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void JudgeGameOver(){
         switch(_gr){
             case GameRull.TIME:
-                List<PlayerData> winDatas = new List<PlayerData>();
+                // List<PlayerData> winDatas = new List<PlayerData>();
                 winDatas.Add(players[0]);//將玩家列表中第一個加入winDatas
                 for (int i = 1; i < players.Count; i++)
                 {//一個個判斷winDatas的玩家分數是否比較高
@@ -290,26 +306,18 @@ public class GameManager : MonoBehaviourPunCallbacks
                 }else{//如果分數最高的不只一人，就進入FINAL模式
 
                     CallRpcFianl();
-                    List<string> winName = new List<string>();
+                    // List<string> winName = new List<string>();
                     
-                    foreach (var item in winDatas)
-                    {//將分數最高的玩家物件名加入list
-                        winName.Add(item.gameObject.name);
-                        players.Remove(item);
-                        item._gm.ReSetPlayer(item.gameObject);
-                    }
-                    foreach (var item in winDatas)
-                    {//將分數最高的玩家data從players列表移除
-                        
-                    }
-                    foreach (var item in players)
-                    {//刪除分數最高的玩家以外的人
-                        Destroy(item.gameObject);
-                    }
-                    foreach (var item in winDatas)
-                    {//生成分數最高的玩家
-                        
-                    }
+                    // foreach (var item in winDatas)
+                    // {//將分數最高的玩家物件名加入list並
+                    //     winName.Add(item.gameObject.name);
+                    //     players.Remove(item);//將分數最高的玩家data從players列表移除
+                    //     item._gm.ReSetPlayer(item.gameObject);//生成分數最高的玩家
+                    // }
+                    // foreach (var item in players)
+                    // {//刪除分數最高的玩家以外的人
+                    //     Destroy(item.gameObject);
+                    // }
                 }
                 
             break;

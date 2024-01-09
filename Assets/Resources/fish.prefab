@@ -277,6 +277,7 @@ MonoBehaviour:
   _pv: {fileID: 0}
   _gm: {fileID: 0}
   final: {fileID: 0}
+  playerUI: {fileID: 0}
 --- !u!114 &4634476352361722460
 MonoBehaviour:
   m_ObjectHideFlags: 0

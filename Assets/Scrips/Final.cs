@@ -14,12 +14,12 @@ public class Final : MonoBehaviour
     }
 
     public void GoFinal(){
-        playerInput.SwitchCurrentActionMap("NotMe");
+        playerInput.enabled = false;
         
     }
 
     public void StartFinal(){
-        playerInput.SwitchCurrentActionMap("Player1");
         _gm._gr = GameManager.GameRull.FINAL;
+        playerInput.enabled = true;
     }
 }
