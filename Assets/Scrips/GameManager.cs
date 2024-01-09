@@ -188,12 +188,12 @@ public class GameManager : MonoBehaviourPunCallbacks
         
         _am.PlayAudio(4);
         PhotonNetwork.CurrentRoom.IsVisible = true;
-        
+        CallRpcLeavGame();
         //PhotonNetwork.LeaveRoom();
     }
 
     public void CallRpcLeavGame(){
-        _pv.RPC("Rpc",RpcTarget.All);
+        _pv.RPC("RpcLeavGame",RpcTarget.All);
     }
     [PunRPC]
     public void RpcLeavGame(PhotonMessageInfo info){
