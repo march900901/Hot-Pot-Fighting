@@ -51,7 +51,7 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
             {//顯示遊戲模式及時間
                 case 0:
                     textGameMode.text = "Mode: TIME";
-                    textGameTime.gameObject.SetActive(true);
+                    //textGameTime.gameObject.SetActive(true);
                     textGameTime.text = "Game time: " + GameTime.ToString() + " sec";
                 break;
                 
