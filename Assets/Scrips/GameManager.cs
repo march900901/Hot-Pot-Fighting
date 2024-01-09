@@ -188,8 +188,16 @@ public class GameManager : MonoBehaviourPunCallbacks
         
         _am.PlayAudio(4);
         PhotonNetwork.CurrentRoom.IsVisible = true;
-        SceneManager.LoadScene("selectCharacter");
+        
         //PhotonNetwork.LeaveRoom();
+    }
+
+    public void CallRpcLeavGame(){
+        _pv.RPC("Rpc",RpcTarget.All);
+    }
+    [PunRPC]
+    public void RpcLeavGame(PhotonMessageInfo info){
+        SceneManager.LoadScene("selectCharacter");
     }
 
 //-------遊戲結束-------

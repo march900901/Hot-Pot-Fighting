@@ -122,8 +122,6 @@ public class DoTween : MonoBehaviour
     public void ReduceLife(){
         CanvasGroup canvasGroup = GetComponent<CanvasGroup>();
         transform.DOMoveY(transform.position.y-85,1);
-        
     }
-
 
 }
