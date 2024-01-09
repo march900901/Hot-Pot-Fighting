@@ -13,6 +13,8 @@ TagManager:
   - UI
   - Animator
   - Point
+  - Life
+  - Final
   layers:
   - Default
   - TransparentFX

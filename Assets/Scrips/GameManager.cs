@@ -22,11 +22,14 @@ public class GameManager : MonoBehaviourPunCallbacks
     public int GameTime;
     public List<Transform> startTransform = new List<Transform>();
     public List<PlayerData> players = new List<PlayerData>();
+    public GameObject MyCharacter;
     [SerializeField]List<string> messageList;
     [SerializeField]Text messageText;
     public Dictionary<Player, bool> alivePlayerMap = new Dictionary<Player, bool>();
     public string CharacterName;
-    public GameObject GameOverPanlel;
+    public GameObject GameOverPanel;
+    public Animator FinalPanel;
+    public Animator FinalText;
     public GameObject BT_Leav;
     public AudioManager _am;
     public AudioSource Leav;
@@ -57,7 +60,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         PlayerCount = PhotonNetwork.CurrentRoom.PlayerCount;
         //instruction.gameObject.SetActive(true);
         //instruction.PanelIn();
-        GameOverPanlel.SetActive(false);
+        GameOverPanel.SetActive(false);
+        //FinalPanel.SetActive(false);
         InisGame();
         PhotonNetwork.SendRate = 1000;
         PhotonNetwork.SerializationRate = 1000;
@@ -200,9 +204,24 @@ public class GameManager : MonoBehaviourPunCallbacks
         SceneManager.LoadScene("selectCharacter");
     }
 
+//-------最終決戰-------
+    public void Final(){
+        FinalPanel.SetTrigger("Start");
+        FinalText.SetTrigger("Start");
+    }
+
+    public void CallRpcFianl(){
+        _pv.RPC("RpcFinal",RpcTarget.All);
+    }
+
+    [PunRPC]
+    public void RpcFinal(){
+        Final();
+    }
+
 //-------遊戲結束-------
     public void GameOver(){//執行遊戲結束
-        GameOverPanlel.SetActive(true);
+        GameOverPanel.SetActive(true);
         _am.PlayAudio(4);
         BGM.Stop();
         print("GameOver");
@@ -269,7 +288,8 @@ public class GameManager : MonoBehaviourPunCallbacks
                 {//找出分數最高的人後，判斷如果分數最高的只有一人，就執行設定贏家
                     CallRpcSetWinerName(winDatas[0].nameText.text,winDatas[0].gameObject.name);
                 }else{//如果分數最高的不只一人，就進入FINAL模式
-                    _gr = GameRull.FINAL;
+
+                    CallRpcFianl();
                     List<string> winName = new List<string>();
                     
                     foreach (var item in winDatas)

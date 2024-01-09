@@ -871,7 +871,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panelHome: {fileID: 0}
-  Button: []
+  TweenObjects: []
   ButtonMove: 0
 --- !u!1 &1147160464
 GameObject:
@@ -942,7 +942,7 @@ MonoBehaviour:
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: 1
+    m_LineSpacing: 1.73
   m_Text: "\u8EAB\u70BA\u706B\u934B\u6599\uFF0C\u70BA\u4E86\u7DAD\u6301\u751F\u6D3B\u548C\u6EFF\u8DB3\u57FA\u672C\u7684\u9700\u6C42\uFF0C\u53EA\u80FD\u900F\u904E\u885D\u92D2\u653B\u64CA\u4F86\u8B93\u5C0D\u65B9\u6454\u5012\uFF0C\u4E26\u628A\u5C0D\u65B9\u8209\u8D77\u4E1F\u5165\u934B\u4E2D\uFF0C\u4EE5\u7372\u5F97\u751F\u5B58\u7684\u6700\u4F4E\u8981\u6C42\uFF0C\u6D3B\u8457\u3002\r\n\u76EE\u6A19\uFF1A\u5C07\u5C0D\u624B\u4E1F\u9032\u706B\u934B\u88E1\u982D\uFF0C\u4EE5\u7372\u5F97\u5206\u6578"
 --- !u!222 &1147160467
 CanvasRenderer:

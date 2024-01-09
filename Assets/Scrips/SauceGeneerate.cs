@@ -24,6 +24,7 @@ public class SauceGeneerate : MonoBehaviour
 
     public void SponSauceGenerate(){
         Vector3 generateRang = new Vector3(Random.Range(-5,5),this.transform.position.y,Random.Range(-5,5));
-        PhotonNetwork.Instantiate("SuaceGrenerate",generateRang,Quaternion.identity);
+        GameObject Garlic = PhotonNetwork.Instantiate("SuaceGrenerate",generateRang,Quaternion.identity);
+        Destroy(Garlic,10 );
     }
 }
