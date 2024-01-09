@@ -16,7 +16,7 @@ public class PointUI : MonoBehaviour
     void Start()
     {
         _gm = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
-        Icon = GameObject.FindGameObjectsWithTag("Life");
+        //Icon = GameObject.FindGameObjectsWithTag("Life");
         Life = 3;
         _point = 0;
         UpDatePointUI();
@@ -31,9 +31,10 @@ public class PointUI : MonoBehaviour
 
             case GameManager.GameRull.LIVE:
                 if (Life < 3)
-                {
+                {   
+                    Icon[Mathf.Abs(Life-2)].GetComponent<DoTween>().ReduceLife();
                     Icon[Mathf.Abs(Life-2)].SetActive(false);       
-                    //Icon[Life].GetComponent<DoTween>();
+                    
                 }
             break;
             

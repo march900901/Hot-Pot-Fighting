@@ -9,7 +9,7 @@ public class DontDestroy : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(this.gameObject);
-        Destroy(this.gameObject,300);
+        //Destroy(this.gameObject,300);
     }
 
     // Update is called once per frame

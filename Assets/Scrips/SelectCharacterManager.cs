@@ -65,6 +65,8 @@ public class SelectCharacterManager : MonoBehaviourPunCallbacks
         buttonStartGame.interactable=false;//禁用開始按鈕
         //在GeneratPoint生成角色列表第0個角色
         GameObject Character = Instantiate(CharacterList[0],GeneratPoint.position,new Quaternion(0,180,0,0));
+        Animator _animator = Character.GetComponentInChildren<Animator>(); 
+        _animator.SetTrigger("Choose");//將生成的角色動畫設為選角動畫
         Character.name = CharacterList[0].name;//將生成的角色名字改成跟角色列表一樣，防止出現culon等字樣，方便後續操作
         ReSetCharacter(Character);//將角色控制、數據等腳本刪除，防止報錯
         selectCharacterName = Character.name;//將所selectCharcterName設為當前所選角色名字

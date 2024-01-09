@@ -177,7 +177,7 @@ public class ReBindingManager : MonoBehaviour
         .Start();
     }
 
-    public void RebindingRght(){//重新綁定往右按鍵
+    public void RebindingRight(){//重新綁定往右按鍵
         print("Rebinding");
         playerInput.SwitchCurrentActionMap("NotMe");
         MoveActionRef.action.Disable();

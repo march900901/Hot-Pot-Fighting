@@ -31,7 +31,6 @@ public class AudioManager : MonoBehaviour
             audio.loop = Loop;
             audio.Play();
         }
-
     }
 
     AudioClip GetAudioClip(string name){

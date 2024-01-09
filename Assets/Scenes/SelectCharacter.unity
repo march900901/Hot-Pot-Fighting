@@ -1343,7 +1343,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 424636391}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -5392,10 +5392,6 @@ MonoBehaviour:
   - {fileID: 3565059113061548435, guid: 2f51a95cfeea434449a5dd123decd52e, type: 3}
   - {fileID: 3565059113061548435, guid: b316b465b15973f48968d6a5cc64c6b1, type: 3}
   - {fileID: 3565059113061548435, guid: 710f7d3afd87b08469d2acc1ba9d3e0a, type: 3}
-  - {fileID: 3565059113061548435, guid: d4ae47f41403e2946b8ef3202b0dfebe, type: 3}
-  - {fileID: 3565059113061548435, guid: 0ba42ede26aeae04c9d5022215045cab, type: 3}
-  - {fileID: 3565059113061548435, guid: 8936b36f2e26f0340bffddb313711ea6, type: 3}
-  - {fileID: 3565059113061548435, guid: 883d312b7cb714b4d86706dad3b0b690, type: 3}
   GeneratPoint: {fileID: 1622816025}
   selectCharacterName: 
   text_Confirm: {fileID: 1054938913}
