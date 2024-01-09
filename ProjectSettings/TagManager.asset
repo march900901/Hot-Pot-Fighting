@@ -15,6 +15,7 @@ TagManager:
   - Point
   - Life
   - Final
+  - PlayerUI
   layers:
   - Default
   - TransparentFX

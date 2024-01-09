@@ -46,6 +46,7 @@ public class PlayerData : MonoBehaviourPunCallbacks
     public PhotonView _pv;
     public GameManager _gm;
     public Final final;
+    public PlayerUI playerUI;
     PlayerContaller playerContaller;
     Rigidbody rigidbody;
     PlayerInput playerInput;    
@@ -72,6 +73,7 @@ public class PlayerData : MonoBehaviourPunCallbacks
         _pv = this.transform.GetComponent<PhotonView>();      
         nameText.text = _pv.Owner.NickName;
         final = GameObject.FindWithTag("Final").GetComponent<Final>();
+        playerUI = GameObject.FindWithTag("PlayerUI").GetComponent<PlayerUI>();
         if (this.gameObject.name.EndsWith("(Clone)"))
         {
             Name = this.gameObject.name.TrimEnd("(Clone)");
@@ -101,6 +103,8 @@ public class PlayerData : MonoBehaviourPunCallbacks
             _gm.ui_PlayerName.text = nameText.text;
             _gm.MyCharacter = this.gameObject;
             final.playerInput = this.transform.GetComponent<PlayerInput>();
+            playerUI._pd = GetComponent<PlayerData>();
+            playerUI.UpDatePlayerImage();
         }
     }
 
