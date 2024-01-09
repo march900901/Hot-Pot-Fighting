@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 1, g: 1, b: 1, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
@@ -5816,6 +5816,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 204028314}
+    - target: {fileID: 853579017294550840, guid: 1f43f9e23fe60554e9a063d762b10df9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: RebindingRight
+      objectReference: {fileID: 0}
     - target: {fileID: 867398791775033087, guid: 1f43f9e23fe60554e9a063d762b10df9, type: 3}
       propertyPath: m_FontData.m_FontSize
       value: 50
@@ -6114,6 +6118,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 2b342dec8f96a3847a3b4f19b8531a89, type: 3}
+    - target: {fileID: 8978933467816036603, guid: 1f43f9e23fe60554e9a063d762b10df9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9118913182475029803, guid: 1f43f9e23fe60554e9a063d762b10df9, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
